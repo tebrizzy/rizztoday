@@ -208,72 +208,98 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Mini Piano - Web Audio API
-const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioContext = new AudioContext();
+// iPod Nano Player
+const ipodAudio = document.getElementById('ipodAudio');
+const ipodScreen = document.getElementById('ipodScreen');
+const songTitle = document.getElementById('songTitle');
+const playPauseBtn = document.getElementById('playPauseBtn');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const selectBtn = document.getElementById('selectBtn');
+const playIcon = document.querySelector('.play-icon');
+const pauseIcon = document.querySelector('.pause-icon');
 
-// Note frequencies
-const noteFrequencies = {
-    'C4': 261.63,
-    'C#4': 277.18,
-    'D4': 293.66,
-    'D#4': 311.13,
-    'E4': 329.63,
-    'F4': 349.23,
-    'F#4': 369.99,
-    'G4': 392.00,
-    'G#4': 415.30,
-    'A4': 440.00,
-    'A#4': 466.16,
-    'B4': 493.88
-};
+// Playlist - Add MP3 tracks here
+const playlist = [
+    { title: "Get Down On It", src: "content/music/Kool & The Gang - Get Down On It.mp3" }
+];
 
-function playNote(frequency) {
-    // Resume audio context if suspended (browser requirement)
-    if (audioContext.state === 'suspended') {
-        audioContext.resume();
+let currentTrack = 0;
+let isPlaying = false;
+
+function loadTrack(index) {
+    if (playlist.length === 0) {
+        songTitle.textContent = 'No Track';
+        return false;
     }
 
-    // Create oscillator
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-
-    // Piano-like sound (sine wave with slight harmonics)
-    oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-
-    // Envelope
-    gainNode.gain.setValueAtTime(0, audioContext.currentTime);
-    gainNode.gain.linearRampToValueAtTime(0.3, audioContext.currentTime + 0.01);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.5);
+    currentTrack = ((index % playlist.length) + playlist.length) % playlist.length;
+    const track = playlist[currentTrack];
+    ipodAudio.src = track.src;
+    songTitle.textContent = track.title;
+    return true;
 }
 
-// Add click handlers to piano keys
-const pianoKeys = document.querySelectorAll('.white-key, .black-key');
-pianoKeys.forEach(key => {
-    key.addEventListener('mousedown', function() {
-        const note = this.getAttribute('data-note');
-        const frequency = noteFrequencies[note];
-        if (frequency) {
-            playNote(frequency);
-            this.classList.add('active');
+function togglePlay() {
+    if (playlist.length === 0) {
+        songTitle.textContent = 'Add MP3s';
+        return;
+    }
+
+    if (isPlaying) {
+        ipodAudio.pause();
+        ipodScreen.classList.remove('active');
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+        isPlaying = false;
+    } else {
+        ipodAudio.play().catch(() => {
+            songTitle.textContent = 'Error';
+        });
+        ipodScreen.classList.add('active');
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+        isPlaying = true;
+    }
+}
+
+function prevTrack() {
+    if (playlist.length === 0) return;
+    loadTrack(currentTrack - 1);
+    if (isPlaying) ipodAudio.play();
+}
+
+function nextTrack() {
+    if (playlist.length === 0) return;
+    loadTrack(currentTrack + 1);
+    if (isPlaying) ipodAudio.play();
+}
+
+// Button handlers
+if (playPauseBtn) playPauseBtn.addEventListener('click', togglePlay);
+if (selectBtn) selectBtn.addEventListener('click', togglePlay);
+if (prevBtn) prevBtn.addEventListener('click', prevTrack);
+if (nextBtn) nextBtn.addEventListener('click', nextTrack);
+
+if (ipodAudio) {
+    ipodAudio.addEventListener('ended', () => {
+        if (playlist.length > 1) {
+            loadTrack(currentTrack + 1);
+            ipodAudio.play();
+        } else {
+            ipodScreen.classList.remove('active');
+            playIcon.style.display = 'block';
+            pauseIcon.style.display = 'none';
+            isPlaying = false;
         }
     });
+}
 
-    key.addEventListener('mouseup', function() {
-        this.classList.remove('active');
-    });
+// Set default volume to 25%
+if (ipodAudio) ipodAudio.volume = 0.25;
 
-    key.addEventListener('mouseleave', function() {
-        this.classList.remove('active');
-    });
-});
+// Load first track
+loadTrack(0);
 
 // Notification card click handler
 const notificationCard = document.querySelector('.notification-card');
@@ -281,4 +307,52 @@ if (notificationCard) {
     notificationCard.addEventListener('click', function(e) {
         window.open('https://x.com/rizzytoday', '_blank', 'noopener,noreferrer');
     });
+}
+
+// Cards Toggle Button
+const cardsToggleBtn = document.getElementById('cardsToggleBtn');
+const cardsStack = document.getElementById('cardsStack');
+
+if (cardsToggleBtn && cardsStack) {
+    cardsToggleBtn.addEventListener('click', function() {
+        cardsStack.classList.toggle('active');
+    });
+
+    // Close cards when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!cardsStack.contains(e.target) && !cardsToggleBtn.contains(e.target)) {
+            cardsStack.classList.remove('active');
+        }
+    });
+}
+
+// Project Cards Stack - Click to cycle through cards
+const projectCards = document.querySelectorAll('.project-card');
+projectCards.forEach(card => {
+    card.addEventListener('click', function() {
+        // Get all cards and their current indices
+        const allCards = Array.from(projectCards);
+
+        // Cycle: each card moves to the next position in order
+        allCards.forEach(c => {
+            const currentIndex = parseInt(c.getAttribute('data-index'));
+            const newIndex = (currentIndex + 1) % allCards.length;
+            c.setAttribute('data-index', newIndex);
+        });
+    });
+});
+
+// Play videos when cards stack becomes visible
+if (cardsToggleBtn && cardsStack) {
+    const cardVideos = cardsStack.querySelectorAll('video');
+
+    const observer = new MutationObserver(() => {
+        if (cardsStack.classList.contains('active')) {
+            cardVideos.forEach(video => {
+                video.play().catch(() => {});
+            });
+        }
+    });
+
+    observer.observe(cardsStack, { attributes: true, attributeFilter: ['class'] });
 }

@@ -96,30 +96,99 @@
             </div>
         </main>
 
-        <!-- Mini Piano -->
-        <div class="piano-container" id="piano">
-            <div class="piano-header">
-                <div class="piano-logo">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 2L2 7V12C2 16.55 5.84 20.74 11 22V22C16.16 20.74 22 16.55 22 12V7L12 2Z" fill="#E0115F"/>
-                    </svg>
+        <!-- Cards Toggle Button -->
+        <button class="cards-toggle-btn" id="cardsToggleBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="5" width="18" height="14" rx="2" stroke="white" stroke-width="2"/>
+                <rect x="7" y="9" width="10" height="2" fill="white"/>
+                <rect x="7" y="13" width="6" height="2" fill="white"/>
+            </svg>
+        </button>
+
+        <!-- Project Cards Stack -->
+        <div class="cards-stack" id="cardsStack">
+            <!-- Card 1: Hydex Grid -->
+            <div class="project-card" data-index="0">
+                <div class="card-content">
+                    <div class="card-grid-horizontal">
+                        <img src="content/PITCHDECK-2.jpeg" alt="Hydex 1">
+                        <img src="content/PITCHDECK-3.jpeg" alt="Hydex 2">
+                        <img src="content/PITCHDECK-6.jpeg" alt="Hydex 3">
+                        <img src="content/PITCHDECK-8.jpeg" alt="Hydex 4">
+                    </div>
                 </div>
-                <div class="piano-indicator"></div>
+                <div class="card-caption">
+                    <a href="https://x.com/rizzytoday/status/1999124944668553387?s=20" target="_blank" rel="noopener" class="card-title">Pitchdeck Design</a>
+                    <img src="content/logos/hydex logo.png" alt="Hydex" class="card-logo">
+                </div>
             </div>
-            <div class="piano-keys">
-                <div class="white-key" data-note="C4"></div>
-                <div class="black-key" data-note="C#4"></div>
-                <div class="white-key" data-note="D4"></div>
-                <div class="black-key" data-note="D#4"></div>
-                <div class="white-key" data-note="E4"></div>
-                <div class="white-key" data-note="F4"></div>
-                <div class="black-key" data-note="F#4"></div>
-                <div class="white-key" data-note="G4"></div>
-                <div class="black-key" data-note="G#4"></div>
-                <div class="white-key" data-note="A4"></div>
-                <div class="black-key" data-note="A#4"></div>
-                <div class="white-key" data-note="B4"></div>
+
+            <!-- Card 2: Radiants -->
+            <div class="project-card" data-index="1">
+                <div class="card-content">
+                    <video src="content/radiants-web.mp4" autoplay loop muted playsinline></video>
+                </div>
+                <div class="card-caption">
+                    <a href="https://x.com/rizzytoday/status/1985022653652955614?s=20" target="_blank" rel="noopener" class="card-title">Motion Design</a>
+                    <img src="content/logos/radiant logo.png" alt="Radiants" class="card-logo">
+                </div>
             </div>
+
+            <!-- Card 3: Solana -->
+            <div class="project-card" data-index="2">
+                <div class="card-content">
+                    <video src="content/solana.mp4" autoplay loop muted playsinline></video>
+                </div>
+                <div class="card-caption">
+                    <a href="https://x.com/rizzytoday/status/1984049190822146067?s=20" target="_blank" rel="noopener" class="card-title">Solana in Wall Street</a>
+                    <img src="content/logos/Solana Logomark - Color.svg" alt="Solana" class="card-logo">
+                </div>
+            </div>
+
+            <!-- Card 4: WeSplit -->
+            <div class="project-card" data-index="3">
+                <div class="card-content">
+                    <video src="content/we-split-animation.mp4" autoplay loop muted playsinline></video>
+                </div>
+                <div class="card-caption">
+                    <a href="https://x.com/rizzytoday/status/1981382305609314481?s=20" target="_blank" rel="noopener" class="card-title">Logo Animation</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- iPod Nano Player -->
+        <div class="ipod-nano" id="ipod">
+            <div class="ipod-body">
+                <div class="ipod-screen" id="ipodScreen">
+                    <div class="song-title" id="songTitle">No Track</div>
+                </div>
+                <div class="click-wheel">
+                    <div class="wheel-ring">
+                        <button class="wheel-btn menu" id="menuBtn">MENU</button>
+                        <button class="wheel-btn prev" id="prevBtn">
+                            <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor">
+                                <path d="M0 0H3V12H0V0ZM3 6L16 12V0L3 6Z"/>
+                            </svg>
+                        </button>
+                        <button class="wheel-btn next" id="nextBtn">
+                            <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor">
+                                <path d="M16 0H13V12H16V0ZM13 6L0 12V0L13 6Z"/>
+                            </svg>
+                        </button>
+                        <button class="wheel-btn playpause" id="playPauseBtn">
+                            <svg class="play-icon" width="10" height="12" viewBox="0 0 10 12" fill="currentColor">
+                                <path d="M0 0V12L10 6L0 0Z"/>
+                            </svg>
+                            <svg class="pause-icon" width="10" height="12" viewBox="0 0 10 12" fill="currentColor" style="display:none;">
+                                <rect x="0" y="0" width="3" height="12"/>
+                                <rect x="7" y="0" width="3" height="12"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <button class="wheel-center" id="selectBtn"></button>
+                </div>
+            </div>
+            <audio id="ipodAudio"></audio>
         </div>
     </div>
 
