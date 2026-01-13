@@ -523,6 +523,7 @@ body {
     letter-spacing: -0.01em;
     z-index: 5;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    overflow: visible;
 }
 
 .status-btn:hover {
@@ -570,7 +571,7 @@ body {
     opacity: 0;
     transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     padding-bottom: 8px;
-    padding-top: 40px;
+    padding-top: 80px;
     overflow: visible;
 }
 
@@ -639,32 +640,31 @@ body {
 
 .btn-text {
     position: absolute;
-    bottom: calc(100% + 8px);
+    bottom: calc(100% + 10px);
     left: 50%;
-    transform: translateX(-50%) translateY(5px);
-    background-color: rgba(20, 20, 20, 0.98);
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: white;
+    text-align: center;
     padding: 8px 14px;
     border-radius: 8px;
     font-size: 12px;
     font-weight: 600;
-    letter-spacing: -0.01em;
     white-space: nowrap;
-    color: rgb(255, 255, 255);
+    z-index: 999999;
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.2s ease 0.05s, visibility 0.2s ease 0.05s, transform 0.2s ease 0.05s;
     pointer-events: none;
+    transition: all 0.2s ease;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    z-index: 10000;
-    display: block;
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .action-btn:hover .btn-text {
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: translateX(-50%) translateY(0) !important;
-    display: block !important;
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Tooltip arrow */
