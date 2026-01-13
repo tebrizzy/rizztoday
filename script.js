@@ -146,11 +146,19 @@ if (asciiCanvas && asciiRose && imageCanvas) {
 const statusBtn = document.getElementById('statusBtn');
 if (statusBtn) {
     let isWorking = true;
+    const isTouchDevice = window.matchMedia('(hover: none)').matches;
 
     statusBtn.addEventListener('click', (e) => {
         // Don't toggle if clicking on action buttons
         if (e.target.closest('.action-btn')) return;
 
+        // On touch devices, only toggle action buttons visibility (don't change status text)
+        if (isTouchDevice) {
+            statusBtn.classList.toggle('actions-visible');
+            return; // Don't change status on mobile - just toggle buttons
+        }
+
+        // Desktop behavior - change status text
         isWorking = !isWorking;
         const statusText = statusBtn.querySelector('.status-text');
         const statusDot = statusBtn.querySelector('.status-dot');
@@ -165,6 +173,15 @@ if (statusBtn) {
             statusDot.style.boxShadow = '0 0 8px rgba(74, 222, 128, 0.6)';
         }
     });
+
+    // Close action buttons when clicking outside (touch devices)
+    if (isTouchDevice) {
+        document.addEventListener('click', (e) => {
+            if (!statusBtn.contains(e.target)) {
+                statusBtn.classList.remove('actions-visible');
+            }
+        });
+    }
 }
 
 // Add click animation to action buttons
@@ -318,6 +335,39 @@ if (notificationCard) {
     });
 }
 
+// Notification toggle for touch devices
+const notificationBtn = document.getElementById('notificationBtn');
+const notificationOverlay = document.getElementById('notificationOverlay');
+if (notificationBtn && notificationCard) {
+    const isTouchDeviceForNotif = window.matchMedia('(hover: none)').matches;
+    if (isTouchDeviceForNotif) {
+        notificationBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            notificationCard.classList.toggle('active');
+            if (notificationOverlay) {
+                notificationOverlay.classList.toggle('active');
+            }
+        });
+
+        // Close notification when clicking overlay
+        if (notificationOverlay) {
+            notificationOverlay.addEventListener('click', () => {
+                notificationCard.classList.remove('active');
+                notificationOverlay.classList.remove('active');
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!notificationBtn.contains(e.target) && !notificationCard.contains(e.target)) {
+                notificationCard.classList.remove('active');
+                if (notificationOverlay) {
+                    notificationOverlay.classList.remove('active');
+                }
+            }
+        });
+    }
+}
+
 // Cards Toggle Button
 const cardsToggleBtn = document.getElementById('cardsToggleBtn');
 const cardsStack = document.getElementById('cardsStack');
@@ -386,3 +436,16 @@ if (actionTooltip && actionBtns.length > 0) {
         });
     });
 }
+
+// Click Wave Effect
+document.addEventListener('click', (e) => {
+    const wave = document.createElement('div');
+    wave.className = 'click-wave';
+    wave.style.left = e.clientX + 'px';
+    wave.style.top = e.clientY + 'px';
+    document.body.appendChild(wave);
+
+    setTimeout(() => {
+        wave.remove();
+    }, 600);
+});

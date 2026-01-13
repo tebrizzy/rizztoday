@@ -228,6 +228,13 @@ body {
     transform: translateY(0);
 }
 
+/* Active state for touch devices */
+.notification-card.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0);
+}
+
 .notification-header {
     display: flex;
     justify-content: space-between;
@@ -506,6 +513,35 @@ body {
 
 .action-tooltip-js.visible {
     opacity: 1;
+}
+
+/* Click Wave Effect */
+.click-wave {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: wave-expand 0.6s ease-out forwards;
+    z-index: 99999;
+}
+
+@keyframes wave-expand {
+    0% {
+        width: 10px;
+        height: 10px;
+        opacity: 0.6;
+        border-width: 2px;
+    }
+    100% {
+        width: 150px;
+        height: 150px;
+        opacity: 0;
+        border-width: 1px;
+    }
 }
 
 /* Name and Tagline at Bottom */
@@ -820,8 +856,8 @@ body {
 /* Project Cards Stack */
 .cards-stack {
     position: fixed;
-    top: 80px;
-    left: 40px;
+    top: 140px;
+    left: 80px;
     width: 240px;
     height: 140px;
     z-index: 50;
@@ -976,7 +1012,7 @@ body {
 
     /* ASCII rose - scale down on tablet */
     .ascii-rose {
-        transform: translate(-50%, -50%) scale(0.65);
+        transform: translate(-50%, -50%) scale(0.75);
     }
 
     .ascii-rose pre {
@@ -995,6 +1031,14 @@ body {
     }
 
     /* Name tagline */
+    .name-tagline {
+        position: fixed;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+    }
+
     .name {
         font-size: 12px;
     }
@@ -1015,8 +1059,8 @@ body {
     .cards-stack {
         width: 200px;
         height: 120px;
-        left: 20px;
-        top: 60px;
+        left: 35px;
+        top: 130px;
     }
 
     .project-card {
@@ -1042,8 +1086,8 @@ body {
 
     /* Cards toggle button */
     .cards-toggle-btn {
-        left: 20px;
-        top: 60px;
+        left: 35px;
+        top: 75px;
     }
 
     .piano-container {
@@ -1065,7 +1109,7 @@ body {
 
     /* ASCII rose - smaller on phone */
     .ascii-rose {
-        transform: translate(-50%, -50%) scale(0.45);
+        transform: translate(-50%, -50%) scale(0.55);
     }
 
     .ascii-rose pre {
@@ -1074,7 +1118,11 @@ body {
 
     /* Name tagline */
     .name-tagline {
-        bottom: 10px;
+        position: fixed;
+        bottom: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
     }
 
     /* iPod - smaller on phone */
@@ -1088,8 +1136,8 @@ body {
     .cards-stack {
         width: 180px;
         height: 110px;
-        left: 15px;
-        top: 50px;
+        left: 25px;
+        top: 115px;
     }
 
     .project-card {
@@ -1128,8 +1176,8 @@ body {
 
     /* Cards toggle button */
     .cards-toggle-btn {
-        left: 15px;
-        top: 50px;
+        left: 25px;
+        top: 60px;
         width: 40px;
         height: 40px;
     }
@@ -1177,16 +1225,67 @@ body {
         font-weight: 500;
     }
 
-    /* Action buttons always visible on touch */
+    /* Action buttons hidden by default on touch - shown via JS toggle */
     .status-btn .action-buttons {
+        opacity: 0;
+        transform: translateX(-50%) translateY(8px) scale(0.9);
+    }
+
+    .status-btn .action-btn {
+        opacity: 0;
+        transform: scale(0.6) translateY(12px);
+    }
+
+    /* Show action buttons when status button has .actions-visible class */
+    .status-btn.actions-visible .action-buttons {
         opacity: 1;
         transform: translateX(-50%) translateY(0) scale(1);
     }
 
-    .status-btn .action-btn {
+    .status-btn.actions-visible .action-btn {
         opacity: 1;
         transform: scale(1) translateY(0);
     }
+
+    /* Disable hover on touch for notification, use click toggle */
+    .notification-btn:hover .notification-card {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    /* Center notification card on mobile */
+    .notification-card {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        right: auto;
+        transform: translate(-50%, -50%) scale(0.9);
+        transform-origin: center;
+        width: min(320px, 90vw);
+        z-index: 9999;
+    }
+
+    .notification-card.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, -50%) scale(1);
+    }
+}
+
+/* Overlay background when notification is active on mobile */
+.notification-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9998;
+}
+
+.notification-overlay.active {
+    display: block;
 }
 
 /* Yellow Sticky Note */
