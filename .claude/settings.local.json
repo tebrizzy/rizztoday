@@ -6,7 +6,10 @@
       "Bash(xargs kill:*)",
       "Bash(python3:*)",
       "Bash(curl:*)",
-      "Bash(open:*)"
+      "Bash(open:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)"
     ]
   }
 }
