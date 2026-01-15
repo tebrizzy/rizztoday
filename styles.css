@@ -865,6 +865,27 @@ body {
     transform: translateY(-50%) translateX(0);
 }
 
+/* Cards instruction tooltip */
+.cards-instruction-tooltip {
+    position: fixed;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 0;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.cards-instruction-tooltip.visible {
+    opacity: 1;
+}
+
 /* Project Cards Stack */
 .cards-stack {
     position: fixed;
@@ -999,7 +1020,7 @@ body {
     text-transform: uppercase;
 }
 
-.project-card:hover {
+.project-card[data-index="0"]:hover {
     transform: translate(0, -2px) rotate(0deg) scale(1.01);
 }
 
@@ -1447,13 +1468,8 @@ body {
 }
 
 .guestbook-icon {
-    font-size: 20px;
-    width: 20px;
-    height: 20px;
+    font-size: 30px;
     line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
 .guestbook-btn .hover-title {

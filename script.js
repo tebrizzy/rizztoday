@@ -379,29 +379,66 @@ if (notificationBtn && notificationCard) {
 const cardsToggleBtn = document.getElementById('cardsToggleBtn');
 const cardsStack = document.getElementById('cardsStack');
 
+// Create instruction tooltip
+const cardsInstructionTooltip = document.createElement('div');
+cardsInstructionTooltip.className = 'cards-instruction-tooltip';
+cardsInstructionTooltip.textContent = 'click to shift cards';
+document.body.appendChild(cardsInstructionTooltip);
+
 if (cardsToggleBtn && cardsStack) {
     cardsToggleBtn.addEventListener('click', function() {
+        const wasActive = cardsStack.classList.contains('active');
         cardsStack.classList.toggle('active');
+
+        // Show tooltip every time cards open
+        if (!wasActive && cardsStack.classList.contains('active')) {
+            // Position tooltip left-aligned above the cards
+            setTimeout(() => {
+                const stackRect = cardsStack.getBoundingClientRect();
+                cardsInstructionTooltip.style.left = stackRect.left + 'px';
+                cardsInstructionTooltip.style.top = (stackRect.top - 20) + 'px';
+                cardsInstructionTooltip.style.transform = 'none';
+                cardsInstructionTooltip.classList.add('visible');
+            }, 100);
+
+            // Hide after 3 seconds
+            setTimeout(() => {
+                cardsInstructionTooltip.classList.remove('visible');
+            }, 3000);
+        } else {
+            cardsInstructionTooltip.classList.remove('visible');
+        }
     });
 
     // Close cards when clicking outside
     document.addEventListener('click', function(e) {
         if (!cardsStack.contains(e.target) && !cardsToggleBtn.contains(e.target)) {
             cardsStack.classList.remove('active');
+            cardsInstructionTooltip.classList.remove('visible');
         }
     });
 }
 
-// Project Cards Stack - Click to cycle through cards
+// Project Cards Stack - Click top card to send to back
 const projectCards = document.querySelectorAll('.project-card');
 projectCards.forEach(card => {
-    card.addEventListener('click', function() {
-        const allCards = Array.from(projectCards);
+    card.addEventListener('click', function(e) {
+        // Only respond to clicks on the top card (data-index="0")
+        if (this.getAttribute('data-index') !== '0') return;
 
-        // Cycle: each card moves to the next position
+        e.stopPropagation(); // Prevent closing the stack
+
+        // Hide tooltip if visible
+        cardsInstructionTooltip.classList.remove('visible');
+
+        const allCards = Array.from(projectCards);
+        const totalCards = allCards.length;
+
+        // Move each card: decrement index (card at 0 goes to back)
         allCards.forEach(c => {
             const currentIndex = parseInt(c.getAttribute('data-index'));
-            const newIndex = (currentIndex + 1) % allCards.length;
+            // Decrement index, wrap around so 0 becomes (totalCards - 1)
+            const newIndex = (currentIndex - 1 + totalCards) % totalCards;
             c.setAttribute('data-index', newIndex);
         });
     });
