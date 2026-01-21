@@ -1187,8 +1187,7 @@ body {
     }
 
     .guestbook-comments-panel .guest-time {
-        font-size: 7px;
-        margin-top: 2px;
+        font-size: 6px;
     }
 
     .guestbook-comments-panel .guestbook-messages {
@@ -1334,8 +1333,7 @@ body {
     }
 
     .guestbook-comments-panel .guest-time {
-        font-size: 6px;
-        margin-top: 1px;
+        font-size: 5px;
     }
 
     .guestbook-comments-panel .guestbook-messages {
@@ -1709,12 +1707,25 @@ body {
     margin-bottom: 8px;
 }
 
+.guest-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2px;
+    margin-left: 8px;
+    margin-right: 2px;
+}
+
 .guest-name {
     font-size: 7px;
     font-weight: 600;
     color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 2px;
-    margin-left: 8px;
+    font-family: 'Inter Tight', sans-serif;
+}
+
+.guest-time {
+    font-size: 5px;
+    color: rgba(255, 255, 255, 0.35);
     font-family: 'Inter Tight', sans-serif;
 }
 
@@ -1745,13 +1756,6 @@ body {
     line-height: 1.2;
     font-family: -apple-system, BlinkMacSystemFont, 'Inter Tight', sans-serif;
     word-wrap: break-word;
-}
-
-.guest-time {
-    font-size: 6px;
-    color: rgba(0, 0, 0, 0.4);
-    margin-top: 1px;
-    font-family: 'Inter Tight', sans-serif;
 }
 
 .no-messages {
