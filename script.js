@@ -391,6 +391,7 @@ if (cardsToggleBtn && cardsStack) {
     cardsToggleBtn.addEventListener('click', function() {
         const wasActive = cardsStack.classList.contains('active');
         cardsStack.classList.toggle('active');
+        cardsToggleBtn.classList.toggle('active');
 
         // Hide/show About button when Works cards are toggled
         if (aboutToggleBtnForCards) {
@@ -427,6 +428,7 @@ if (cardsToggleBtn && cardsStack) {
     document.addEventListener('click', function(e) {
         if (!cardsStack.contains(e.target) && !cardsToggleBtn.contains(e.target)) {
             cardsStack.classList.remove('active');
+            cardsToggleBtn.classList.remove('active');
             cardsInstructionTooltip.classList.remove('visible');
             // Show About button when cards close
             if (aboutToggleBtnForCards) {
@@ -822,6 +824,7 @@ if (aboutToggleBtn && aboutCard) {
 
     aboutToggleBtn.addEventListener('click', function() {
         aboutCard.classList.toggle('active');
+        aboutToggleBtn.classList.toggle('active');
 
         // Hide/show Works button when About is toggled
         if (worksToggleBtnForAbout) {
@@ -837,6 +840,7 @@ if (aboutToggleBtn && aboutCard) {
     document.addEventListener('click', function(e) {
         if (!aboutCard.contains(e.target) && !aboutToggleBtn.contains(e.target)) {
             aboutCard.classList.remove('active');
+            aboutToggleBtn.classList.remove('active');
             // Show Works button when About closes
             if (worksToggleBtnForAbout) {
                 worksToggleBtnForAbout.classList.remove('hidden');
@@ -849,7 +853,6 @@ if (aboutToggleBtn && aboutCard) {
 const testimonialsToggleBtn = document.getElementById('testimonialsToggleBtn');
 const testimonialsCard = document.getElementById('testimonialsCard');
 const testimonialSlides = document.querySelectorAll('.testimonial-slide');
-const testimonialDots = document.querySelectorAll('.testimonial-dots .dot');
 const testimonialPrev = document.getElementById('testimonialPrev');
 const testimonialNext = document.getElementById('testimonialNext');
 
@@ -865,24 +868,19 @@ function showTestimonial(index) {
             slide.classList.add('active');
         }
     });
-
-    testimonialDots.forEach((dot, i) => {
-        dot.classList.remove('active');
-        if (i === currentTestimonial) {
-            dot.classList.add('active');
-        }
-    });
 }
 
 if (testimonialsToggleBtn && testimonialsCard) {
     testimonialsToggleBtn.addEventListener('click', function() {
         testimonialsCard.classList.toggle('active');
+        testimonialsToggleBtn.classList.toggle('active');
     });
 
     // Close when clicking outside
     document.addEventListener('click', function(e) {
         if (!testimonialsCard.contains(e.target) && !testimonialsToggleBtn.contains(e.target)) {
             testimonialsCard.classList.remove('active');
+            testimonialsToggleBtn.classList.remove('active');
         }
     });
 }
@@ -894,10 +892,6 @@ if (testimonialPrev) {
 if (testimonialNext) {
     testimonialNext.addEventListener('click', () => showTestimonial(currentTestimonial + 1));
 }
-
-testimonialDots.forEach((dot, i) => {
-    dot.addEventListener('click', () => showTestimonial(i));
-});
 
 // ===== PROJECT COUNTER ANIMATION =====
 const projectCounter = document.getElementById('projectCounter');
