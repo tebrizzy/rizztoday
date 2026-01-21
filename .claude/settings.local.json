@@ -42,7 +42,10 @@
       "Bash(openssl x509:*)",
       "Bash(dig:*)",
       "Bash(whois:*)",
-      "WebFetch(domain:www.rizzy.today)"
+      "WebFetch(domain:www.rizzy.today)",
+      "Bash(npx http-server:*)",
+      "WebFetch(domain:kostya.sh)",
+      "Bash(npm i:*)"
     ]
   }
 }

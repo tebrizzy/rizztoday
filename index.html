@@ -173,6 +173,62 @@
             <span class="hover-title">About</span>
         </button>
 
+        <!-- Testimonials Button -->
+        <button class="testimonials-toggle-btn" id="testimonialsToggleBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M21 11.5C21 16.75 16.75 21 11.5 21C6.25 21 2 16.75 2 11.5C2 6.25 6.25 2 11.5 2" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <path d="M22 2L15 9" stroke="white" stroke-width="2" stroke-linecap="round"/>
+                <path d="M15 2H22V9" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="hover-title">Testimonials</span>
+        </button>
+
+        <!-- Testimonials Card -->
+        <div class="testimonials-card" id="testimonialsCard">
+            <div class="testimonial-slide active" data-index="0">
+                <div class="testimonial-header">
+                    <img src="testimonial/DEVOUR.jpg" alt="DEVOUR" class="testimonial-pfp">
+                    <div class="testimonial-info">
+                        <h3 class="testimonial-name">DEVOUR</h3>
+                        <span class="testimonial-title">CEO at Phase</span>
+                    </div>
+                    <img src="content/logos/radiant logo.png" alt="RadiantsDAO" class="testimonial-company-logo">
+                </div>
+                <div class="testimonial-quote">
+                    <p>"Rizzy has been a core creative force behind Radiants' public presence. He consistently translates abstract ideas, fast-moving narratives, and evolving brand direction into content that actually resonates with people. What stands out most is his creativity. In an attention-driven environment, Rizzy understands how to balance speed, creativity, and brand integrity. He's not just a designer or content creator, he's someone who actively helps shape how a project is perceived in the market."</p>
+                </div>
+            </div>
+            <div class="testimonial-slide" data-index="1">
+                <div class="testimonial-header">
+                    <img src="testimonial/JerkTerror.jpg" alt="Jerk Terror" class="testimonial-pfp">
+                    <div class="testimonial-info">
+                        <h3 class="testimonial-name">Jerk Terror</h3>
+                        <span class="testimonial-title">CEO at Hydex</span>
+                    </div>
+                    <img src="content/logos/hydex logo.png" alt="Hydex" class="testimonial-company-logo">
+                </div>
+                <div class="testimonial-quote">
+                    <p>"Rizzy has an incredibly keen eye for design. Whether I have a strong idea of what I need or just a rough concept, he always delivers a professional grade product that often exceeds my expectations."</p>
+                </div>
+            </div>
+            <div class="testimonial-nav">
+                <button class="testimonial-arrow prev" id="testimonialPrev">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M15 18L9 12L15 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+                <div class="testimonial-dots">
+                    <span class="dot active" data-index="0"></span>
+                    <span class="dot" data-index="1"></span>
+                </div>
+                <button class="testimonial-arrow next" id="testimonialNext">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 18L15 12L9 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
         <!-- About Profile Card -->
         <div class="about-card" id="aboutCard">
             <div class="about-header">
