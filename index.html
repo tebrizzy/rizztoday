@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rizzy.today</title>
-    <meta name="description" content="Rizzy Rose - designing experiences">
+    <meta name="description" content="Riz Rose - translating ideas into visuals">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png">
@@ -13,7 +13,7 @@
     <!-- Open Graph / Social Banner -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://rizzy.today/">
-    <meta property="og:title" content="Rizzy Rose">
+    <meta property="og:title" content="Riz Rose">
     <meta property="og:description" content="designing experiences">
     <meta property="og:image" content="https://rizzy.today/rizzy-websiteimage.png">
     <meta property="og:image:width" content="2400">
@@ -22,7 +22,7 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://rizzy.today/">
-    <meta name="twitter:title" content="Rizzy Rose">
+    <meta name="twitter:title" content="Riz Rose">
     <meta name="twitter:description" content="designing experiences">
     <meta name="twitter:image" content="https://rizzy.today/rizzy-websiteimage.png">
 
@@ -70,7 +70,7 @@
                     <div class="notification-content">
                         <div class="notification-header">
                             <img src="newpfp.png" alt="Profile" class="notification-pfp">
-                            <span class="notification-app">Rizzy Rose</span>
+                            <span class="notification-app">Riz Rose</span>
                             <span class="notification-time">now</span>
                         </div>
                         <div class="notification-title">website v.1 is live</div>
@@ -79,7 +79,7 @@
                     <div class="notification-content">
                         <div class="notification-header">
                             <img src="newpfp.png" alt="Profile" class="notification-pfp">
-                            <span class="notification-app">Rizzy Rose</span>
+                            <span class="notification-app">Riz Rose</span>
                             <span class="notification-time">1d ago</span>
                         </div>
                         <div class="notification-title">I Just Build My Website in 3 prompt</div>
@@ -134,8 +134,22 @@
 
                 <!-- Name and Tagline at Bottom -->
                 <div class="name-tagline">
-                    <h1 class="name">Rizzy Rose</h1>
-                    <p class="tagline">designing experiences</p>
+                    <h1 class="name">Riz Rose</h1>
+                    <p class="tagline">translating ideas into visuals</p>
+
+                    <!-- Project Stats -->
+                    <div class="project-stats">
+                        <span class="stats-label">worked with</span>
+                        <span class="stats-counter" id="projectCounter">0</span>
+                        <span class="stats-label">web3 projects</span>
+                    </div>
+
+                    <!-- Client Logos -->
+                    <div class="client-logos">
+                        <img src="content/logos/hydex logo.png" alt="Hydex">
+                        <img src="content/logos/rad-BLACK.png" alt="Radiants">
+                        <img src="content/logos/Solana Logomark - Color.svg" alt="Solana">
+                    </div>
                 </div>
             </div>
         </main>
@@ -149,6 +163,49 @@
             </svg>
             <span class="hover-title">Works</span>
         </button>
+
+        <!-- About Button -->
+        <button class="about-toggle-btn" id="aboutToggleBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="8" r="4" stroke="white" stroke-width="2"/>
+                <path d="M4 20C4 16.6863 6.68629 14 10 14H14C17.3137 14 20 16.6863 20 20V21H4V20Z" stroke="white" stroke-width="2"/>
+            </svg>
+            <span class="hover-title">About</span>
+        </button>
+
+        <!-- About Profile Card -->
+        <div class="about-card" id="aboutCard">
+            <div class="about-header">
+                <img src="newpfp.png" alt="Riz Rose" class="about-pfp">
+                <div class="about-info">
+                    <h3 class="about-name">Riz Rose</h3>
+                    <span class="about-location">Southeast Asia</span>
+                </div>
+            </div>
+            <div class="about-bio">
+                <p class="about-intro">hi, i'm riz.</p>
+                <p>i turn ideas into visuals — pitch decks, brand identities, motion graphics. mostly for web3 people and indie creators who need to stand out.</p>
+                <p class="about-vibes">into basketball, making cool stuff, and songs that hit different at 5am. glad i born around these times.</p>
+            </div>
+            <div class="emoji-reactions">
+                <button class="emoji-btn" data-emoji="salute">
+                    <span class="emoji">🫡</span>
+                    <span class="emoji-count" id="count-salute">0</span>
+                </button>
+                <button class="emoji-btn" data-emoji="sword">
+                    <span class="emoji">🗡️</span>
+                    <span class="emoji-count" id="count-sword">0</span>
+                </button>
+                <button class="emoji-btn" data-emoji="basketball">
+                    <span class="emoji">🏀</span>
+                    <span class="emoji-count" id="count-basketball">0</span>
+                </button>
+                <button class="emoji-btn" data-emoji="heart">
+                    <span class="emoji">❤️</span>
+                    <span class="emoji-count" id="count-heart">0</span>
+                </button>
+            </div>
+        </div>
 
         <!-- Project Cards Stack -->
         <div class="cards-stack" id="cardsStack">
@@ -300,5 +357,11 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 
     <script src="script.js"></script>
+
+    <!-- Vercel Web Analytics -->
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

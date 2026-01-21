@@ -584,6 +584,402 @@ body {
     letter-spacing: -0.01em;
 }
 
+/* Client Logos */
+.client-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 12px;
+    opacity: 0.4;
+    transition: opacity 0.3s ease;
+}
+
+.client-logos:hover {
+    opacity: 0.6;
+}
+
+.client-logos img {
+    height: 16px;
+    width: auto;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+.client-logos img:hover {
+    filter: none;
+    opacity: 1;
+}
+
+/* Project Stats */
+.project-stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-top: 10px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.stats-label {
+    font-weight: 400;
+}
+
+.stats-counter {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: 'Fragment Mono', monospace;
+    min-width: 20px;
+    text-align: center;
+}
+
+.stats-counter.glitch {
+    animation: counter-glitch 0.15s ease-in-out;
+}
+
+@keyframes counter-glitch {
+    0%, 100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    25% {
+        opacity: 0.5;
+        transform: translateX(-2px);
+    }
+    75% {
+        opacity: 0.5;
+        transform: translateX(2px);
+    }
+}
+
+/* About Toggle Button */
+.about-toggle-btn {
+    position: fixed;
+    top: 140px;
+    left: 40px;
+    width: 44px;
+    height: 44px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 60;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.about-toggle-btn:hover {
+    background: rgba(0, 0, 0, 0.85);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.about-toggle-btn:active {
+    transform: scale(0.95);
+    transition: all 0.1s ease;
+}
+
+.about-toggle-btn svg {
+    opacity: 0.9;
+}
+
+.about-toggle-btn:hover svg {
+    opacity: 1;
+}
+
+.about-toggle-btn.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.9) translateY(5px);
+    transition: all 0.25s ease-out;
+}
+
+.about-toggle-btn .hover-title {
+    left: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%) translateX(-4px);
+}
+
+.about-toggle-btn:hover .hover-title {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
+}
+
+/* About Profile Card */
+.about-card {
+    position: fixed;
+    top: 200px;
+    left: 100px;
+    width: 280px;
+    max-height: 320px;
+    background: rgba(18, 18, 18, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.85) translateY(-10px);
+    transform-origin: top left;
+    transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 50;
+    overflow: hidden;
+}
+
+.about-card.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0);
+}
+
+.about-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.about-pfp {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.about-info {
+    flex: 1;
+}
+
+.about-name {
+    font-family: 'Urbanist', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--text-primary);
+    margin: 0 0 2px 0;
+}
+
+.about-location {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.about-bio {
+    max-height: 180px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+.about-bio::-webkit-scrollbar {
+    width: 3px;
+}
+
+.about-bio::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.about-bio::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 3px;
+}
+
+.about-bio p {
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 11px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 0 10px 0;
+}
+
+.about-bio p:last-child {
+    margin-bottom: 0;
+}
+
+.about-bio .about-intro {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 8px;
+}
+
+.about-bio .about-vibes {
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 10px;
+}
+
+/* Emoji Reactions */
+.emoji-reactions {
+    display: flex;
+    gap: 6px;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.emoji-btn {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.emoji-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.3),
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+.emoji-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+.emoji-btn:active {
+    transform: scale(0.95);
+}
+
+/* Selected state */
+.emoji-btn.selected {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+}
+
+.emoji-btn.selected .emoji-count {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Click animation - bump + shine */
+.emoji-btn.clicked {
+    animation: btn-bump 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.emoji-btn.clicked::before {
+    left: 100%;
+}
+
+@keyframes btn-bump {
+    0% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1.15);
+    }
+    50% {
+        transform: scale(0.95);
+    }
+    70% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.emoji-btn .emoji {
+    font-size: 14px;
+    line-height: 1;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.emoji-btn.clicked .emoji {
+    animation: emoji-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes emoji-pop {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.4) rotate(-10deg);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.emoji-count {
+    font-family: 'Fragment Mono', monospace;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+    min-width: 12px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.emoji-btn.clicked .emoji-count {
+    animation: count-pop 0.3s ease;
+}
+
+@keyframes count-pop {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.3);
+        color: rgba(255, 255, 255, 1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Floating emoji particle */
+.emoji-particle {
+    position: fixed;
+    font-size: 20px;
+    pointer-events: none;
+    z-index: 1000;
+    animation: float-up 1s ease-out forwards;
+    transform: translateX(-50%);
+}
+
+@keyframes float-up {
+    0% {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-60px) scale(1.3);
+    }
+}
+
 /* iPod Nano Player */
 .ipod-nano {
     position: fixed;
@@ -845,6 +1241,14 @@ body {
 
 .cards-toggle-btn:hover svg {
     opacity: 1;
+}
+
+.cards-toggle-btn.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.9) translateY(5px);
+    transition: all 0.25s ease-out;
 }
 
 .hover-title {
@@ -1133,6 +1537,45 @@ body {
         top: 75px;
     }
 
+    /* About toggle button */
+    .about-toggle-btn {
+        left: 35px;
+        top: 130px;
+    }
+
+    .about-card {
+        top: 190px;
+        left: 50px;
+        width: 240px;
+        max-height: 300px;
+    }
+
+    .emoji-reactions {
+        gap: 4px;
+        flex-wrap: wrap;
+    }
+
+    .emoji-btn {
+        padding: 5px 8px;
+    }
+
+    .emoji-btn .emoji {
+        font-size: 12px;
+    }
+
+    .emoji-count {
+        font-size: 9px;
+    }
+
+    /* Client logos and stats */
+    .client-logos {
+        gap: 12px;
+    }
+
+    .client-logos img {
+        height: 14px;
+    }
+
     .piano-container {
         bottom: 10px;
         right: 10px;
@@ -1286,6 +1729,78 @@ body {
         height: 40px;
     }
 
+    /* About toggle button */
+    .about-toggle-btn {
+        left: 25px;
+        top: 110px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .about-card {
+        top: 165px;
+        left: 40px;
+        width: 220px;
+        max-height: 280px;
+        padding: 12px;
+    }
+
+    .about-pfp {
+        width: 40px;
+        height: 40px;
+    }
+
+    .about-name {
+        font-size: 13px;
+    }
+
+    .about-bio p {
+        font-size: 10px;
+    }
+
+    .about-bio .about-intro {
+        font-size: 12px;
+    }
+
+    .about-bio .about-vibes {
+        font-size: 9px;
+    }
+
+    .emoji-reactions {
+        gap: 3px;
+        margin-top: 10px;
+        padding-top: 8px;
+    }
+
+    .emoji-btn {
+        padding: 4px 6px;
+        border-radius: 14px;
+    }
+
+    .emoji-btn .emoji {
+        font-size: 11px;
+    }
+
+    .emoji-count {
+        font-size: 8px;
+        min-width: 10px;
+    }
+
+    /* Client logos */
+    .client-logos {
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .client-logos img {
+        height: 12px;
+    }
+
+    .project-stats {
+        font-size: 9px;
+        margin-top: 8px;
+    }
+
     .piano-container {
         transform: scale(0.7);
     }
@@ -1379,6 +1894,52 @@ body {
         font-weight: 500;
         line-height: 44px;
         white-space: nowrap;
+    }
+
+    /* About toggle button - show label inline, stable layout */
+    .about-toggle-btn {
+        width: auto !important;
+        min-width: 100px;
+        height: 44px !important;
+        padding: 0 16px !important;
+        gap: 8px;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        top: 140px !important;
+    }
+
+    .about-toggle-btn svg {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+    }
+
+    .about-toggle-btn .hover-title {
+        position: static !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: none !important;
+        padding: 0;
+        background: none;
+        border: none;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 44px;
+        white-space: nowrap;
+    }
+
+    /* Hidden state overrides for mobile - must use !important */
+    .cards-toggle-btn.hidden,
+    .about-toggle-btn.hidden {
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        transform: scale(0.9) !important;
+    }
+
+    .about-card {
+        top: 200px !important;
     }
 
     /* Action buttons - show labels as tooltips above icons on mobile */
@@ -1740,6 +2301,7 @@ body {
     padding: 4px 7px;
     background: #f5d866;
     border-radius: 6px 12px 12px 4px;
+    width: fit-content;
     max-width: 100%;
     position: relative;
     margin-left: 6px;
