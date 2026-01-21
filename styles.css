@@ -392,8 +392,8 @@ body {
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: #ffd700;
-    box-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.4);
+    background-color: #4ade80;
+    box-shadow: 0 0 10px rgba(74, 222, 128, 0.8), 0 0 20px rgba(74, 222, 128, 0.4);
     animation: pulse 2s ease-in-out infinite;
 }
 
