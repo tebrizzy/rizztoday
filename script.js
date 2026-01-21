@@ -379,6 +379,7 @@ if (notificationBtn && notificationCard) {
 // Cards Toggle Button
 const cardsToggleBtn = document.getElementById('cardsToggleBtn');
 const cardsStack = document.getElementById('cardsStack');
+const aboutToggleBtnForCards = document.getElementById('aboutToggleBtn');
 
 // Create instruction tooltip
 const cardsInstructionTooltip = document.createElement('div');
@@ -390,6 +391,15 @@ if (cardsToggleBtn && cardsStack) {
     cardsToggleBtn.addEventListener('click', function() {
         const wasActive = cardsStack.classList.contains('active');
         cardsStack.classList.toggle('active');
+
+        // Hide/show About button when Works cards are toggled
+        if (aboutToggleBtnForCards) {
+            if (cardsStack.classList.contains('active')) {
+                aboutToggleBtnForCards.classList.add('hidden');
+            } else {
+                aboutToggleBtnForCards.classList.remove('hidden');
+            }
+        }
 
         // Show tooltip every time cards open
         if (!wasActive && cardsStack.classList.contains('active')) {
@@ -418,6 +428,10 @@ if (cardsToggleBtn && cardsStack) {
         if (!cardsStack.contains(e.target) && !cardsToggleBtn.contains(e.target)) {
             cardsStack.classList.remove('active');
             cardsInstructionTooltip.classList.remove('visible');
+            // Show About button when cards close
+            if (aboutToggleBtnForCards) {
+                aboutToggleBtnForCards.classList.remove('hidden');
+            }
         }
     });
 }
@@ -657,4 +671,225 @@ function formatTime(date) {
     if (hours < 24) return `${hours}h ago`;
     if (days < 7) return `${days}d ago`;
     return date.toLocaleDateString();
+}
+
+// ===== EMOJI REACTIONS =====
+const emojiButtons = document.querySelectorAll('.emoji-btn');
+const STORAGE_KEY = 'riz_emoji_reactions';
+
+// Get user's selected reactions from localStorage (returns array)
+function getUserReactions() {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return stored ? JSON.parse(stored) : [];
+}
+
+// Save user's reactions to localStorage
+function setUserReactions(reactions) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(reactions));
+}
+
+// Check if user has reacted with specific emoji
+function hasReaction(emoji) {
+    return getUserReactions().includes(emoji);
+}
+
+// Toggle a reaction (add or remove)
+function toggleReaction(emoji) {
+    const reactions = getUserReactions();
+    const index = reactions.indexOf(emoji);
+    if (index > -1) {
+        reactions.splice(index, 1); // Remove
+    } else {
+        reactions.push(emoji); // Add
+    }
+    setUserReactions(reactions);
+    return index === -1; // Returns true if added, false if removed
+}
+
+// Update button selected states
+function updateButtonStates() {
+    const reactions = getUserReactions();
+    emojiButtons.forEach(btn => {
+        const emoji = btn.getAttribute('data-emoji');
+        if (reactions.includes(emoji)) {
+            btn.classList.add('selected');
+        } else {
+            btn.classList.remove('selected');
+        }
+    });
+}
+
+// Load emoji counts from Firebase
+async function loadEmojiCounts() {
+    if (!db) return;
+
+    try {
+        const doc = await db.collection('reactions').doc('counts').get();
+        if (doc.exists) {
+            const data = doc.data();
+            Object.keys(data).forEach(emoji => {
+                const countEl = document.getElementById(`count-${emoji}`);
+                if (countEl) {
+                    countEl.textContent = Math.max(0, data[emoji] || 0);
+                }
+            });
+        }
+    } catch (error) {
+        console.error('Error loading emoji counts:', error);
+    }
+}
+
+// Initialize on page load
+loadEmojiCounts();
+updateButtonStates();
+
+// Create floating emoji particle
+function createEmojiParticle(btn, emojiChar) {
+    const particle = document.createElement('span');
+    particle.className = 'emoji-particle';
+    particle.textContent = emojiChar;
+
+    const rect = btn.getBoundingClientRect();
+    particle.style.left = (rect.left + rect.width / 2) + 'px';
+    particle.style.top = rect.top + 'px';
+
+    document.body.appendChild(particle);
+
+    setTimeout(() => particle.remove(), 1000);
+}
+
+// Handle emoji clicks
+emojiButtons.forEach(btn => {
+    btn.addEventListener('click', async () => {
+        const emoji = btn.getAttribute('data-emoji');
+        const countEl = document.getElementById(`count-${emoji}`);
+        const emojiChar = btn.querySelector('.emoji').textContent;
+        const currentCount = parseInt(countEl.textContent) || 0;
+        const wasSelected = hasReaction(emoji);
+
+        // Add click animation
+        btn.classList.add('clicked');
+        setTimeout(() => btn.classList.remove('clicked'), 500);
+
+        // Toggle the reaction
+        const isNowSelected = toggleReaction(emoji);
+
+        if (isNowSelected) {
+            // Added reaction
+            countEl.textContent = currentCount + 1;
+            btn.classList.add('selected');
+            createEmojiParticle(btn, emojiChar);
+
+            if (db) {
+                try {
+                    await db.collection('reactions').doc('counts').set({
+                        [emoji]: firebase.firestore.FieldValue.increment(1)
+                    }, { merge: true });
+                } catch (error) {
+                    console.error('Error updating emoji count:', error);
+                    countEl.textContent = currentCount;
+                    toggleReaction(emoji); // Revert
+                    btn.classList.remove('selected');
+                }
+            }
+        } else {
+            // Removed reaction
+            countEl.textContent = Math.max(0, currentCount - 1);
+            btn.classList.remove('selected');
+
+            if (db) {
+                try {
+                    await db.collection('reactions').doc('counts').set({
+                        [emoji]: firebase.firestore.FieldValue.increment(-1)
+                    }, { merge: true });
+                } catch (error) {
+                    console.error('Error updating emoji count:', error);
+                    countEl.textContent = currentCount;
+                    toggleReaction(emoji); // Revert
+                    btn.classList.add('selected');
+                }
+            }
+        }
+    });
+});
+
+// ===== ABOUT CARD TOGGLE =====
+const aboutToggleBtn = document.getElementById('aboutToggleBtn');
+const aboutCard = document.getElementById('aboutCard');
+
+if (aboutToggleBtn && aboutCard) {
+    const worksToggleBtnForAbout = document.getElementById('cardsToggleBtn');
+
+    aboutToggleBtn.addEventListener('click', function() {
+        aboutCard.classList.toggle('active');
+
+        // Hide/show Works button when About is toggled
+        if (worksToggleBtnForAbout) {
+            if (aboutCard.classList.contains('active')) {
+                worksToggleBtnForAbout.classList.add('hidden');
+            } else {
+                worksToggleBtnForAbout.classList.remove('hidden');
+            }
+        }
+    });
+
+    // Close about card when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!aboutCard.contains(e.target) && !aboutToggleBtn.contains(e.target)) {
+            aboutCard.classList.remove('active');
+            // Show Works button when About closes
+            if (worksToggleBtnForAbout) {
+                worksToggleBtnForAbout.classList.remove('hidden');
+            }
+        }
+    });
+}
+
+// ===== PROJECT COUNTER ANIMATION =====
+const projectCounter = document.getElementById('projectCounter');
+const targetCount = 19;
+
+if (projectCounter) {
+    let hasAnimated = false;
+
+    function animateCounter() {
+        if (hasAnimated) return;
+        hasAnimated = true;
+
+        let current = 0;
+        const duration = 2800; // 2.8 seconds for slower count
+        const stepTime = duration / targetCount;
+
+        const countUp = setInterval(() => {
+            current++;
+            projectCounter.textContent = current;
+
+            if (current >= targetCount) {
+                clearInterval(countUp);
+
+                // Glitch effect: try to go to 20, fall back to 19
+                setTimeout(() => {
+                    projectCounter.textContent = '20';
+                    projectCounter.classList.add('glitch');
+
+                    setTimeout(() => {
+                        projectCounter.textContent = '19';
+                        projectCounter.classList.remove('glitch');
+                    }, 200);
+                }, 300);
+            }
+        }, stepTime);
+    }
+
+    // Use Intersection Observer to trigger animation when visible
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                setTimeout(animateCounter, 500); // Small delay for effect
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    observer.observe(projectCounter);
 }
