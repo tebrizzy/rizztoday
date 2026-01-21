@@ -746,13 +746,6 @@ body {
     opacity: 1;
 }
 
-.about-toggle-btn.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: scale(0.9) translateY(5px);
-    transition: all 0.25s ease-out;
-}
 
 .about-toggle-btn .hover-title {
     left: calc(100% + 12px);
@@ -768,8 +761,8 @@ body {
 /* About Profile Card */
 .about-card {
     position: fixed;
-    top: 200px;
-    left: 100px;
+    top: 136px;
+    left: 40px;
     width: 280px;
     max-height: 320px;
     background: rgba(18, 18, 18, 0.95);
@@ -876,8 +869,8 @@ body {
 /* Testimonials Toggle Button */
 .testimonials-toggle-btn {
     position: fixed;
-    top: 80px;
-    right: 40px;
+    top: 180px;
+    left: 40px;
     width: 44px;
     height: 44px;
     background: rgba(0, 0, 0, 0.7);
@@ -930,11 +923,11 @@ body {
     opacity: 1;
 }
 
+
 .testimonials-toggle-btn .hover-title {
-    right: calc(100% + 12px);
-    left: auto;
+    left: calc(100% + 12px);
     top: 50%;
-    transform: translateY(-50%) translateX(4px);
+    transform: translateY(-50%) translateX(-4px);
 }
 
 .testimonials-toggle-btn:hover .hover-title {
@@ -945,19 +938,19 @@ body {
 /* Testimonials Card */
 .testimonials-card {
     position: fixed;
-    top: 140px;
-    right: 40px;
-    width: 320px;
+    top: 136px;
+    left: 40px;
+    width: 280px;
     background: rgba(18, 18, 18, 0.95);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
-    padding: 20px;
+    border-radius: 12px;
+    padding: 14px;
     opacity: 0;
     visibility: hidden;
     transform: scale(0.85) translateY(-10px);
-    transform-origin: top right;
+    transform-origin: top left;
     transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     z-index: 70;
     overflow: hidden;
@@ -992,14 +985,14 @@ body {
 .testimonial-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 16px;
-    margin-top: 28px;
+    gap: 10px;
+    margin-bottom: 12px;
+    margin-top: 24px;
 }
 
 .testimonial-pfp {
-    width: 48px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid rgba(255, 255, 255, 0.1);
@@ -1011,7 +1004,7 @@ body {
 
 .testimonial-name {
     font-family: 'Urbanist', sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 700;
     color: var(--text-primary);
     margin: 0 0 2px 0;
@@ -1019,12 +1012,12 @@ body {
 
 .testimonial-title {
     font-family: 'Inter Tight', sans-serif;
-    font-size: 11px;
+    font-size: 10px;
     color: rgba(255, 255, 255, 0.5);
 }
 
 .testimonial-company-logo {
-    height: 24px;
+    height: 20px;
     width: auto;
     object-fit: contain;
     opacity: 0.7;
@@ -1033,18 +1026,18 @@ body {
 .testimonial-quote {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 14px 16px;
+    border-radius: 10px;
+    padding: 10px 12px;
     position: relative;
 }
 
 .testimonial-quote::before {
     content: '';
     position: absolute;
-    top: -8px;
-    left: 24px;
-    width: 16px;
-    height: 16px;
+    top: -6px;
+    left: 20px;
+    width: 12px;
+    height: 12px;
     background: rgba(255, 255, 255, 0.05);
     border-left: 1px solid rgba(255, 255, 255, 0.08);
     border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -1053,18 +1046,61 @@ body {
 
 .testimonial-quote p {
     font-family: 'Inter Tight', sans-serif;
-    font-size: 11px;
-    line-height: 1.6;
+    font-size: 10px;
+    line-height: 1.5;
     color: rgba(255, 255, 255, 0.8);
     margin: 0;
     font-style: italic;
 }
 
+/* Job Done Tags */
+.job-done-tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    padding: 6px 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 10px;
+}
+
+.job-done-tag .job-text {
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.job-done-tag .job-duration {
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+}
+
+/* Brand colors for job text */
+.job-done-tag.radiants .job-text {
+    color: #FCE184;
+}
+
+.job-done-tag.hydex .job-text {
+    color: #4ade80;
+}
+
+/* Ongoing indicator - green dot after duration */
+.job-done-tag .ongoing-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #4ade80;
+    box-shadow: 0 0 6px rgba(74, 222, 128, 0.6);
+    flex-shrink: 0;
+}
+
 .testimonial-arrow {
     position: absolute;
-    top: 12px;
-    width: 24px;
-    height: 24px;
+    top: 10px;
+    width: 22px;
+    height: 22px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 50%;
@@ -1495,41 +1531,100 @@ body {
     opacity: 0.7;
 }
 
-/* Cards Toggle Button */
-.cards-toggle-btn {
+/* ========================================
+   MENU BUTTON SYSTEM
+   - Buttons rearrange when one is active
+   - Active button slides to top position
+   - Other buttons hide with animation
+   - Panels appear below active button
+   ======================================== */
+
+/* Menu Buttons Container */
+.menu-buttons {
     position: fixed;
     top: 80px;
     left: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* Gap handled by button positions */
+    z-index: 60;
+}
+
+/* Base button - positioned absolutely for smooth animations */
+.menu-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 44px;
     height: 44px;
+    padding: 0;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    z-index: 60;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    margin-bottom: 8px; /* Consistent spacing */
 }
 
-.cards-toggle-btn:hover {
+/* Button positions - controlled by data attribute */
+.menu-btn[data-position="0"] {
+    transform: translateY(0);
+}
+
+.menu-btn[data-position="1"] {
+    transform: translateY(0);
+}
+
+.menu-btn[data-position="2"] {
+    transform: translateY(0);
+}
+
+/* When a button is active, it slides to top (position 0) */
+.menu-btn.active[data-original="1"] {
+    transform: translateY(-52px); /* Slide up from position 1 to 0 */
+}
+
+.menu-btn.active[data-original="2"] {
+    transform: translateY(-104px); /* Slide up from position 2 to 0 */
+}
+
+/* Hover state - consistent across all buttons */
+.menu-btn:hover {
     background: rgba(0, 0, 0, 0.85);
     border-color: rgba(255, 255, 255, 0.25);
-    transform: scale(1.08) translateY(-2px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
-.cards-toggle-btn:active {
+/* Hover transform - respects current position */
+.menu-btn:not(.active):not(.hidden):hover {
+    transform: scale(1.08) translateY(-2px);
+}
+
+/* Active button hover - maintain position slide */
+.menu-btn.active:hover {
+    transform: scale(1.05);
+}
+
+.menu-btn.active[data-original="1"]:hover {
+    transform: translateY(-52px) scale(1.05);
+}
+
+.menu-btn.active[data-original="2"]:hover {
+    transform: translateY(-104px) scale(1.05);
+}
+
+/* Press state */
+.menu-btn:active:not(.hidden) {
     transform: scale(0.95);
     transition: all 0.1s ease;
 }
 
-/* Liquid glass glow when panel is open */
-.cards-toggle-btn.active {
+/* Active state - liquid glass glow */
+.menu-btn.active {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.3);
     box-shadow:
@@ -1539,25 +1634,58 @@ body {
         inset 0 1px 2px rgba(255, 255, 255, 0.2);
 }
 
-.cards-toggle-btn.active svg {
+.menu-btn.active svg {
     opacity: 1;
     filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
 }
 
-.cards-toggle-btn svg {
-    opacity: 0.9;
+/* Hidden state - fade out and scale down */
+.menu-btn.hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    transform: scale(0.8) translateY(10px) !important;
+    transition: all 0.25s ease-out !important;
 }
 
-.cards-toggle-btn:hover svg {
+.menu-btn.hidden:hover {
+    transform: scale(0.8) translateY(10px) !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+}
+
+.menu-btn svg {
+    opacity: 0.9;
+    flex-shrink: 0;
+}
+
+.menu-btn:hover svg {
     opacity: 1;
 }
 
-.cards-toggle-btn.hidden {
+/* Desktop: tooltip on hover */
+.menu-btn-label {
+    position: absolute;
+    left: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%) translateX(-4px);
+    background: #0d0201;
+    border: 1px solid #474040;
+    color: #ffffff;
+    font-family: 'Inter Tight', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 8px 14px;
+    border-radius: 8px;
+    white-space: nowrap;
     opacity: 0;
-    visibility: hidden;
     pointer-events: none;
-    transform: scale(0.9) translateY(5px);
-    transition: all 0.25s ease-out;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    z-index: 100;
+}
+
+.menu-btn:hover .menu-btn-label {
+    opacity: 1;
+    transform: translateY(-50%) translateX(0);
 }
 
 .hover-title {
@@ -1609,11 +1737,18 @@ body {
     opacity: 1;
 }
 
+/* ========================================
+   PANEL POSITION SYSTEM
+   - All panels appear below active button
+   - Consistent positioning at top: 136px
+   - (80px button top + 44px height + 12px gap)
+   ======================================== */
+
 /* Project Cards Stack */
 .cards-stack {
     position: fixed;
-    top: 140px;
-    left: 100px;
+    top: 136px;
+    left: 40px;
     width: 240px;
     height: 140px;
     z-index: 50;
@@ -1649,17 +1784,17 @@ body {
 }
 
 .project-card[data-index="1"] {
-    transform: translate(-12px, 8px) rotate(-1deg);
+    transform: translate(12px, 8px) rotate(1deg);
     z-index: 3;
 }
 
 .project-card[data-index="2"] {
-    transform: translate(-24px, 16px) rotate(-2deg);
+    transform: translate(24px, 16px) rotate(2deg);
     z-index: 2;
 }
 
 .project-card[data-index="3"] {
-    transform: translate(-36px, 24px) rotate(-3deg);
+    transform: translate(36px, 24px) rotate(3deg);
     z-index: 1;
 }
 
@@ -1747,19 +1882,27 @@ body {
     transform: translate(0, -2px) rotate(0deg) scale(1.01);
 }
 
-/* Responsive - Testimonials */
+/* Responsive - Menu Buttons */
 @media (max-width: 900px) {
-    .testimonials-toggle-btn {
+    .menu-buttons {
         top: 80px;
-        right: 20px;
+        left: 30px;
     }
 
     .testimonials-card {
-        top: 140px;
-        right: 20px;
-        width: 280px;
-        max-height: 320px;
-        overflow-y: auto;
+        top: 136px;
+        left: 30px;
+        width: 260px;
+    }
+
+    .about-card {
+        top: 136px;
+        left: 30px;
+    }
+
+    .cards-stack {
+        left: 30px;
+        top: 136px;
     }
 }
 
@@ -1831,8 +1974,8 @@ body {
     .cards-stack {
         width: 200px;
         height: 120px;
-        left: 50px;
-        top: 130px;
+        left: 12px;
+        top: 136px;
     }
 
     .project-card {
@@ -1845,15 +1988,15 @@ body {
     }
 
     .project-card[data-index="1"] {
-        transform: translate(-10px, 6px) rotate(-1deg);
+        transform: translate(10px, 6px) rotate(1deg);
     }
 
     .project-card[data-index="2"] {
-        transform: translate(-20px, 12px) rotate(-2deg);
+        transform: translate(20px, 12px) rotate(2deg);
     }
 
     .project-card[data-index="3"] {
-        transform: translate(-30px, 18px) rotate(-3deg);
+        transform: translate(30px, 18px) rotate(3deg);
     }
 
     /* Cards toggle button */
@@ -2023,8 +2166,8 @@ body {
     .cards-stack {
         width: 180px;
         height: 110px;
-        left: 40px;
-        top: 115px;
+        left: 10px;
+        top: 102px;
     }
 
     .project-card {
@@ -2050,48 +2193,72 @@ body {
     }
 
     .project-card[data-index="1"] {
-        transform: translate(-8px, 5px) rotate(-1deg);
+        transform: translate(8px, 5px) rotate(1deg);
     }
 
     .project-card[data-index="2"] {
-        transform: translate(-16px, 10px) rotate(-2deg);
+        transform: translate(16px, 10px) rotate(2deg);
     }
 
     .project-card[data-index="3"] {
-        transform: translate(-24px, 15px) rotate(-3deg);
+        transform: translate(24px, 15px) rotate(3deg);
     }
 
-    /* Cards toggle button */
-    .cards-toggle-btn {
-        left: 15px;
+    /* Menu buttons - show labels on mobile */
+    .menu-buttons {
         top: 50px;
-        width: 40px;
-        height: 40px;
+        left: 10px;
+        gap: 6px;
     }
 
-    /* About toggle button */
-    .about-toggle-btn {
-        left: 15px;
-        top: 95px;
-        width: 40px;
-        height: 40px;
+    .menu-btn {
+        width: auto;
+        height: auto;
+        padding: 10px 14px;
+        gap: 8px;
+        justify-content: flex-start;
     }
 
-    /* Testimonials toggle button - column layout */
-    .testimonials-toggle-btn {
-        left: 15px;
-        top: 140px;
-        right: auto;
-        width: 40px;
-        height: 40px;
+    .menu-btn-label {
+        position: static;
+        transform: none;
+        background: none;
+        border: none;
+        padding: 0;
+        opacity: 1;
+        font-size: 12px;
+    }
+
+    .menu-btn:hover .menu-btn-label {
+        transform: none;
+    }
+
+    /* Disable button rearrangement on mobile - just hide/show */
+    .menu-btn.active,
+    .menu-btn.active[data-original="1"],
+    .menu-btn.active[data-original="2"] {
+        transform: none !important;
+    }
+
+    .menu-btn.hidden {
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        transform: scale(0.8) translateY(10px) !important;
     }
 
     .about-card {
-        top: 165px;
-        left: 40px;
+        top: 102px;
+        left: 10px;
         width: 220px;
         max-height: 280px;
         padding: 12px;
+    }
+
+    .testimonials-card {
+        top: 102px;
+        left: 10px;
+        width: 220px;
     }
 
     .about-pfp {
@@ -2211,135 +2378,26 @@ body {
     }
 }
 
-/* Touch device hover title fix - always visible on mobile */
+/* Touch device interaction behavior - hover:none handles touch, NOT layout */
 @media (hover: none) {
-    /* Testimonials toggle button - show label inline */
-    .testimonials-toggle-btn {
-        width: auto !important;
-        min-width: 90px;
-        height: 44px !important;
-        padding: 0 14px !important;
-        gap: 6px;
-        flex-direction: row !important;
-        align-items: center !important;
-        justify-content: center !important;
-        left: 15px !important;
-        right: auto !important;
-        top: 150px !important;
-    }
-
-    .testimonials-toggle-btn .hover-title {
-        font-size: 12px;
-    }
-
-    .testimonials-toggle-btn svg {
-        flex-shrink: 0;
-        width: 20px;
-        height: 20px;
-    }
-
-    .testimonials-toggle-btn .hover-title {
-        position: static !important;
-        opacity: 1 !important;
-        visibility: visible !important;
+    /* Disable button rearrangement animation on touch - just hide/show */
+    .menu-btn.active,
+    .menu-btn.active[data-original="1"],
+    .menu-btn.active[data-original="2"] {
         transform: none !important;
-        padding: 0;
-        background: none;
-        border: none;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 44px;
-        white-space: nowrap;
     }
 
-    /* Cards toggle button - show label inline, stable layout */
-    .cards-toggle-btn {
-        width: auto !important;
-        min-width: 90px;
-        height: 44px !important;
-        padding: 0 14px !important;
-        gap: 6px;
-        flex-direction: row !important;
-        align-items: center !important;
-        justify-content: center !important;
-        left: 15px !important;
-        top: 50px !important;
-    }
-
-    .cards-toggle-btn .hover-title {
-        font-size: 12px;
-    }
-
-    .cards-toggle-btn svg {
-        flex-shrink: 0;
-        width: 20px;
-        height: 20px;
-    }
-
-    .cards-toggle-btn .hover-title {
-        position: static !important;
-        opacity: 1 !important;
-        visibility: visible !important;
+    .menu-btn.active:hover,
+    .menu-btn.active[data-original="1"]:hover,
+    .menu-btn.active[data-original="2"]:hover {
         transform: none !important;
-        padding: 0;
-        background: none;
-        border: none;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 44px;
-        white-space: nowrap;
     }
 
-    /* About toggle button - show label inline, stable layout */
-    .about-toggle-btn {
-        width: auto !important;
-        min-width: 90px;
-        height: 44px !important;
-        padding: 0 14px !important;
-        gap: 6px;
-        flex-direction: row !important;
-        align-items: center !important;
-        justify-content: center !important;
-        left: 15px !important;
-        top: 100px !important;
-    }
-
-    .about-toggle-btn .hover-title {
-        font-size: 12px;
-    }
-
-    .about-toggle-btn svg {
-        flex-shrink: 0;
-        width: 20px;
-        height: 20px;
-    }
-
-    .about-toggle-btn .hover-title {
-        position: static !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        transform: none !important;
-        padding: 0;
-        background: none;
-        border: none;
-        font-size: 14px;
-        font-weight: 500;
-        line-height: 44px;
-        white-space: nowrap;
-    }
-
-    /* Hidden state overrides for mobile - must use !important */
-    .cards-toggle-btn.hidden,
-    .about-toggle-btn.hidden {
+    .menu-btn.hidden {
         opacity: 0 !important;
         visibility: hidden !important;
         pointer-events: none !important;
-        transform: scale(0.9) !important;
-    }
-
-    .about-card {
-        top: 160px !important;
-        left: 15px !important;
+        transform: scale(0.8) translateY(10px) !important;
     }
 
     /* Action buttons - show labels as tooltips above icons on mobile */
@@ -2407,6 +2465,40 @@ body {
         opacity: 1;
         visibility: visible;
         transform: translateX(-50%) scale(1) translateY(0);
+    }
+}
+
+/* Large touch devices (iPads) - keep desktop-like layout */
+@media (hover: none) and (min-width: 769px) {
+    .menu-buttons {
+        top: 80px;
+        left: 30px;
+    }
+
+    .menu-btn {
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        justify-content: center;
+    }
+
+    .menu-btn-label {
+        position: absolute;
+        left: calc(100% + 10px);
+        top: 50%;
+        transform: translateY(-50%) translateX(-4px);
+        background: #0d0201;
+        border: 1px solid #474040;
+        padding: 8px 14px;
+        opacity: 0;
+        font-size: 12px;
+    }
+
+    .about-card,
+    .testimonials-card,
+    .cards-stack {
+        top: 136px;
+        left: 30px;
     }
 }
 
@@ -2816,23 +2908,23 @@ body {
 
 /* Verified Checkmarks */
 .verified-check {
-    display: inline-flex;
+    display: inline-block;
     width: 14px;
     height: 14px;
     margin-left: 4px;
-    vertical-align: middle;
+    vertical-align: -2px;
 }
-.verified-check.red { color: #E32020; }
+.verified-check.red { color: #E0115F; }
 .verified-check.orange { color: #F59E0B; }
 
 /* Company Badges */
 .company-badge {
-    display: inline-flex;
-    width: 14px;
-    height: 14px;
+    display: inline-block;
+    width: 12px;
+    height: 12px;
     margin-left: 4px;
-    vertical-align: middle;
-    border-radius: 3px;
+    vertical-align: -1px;
+    border-radius: 2px;
     object-fit: cover;
 }
 
