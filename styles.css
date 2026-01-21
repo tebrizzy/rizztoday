@@ -1821,6 +1821,7 @@ body {
 
 .sticky-item input[type="checkbox"]:checked + label {
     text-decoration: line-through;
+    text-decoration-color: rgba(102, 102, 102, 0.6);
     color: #666;
 }
 
