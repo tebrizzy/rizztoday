@@ -380,6 +380,7 @@ if (notificationBtn && notificationCard) {
 const cardsToggleBtn = document.getElementById('cardsToggleBtn');
 const cardsStack = document.getElementById('cardsStack');
 const aboutToggleBtnForCards = document.getElementById('aboutToggleBtn');
+const testimonialsToggleBtnForCards = document.getElementById('testimonialsToggleBtn');
 
 // Create instruction tooltip
 const cardsInstructionTooltip = document.createElement('div');
@@ -393,13 +394,13 @@ if (cardsToggleBtn && cardsStack) {
         cardsStack.classList.toggle('active');
         cardsToggleBtn.classList.toggle('active');
 
-        // Hide/show About button when Works cards are toggled
-        if (aboutToggleBtnForCards) {
-            if (cardsStack.classList.contains('active')) {
-                aboutToggleBtnForCards.classList.add('hidden');
-            } else {
-                aboutToggleBtnForCards.classList.remove('hidden');
-            }
+        // Hide/show About and Testimonials buttons when Works cards are toggled
+        if (cardsStack.classList.contains('active')) {
+            if (aboutToggleBtnForCards) aboutToggleBtnForCards.classList.add('hidden');
+            if (testimonialsToggleBtnForCards) testimonialsToggleBtnForCards.classList.add('hidden');
+        } else {
+            if (aboutToggleBtnForCards) aboutToggleBtnForCards.classList.remove('hidden');
+            if (testimonialsToggleBtnForCards) testimonialsToggleBtnForCards.classList.remove('hidden');
         }
 
         // Show tooltip every time cards open
@@ -427,12 +428,14 @@ if (cardsToggleBtn && cardsStack) {
     // Close cards when clicking outside
     document.addEventListener('click', function(e) {
         if (!cardsStack.contains(e.target) && !cardsToggleBtn.contains(e.target)) {
+            const wasActive = cardsStack.classList.contains('active');
             cardsStack.classList.remove('active');
             cardsToggleBtn.classList.remove('active');
             cardsInstructionTooltip.classList.remove('visible');
-            // Show About button when cards close
-            if (aboutToggleBtnForCards) {
-                aboutToggleBtnForCards.classList.remove('hidden');
+            // Only show buttons if cards were actually open and closing
+            if (wasActive) {
+                if (aboutToggleBtnForCards) aboutToggleBtnForCards.classList.remove('hidden');
+                if (testimonialsToggleBtnForCards) testimonialsToggleBtnForCards.classList.remove('hidden');
             }
         }
     });
@@ -821,29 +824,32 @@ const aboutCard = document.getElementById('aboutCard');
 
 if (aboutToggleBtn && aboutCard) {
     const worksToggleBtnForAbout = document.getElementById('cardsToggleBtn');
+    const testimonialsToggleBtnForAbout = document.getElementById('testimonialsToggleBtn');
 
     aboutToggleBtn.addEventListener('click', function() {
         aboutCard.classList.toggle('active');
         aboutToggleBtn.classList.toggle('active');
 
-        // Hide/show Works button when About is toggled
-        if (worksToggleBtnForAbout) {
-            if (aboutCard.classList.contains('active')) {
-                worksToggleBtnForAbout.classList.add('hidden');
-            } else {
-                worksToggleBtnForAbout.classList.remove('hidden');
-            }
+        // Hide/show Works and Testimonials buttons when About is toggled
+        if (aboutCard.classList.contains('active')) {
+            if (worksToggleBtnForAbout) worksToggleBtnForAbout.classList.add('hidden');
+            if (testimonialsToggleBtnForAbout) testimonialsToggleBtnForAbout.classList.add('hidden');
+        } else {
+            if (worksToggleBtnForAbout) worksToggleBtnForAbout.classList.remove('hidden');
+            if (testimonialsToggleBtnForAbout) testimonialsToggleBtnForAbout.classList.remove('hidden');
         }
     });
 
     // Close about card when clicking outside
     document.addEventListener('click', function(e) {
         if (!aboutCard.contains(e.target) && !aboutToggleBtn.contains(e.target)) {
+            const wasActive = aboutCard.classList.contains('active');
             aboutCard.classList.remove('active');
             aboutToggleBtn.classList.remove('active');
-            // Show Works button when About closes
-            if (worksToggleBtnForAbout) {
-                worksToggleBtnForAbout.classList.remove('hidden');
+            // Only show buttons if About was actually open and closing
+            if (wasActive) {
+                if (worksToggleBtnForAbout) worksToggleBtnForAbout.classList.remove('hidden');
+                if (testimonialsToggleBtnForAbout) testimonialsToggleBtnForAbout.classList.remove('hidden');
             }
         }
     });
@@ -871,16 +877,34 @@ function showTestimonial(index) {
 }
 
 if (testimonialsToggleBtn && testimonialsCard) {
+    const worksToggleBtnForTestimonials = document.getElementById('cardsToggleBtn');
+    const aboutToggleBtnForTestimonials = document.getElementById('aboutToggleBtn');
+
     testimonialsToggleBtn.addEventListener('click', function() {
         testimonialsCard.classList.toggle('active');
         testimonialsToggleBtn.classList.toggle('active');
+
+        // Hide/show Works and About buttons when Testimonials is toggled
+        if (testimonialsCard.classList.contains('active')) {
+            if (worksToggleBtnForTestimonials) worksToggleBtnForTestimonials.classList.add('hidden');
+            if (aboutToggleBtnForTestimonials) aboutToggleBtnForTestimonials.classList.add('hidden');
+        } else {
+            if (worksToggleBtnForTestimonials) worksToggleBtnForTestimonials.classList.remove('hidden');
+            if (aboutToggleBtnForTestimonials) aboutToggleBtnForTestimonials.classList.remove('hidden');
+        }
     });
 
     // Close when clicking outside
     document.addEventListener('click', function(e) {
         if (!testimonialsCard.contains(e.target) && !testimonialsToggleBtn.contains(e.target)) {
+            const wasActive = testimonialsCard.classList.contains('active');
             testimonialsCard.classList.remove('active');
             testimonialsToggleBtn.classList.remove('active');
+            // Only show buttons if Testimonials was actually open and closing
+            if (wasActive) {
+                if (worksToggleBtnForTestimonials) worksToggleBtnForTestimonials.classList.remove('hidden');
+                if (aboutToggleBtnForTestimonials) aboutToggleBtnForTestimonials.classList.remove('hidden');
+            }
         }
     });
 }
