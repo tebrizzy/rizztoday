@@ -679,7 +679,7 @@ body {
     opacity: 0;
     visibility: hidden;
     transform: scale(0.85) translateY(-10px);
-    transform-origin: bottom left;
+    transform-origin: top left;
     transition: all 0.35s var(--bounce-ease);
     z-index: 101;
 }
