@@ -3,6 +3,7 @@ import { Firestore, doc, getDoc, setDoc, increment } from 'firebase/firestore'
 import { usePanelStore, panelStore } from '../../stores/panelStore'
 import { VerifiedBadge } from '../../shared/components/VerifiedBadge'
 import { EMOJIS, STORAGE_KEY } from '../../constants/emojis'
+import styles from './AboutCard.module.css'
 
 interface AboutCardProps {
   db: Firestore | null
@@ -95,7 +96,7 @@ export function AboutCard({ db, isFirebaseReady }: AboutCardProps) {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement
-      if (!target.closest('.about-card') && !target.closest('[data-panel="about"]')) {
+      if (!target.closest(`.${styles.aboutCard}`) && !target.closest('[data-panel="about"]')) {
         if (isActive) panelStore.close()
       }
     }
@@ -115,33 +116,33 @@ export function AboutCard({ db, isFirebaseReady }: AboutCardProps) {
 
   return (
     <>
-      <div className={`about-card ${isActive ? 'active' : ''}`}>
-        <div className="about-header">
-          <img src="/newpfp.png" alt="Riz Rose" className="about-pfp" />
-          <div className="about-info">
-            <h3 className="about-name">
+      <div className={`${styles.aboutCard} ${isActive ? styles.active : ''}`}>
+        <div className={styles.aboutHeader}>
+          <img src="/newpfp.png" alt="Riz Rose" className={styles.aboutPfp} />
+          <div className={styles.aboutInfo}>
+            <h3 className={styles.aboutName}>
               Riz Rose
               <VerifiedBadge color="red" />
-              <img loading="lazy" src="/content/logos/radiant logo.png" alt="Radiants" className="company-badge" />
+              <img loading="lazy" src="/content/logos/radiant logo.png" alt="Radiants" className={styles.companyBadge} />
             </h3>
-            <span className="about-location">Full-Stack Creative</span>
+            <span className={styles.aboutLocation}>Full-Stack Creative</span>
           </div>
         </div>
-        <div className="about-bio">
-          <p className="about-intro">hi, i'm riz.</p>
+        <div className={styles.aboutBio}>
+          <p className={styles.aboutIntro}>hi, i'm riz.</p>
           <p>i turn ideas into visuals — pitch decks, brand identities, motion graphics. mostly for web3 people and indie creators who need to stand out.</p>
-          <p className="about-vibes">same struggle as you, just too stubborn to stay down. glad i was born at the right time.</p>
+          <p className={styles.aboutVibes}>same struggle as you, just too stubborn to stay down. glad i was born at the right time.</p>
         </div>
-        <div className="emoji-reactions">
+        <div className={styles.emojiReactions}>
           {EMOJIS.map(({ key, emoji }) => (
             <button
               key={key}
-              className={`emoji-btn ${selected.includes(key) ? 'selected' : ''} ${clicked === key ? 'clicked' : ''}`}
+              className={`${styles.emojiBtn} ${selected.includes(key) ? styles.selected : ''} ${clicked === key ? styles.clicked : ''}`}
               data-emoji={key}
               onClick={(e) => handleEmojiClick(key, emoji, e)}
             >
-              <span className="emoji">{emoji}</span>
-              <span className="emoji-count">{counts[key] || 0}</span>
+              <span className={styles.emoji}>{emoji}</span>
+              <span className={styles.emojiCount}>{counts[key] || 0}</span>
             </button>
           ))}
         </div>
@@ -149,7 +150,7 @@ export function AboutCard({ db, isFirebaseReady }: AboutCardProps) {
       {particles.map(p => (
         <span
           key={p.id}
-          className="emoji-particle"
+          className={styles.emojiParticle}
           style={{ left: p.x, top: p.y }}
         >
           {p.emoji}

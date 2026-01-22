@@ -1,0 +1,5 @@
+/* Verified Check Badge */
+.verifiedCheck { margin-left: 4px; vertical-align: middle; }
+.verifiedCheck.red { color: #E0115F; }
+.verifiedCheck.orange { color: #f97316; }
+.companyBadge { height: 14px; width: auto; margin-left: 6px; vertical-align: middle; border-radius: 3px; }

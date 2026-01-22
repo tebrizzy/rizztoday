@@ -1,0 +1,27 @@
+/* Guestbook */
+.guestbookBtn { position: fixed; left: 20px; bottom: 20px; width: 47px; height: 47px; padding: 0; background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 0.5px solid rgba(255, 255, 255, 0.15); border-radius: 12px; color: var(--text-primary); cursor: pointer; transition: all 0.3s var(--bounce-ease); z-index: 100; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25); display: flex; align-items: center; justify-content: center; }
+.guestbookBtn:hover { background-color: rgba(0, 0, 0, 0.85); border-color: rgba(255, 255, 255, 0.25); transform: translateY(-3px) scale(1.02); box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); }
+.guestbookBtn:active { transform: scale(0.98); transition: all 0.2s var(--smooth-ease); }
+.guestbookIcon { width: 26px; height: 26px; display: block; }
+
+.guestbookBtn .hoverTitle { position: absolute; left: calc(100% + 12px); top: 50%; transform: translateY(-50%) translateX(-4px); padding: 6px 12px; background: rgba(0, 0, 0, 0.85); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 8px; font-family: 'Inter Tight', sans-serif; font-size: 11px; font-weight: 500; color: rgba(255, 255, 255, 0.85); white-space: nowrap; opacity: 0; visibility: hidden; transition: all 0.2s var(--bounce-ease); z-index: 100; }
+.guestbookBtn:hover .hoverTitle { opacity: 1; visibility: visible; transform: translateY(-50%) translateX(0); }
+
+.guestbookBadge { position: absolute; top: -2px; right: -2px; width: 10px; height: 10px; background-color: #E0115F; border-radius: 50%; box-shadow: 0 2px 4px rgba(224, 17, 95, 0.4); pointer-events: none; animation: badge-jump 3s ease-in-out infinite; }
+
+:global(@keyframes badge-jump) {
+    0%, 85%, 100% { transform: translateY(0) scale(1); }
+    90% { transform: translateY(-4px) scale(1.1); }
+    95% { transform: translateY(0) scale(1); }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+    .guestbookBtn { left: 15px; bottom: 15px; }
+}
+
+/* Responsive - Phone */
+@media (max-width: 480px) {
+    .guestbookBtn { left: 12px; bottom: 12px; width: 42px; height: 42px; }
+    .guestbookIcon { width: 18px; height: 18px; }
+}

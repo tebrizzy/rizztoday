@@ -1,0 +1,116 @@
+/* Shared Panel Styles */
+.aboutCard {
+    position: fixed;
+    top: 136px;
+    left: 40px;
+    background: var(--panel-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--panel-border);
+    border-radius: 12px;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.85) translateY(-10px);
+    transform-origin: top left;
+    transition: all 0.35s var(--bounce-ease);
+    overflow: hidden;
+    width: 280px;
+    max-height: 320px;
+    padding: 16px;
+    z-index: 50;
+}
+
+.aboutCard.active { opacity: 1; visibility: visible; transform: scale(1) translateY(0); }
+
+/* About Card Content */
+.aboutHeader { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--divider); }
+.aboutPfp { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--panel-border); }
+.aboutInfo { flex: 1; }
+.aboutName { font-family: 'Urbanist', sans-serif; font-size: 14px; font-weight: 700; font-style: italic; color: var(--text-primary); margin: 0 0 2px 0; }
+.aboutLocation { font-family: 'Inter Tight', sans-serif; font-size: 11px; color: rgba(255, 255, 255, 0.5); }
+.aboutBio { max-height: 180px; overflow-y: auto; padding-right: 8px; }
+.aboutBio::-webkit-scrollbar { width: 3px; }
+.aboutBio::-webkit-scrollbar-track { background: transparent; }
+.aboutBio::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 3px; }
+.aboutBio p { font-family: 'Inter Tight', sans-serif; font-size: 11px; line-height: 1.5; color: rgba(255, 255, 255, 0.7); margin: 0 0 10px 0; }
+.aboutBio p:last-child { margin-bottom: 0; }
+.aboutBio .aboutIntro { font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; }
+.aboutBio .aboutVibes { font-style: italic; color: rgba(255, 255, 255, 0.5); font-size: 10px; }
+
+/* Emoji Reactions */
+.emojiReactions { display: flex; gap: 6px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--divider); }
+
+.emojiBtn { display: flex; align-items: center; gap: 4px; padding: 6px 10px; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--divider); border-radius: 20px; cursor: pointer; transition: all 0.25s var(--bounce-ease); position: relative; overflow: hidden; }
+.emojiBtn::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent); transition: left 0.5s var(--smooth-ease); }
+.emojiBtn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.15); transform: translateY(-1px); }
+.emojiBtn:active { transform: scale(0.95); }
+.emojiBtn.selected { background: rgba(255, 255, 255, 0.12); border-color: rgba(255, 255, 255, 0.25); box-shadow: 0 0 12px rgba(255, 255, 255, 0.1); }
+.emojiBtn.selected .emojiCount { color: rgba(255, 255, 255, 0.9); }
+.emojiBtn.clicked { animation: btn-bump 0.5s var(--bounce-ease); }
+.emojiBtn.clicked::before { left: 100%; }
+
+:global(@keyframes btn-bump) {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.15); }
+    50% { transform: scale(0.95); }
+    70% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.emojiBtn .emoji { font-size: 14px; line-height: 1; transition: transform 0.3s var(--bounce-ease); }
+.emojiBtn.clicked .emoji { animation: emoji-pop 0.4s var(--bounce-ease); }
+
+:global(@keyframes emoji-pop) {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.4) rotate(-10deg); }
+    100% { transform: scale(1); }
+}
+
+.emojiCount { font-family: 'Fragment Mono', monospace; font-size: 10px; color: rgba(255, 255, 255, 0.5); min-width: 12px; text-align: center; transition: all 0.3s var(--smooth-ease); }
+.emojiBtn.clicked .emojiCount { animation: count-pop 0.3s ease; }
+
+:global(@keyframes count-pop) {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); color: rgba(255, 255, 255, 1); }
+    100% { transform: scale(1); }
+}
+
+.emojiParticle { position: fixed; font-size: 20px; pointer-events: none; z-index: 1000; animation: float-up 1s ease-out forwards; transform: translateX(-50%); }
+
+:global(@keyframes float-up) {
+    0% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-60px) scale(1.3); }
+}
+
+/* Responsive - Tablet */
+@media (max-width: 900px) {
+    .aboutCard { top: 136px; left: 30px; }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+    .aboutCard { top: 190px; left: 50px; width: 240px; max-height: 300px; }
+    .emojiReactions { gap: 4px; flex-wrap: wrap; }
+    .emojiBtn { padding: 5px 8px; }
+    .emojiBtn .emoji { font-size: 12px; }
+    .emojiCount { font-size: 9px; }
+}
+
+/* Responsive - Phone */
+@media (max-width: 480px) {
+    .aboutCard { top: 102px; left: 10px; width: 220px; max-height: 280px; padding: 12px; }
+    .aboutPfp { width: 40px; height: 40px; }
+    .aboutName { font-size: 13px; }
+    .aboutBio p { font-size: 10px; }
+    .aboutBio .aboutIntro { font-size: 12px; }
+    .aboutBio .aboutVibes { font-size: 9px; }
+    .emojiReactions { gap: 3px; margin-top: 10px; padding-top: 8px; }
+    .emojiBtn { padding: 4px 6px; border-radius: 14px; }
+    .emojiBtn .emoji { font-size: 11px; }
+    .emojiCount { font-size: 8px; min-width: 10px; }
+}
+
+/* Large Touch Devices (iPads) */
+@media (hover: none) and (min-width: 769px) {
+    .aboutCard { top: 136px; left: 30px; }
+}
