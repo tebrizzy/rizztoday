@@ -385,7 +385,7 @@ body {
     font-size: 13px;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     letter-spacing: -0.01em;
     z-index: 5;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
@@ -529,9 +529,9 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.35);
     color: white;
     font-family: 'Inter', sans-serif;
-    font-size: 12px;
-    font-weight: 400;
-    padding: 13px 31px;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 8px 14px;
     border-radius: 50px;
     white-space: nowrap;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
@@ -2511,14 +2511,14 @@ body {
         backdrop-filter: blur(50px) saturate(120%);
         -webkit-backdrop-filter: blur(50px) saturate(120%);
         border: 1px solid rgba(255, 255, 255, 0.35);
-        padding: 6px 12px;
+        padding: 5px 10px;
         border-radius: 50px;
         font-size: 9px;
         font-weight: 500;
         color: white;
         white-space: nowrap;
         z-index: 100;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         visibility: visible !important;
         opacity: 1 !important;
     }
