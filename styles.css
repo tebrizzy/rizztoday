@@ -426,6 +426,12 @@ body {
 
 .status-text {
     letter-spacing: -0.01em;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.status-text.changing {
+    opacity: 0;
+    transform: translateY(-4px);
 }
 
 /* Action Buttons - Show on Hover Above Status Button */
@@ -522,15 +528,18 @@ body {
 /* Action Button Tooltips - JavaScript powered */
 .action-tooltip-js {
     position: fixed;
-    background: #0d0201;
-    border: 1px solid #474040;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(50px) saturate(120%);
+    -webkit-backdrop-filter: blur(50px) saturate(120%);
+    border: 1px solid rgba(255, 255, 255, 0.35);
     color: white;
     font-family: 'Inter', sans-serif;
     font-size: 12px;
     font-weight: 400;
     padding: 13px 31px;
-    border-radius: 11px;
+    border-radius: 50px;
     white-space: nowrap;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2503,15 +2512,18 @@ body {
         bottom: calc(100% + 6px);
         left: 50%;
         transform: translateX(-50%);
-        background: #0d0201;
-        border: 1px solid #474040;
-        padding: 4px 8px;
-        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(50px) saturate(120%);
+        -webkit-backdrop-filter: blur(50px) saturate(120%);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        padding: 6px 12px;
+        border-radius: 50px;
         font-size: 9px;
         font-weight: 500;
         color: white;
         white-space: nowrap;
         z-index: 100;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
         visibility: visible !important;
         opacity: 1 !important;
     }
