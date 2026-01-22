@@ -200,30 +200,20 @@ if (statusBtn) {
         // Don't toggle if clicking on action buttons
         if (e.target.closest('.action-btn')) return;
 
-        // On touch devices, always show popups (don't toggle off)
-        if (isTouchDevice) {
-            e.stopPropagation();
-            e.preventDefault();
-            statusBtn.classList.add('actions-visible');
-            animateStatusChange();
-            return;
-        }
-
-        // Desktop behavior - same animation
+        // Toggle actions-visible on click (works for all devices)
+        statusBtn.classList.toggle('actions-visible');
         animateStatusChange();
     });
 
-    // Close action buttons when clicking outside (touch devices)
+    // Close action buttons when clicking outside (all devices)
     // Use setTimeout to avoid race condition with button click handler
-    if (isTouchDevice) {
-        document.addEventListener('click', (e) => {
-            setTimeout(() => {
-                if (!statusBtn.contains(e.target)) {
-                    statusBtn.classList.remove('actions-visible');
-                }
-            }, 0);
-        });
-    }
+    document.addEventListener('click', (e) => {
+        setTimeout(() => {
+            if (!statusBtn.contains(e.target)) {
+                statusBtn.classList.remove('actions-visible');
+            }
+        }, 0);
+    });
 }
 
 // Add click animation to action buttons
