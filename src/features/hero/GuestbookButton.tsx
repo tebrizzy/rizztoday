@@ -1,10 +1,10 @@
-import { useGuestbookStore } from '../hooks/useGuestbookStore'
+import { useGuestbookStore } from '../../stores/guestbookStore'
 
 export function GuestbookButton() {
-  const { toggle, hasNewEntries } = useGuestbookStore()
+  const { open, hasNewEntries } = useGuestbookStore()
 
   return (
-    <div className="guestbook-btn" onClick={toggle}>
+    <div className="guestbook-btn" onClick={open}>
       <svg className="guestbook-icon" width="18" height="18" viewBox="0 0 24 24" fill="none">
         <rect x="3" y="5" width="18" height="14" rx="2" stroke="white" strokeWidth="2"/>
         <path d="M3 7L12 13L21 7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

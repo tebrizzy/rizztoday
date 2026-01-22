@@ -1,25 +1,25 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Firestore, doc, getDoc, setDoc, increment } from 'firebase/firestore'
-import { usePanelStore, panelStore } from './MenuButtons'
-import { VerifiedBadge } from './VerifiedBadge'
+import { usePanelStore, panelStore } from '../../stores/panelStore'
+import { VerifiedBadge } from '../../shared/components/VerifiedBadge'
+import { EMOJIS, STORAGE_KEY } from '../../constants/emojis'
 
 interface AboutCardProps {
   db: Firestore | null
   isFirebaseReady: boolean
 }
 
-const EMOJIS = [
-  { key: 'salute', emoji: '🫡' },
-  { key: 'sword', emoji: '🗡️' },
-  { key: 'basketball', emoji: '🏀' },
-  { key: 'heart', emoji: '❤️' }
-]
-
-const STORAGE_KEY = 'riz_emoji_reactions'
-
 function getUserReactions(): string[] {
-  const stored = localStorage.getItem(STORAGE_KEY)
-  return stored ? JSON.parse(stored) : []
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (!stored) return []
+    const parsed = JSON.parse(stored)
+    return Array.isArray(parsed) ? parsed : []
+  } catch (error) {
+    console.error('Failed to parse emoji reactions from localStorage:', error)
+    localStorage.removeItem(STORAGE_KEY)
+    return []
+  }
 }
 
 function setUserReactions(reactions: string[]) {
@@ -34,6 +34,8 @@ export function AboutCard({ db, isFirebaseReady }: AboutCardProps) {
   const [selected, setSelected] = useState<string[]>(getUserReactions())
   const [clicked, setClicked] = useState<string | null>(null)
   const [particles, setParticles] = useState<{ id: number; emoji: string; x: number; y: number }[]>([])
+  const particleTimeoutsRef = useRef<Set<NodeJS.Timeout>>(new Set())
+  const clickedTimeoutsRef = useRef<Set<NodeJS.Timeout>>(new Set())
 
   useEffect(() => {
     if (!db || !isFirebaseReady) return
@@ -46,7 +48,7 @@ export function AboutCard({ db, isFirebaseReady }: AboutCardProps) {
           setCounts(docSnap.data() as Record<string, number>)
         }
       } catch (error) {
-        console.error('Error loading emoji counts:', error)
+        console.error('Error loading emoji counts from Firebase:', error)
       }
     }
 
@@ -63,12 +65,14 @@ export function AboutCard({ db, isFirebaseReady }: AboutCardProps) {
     setSelected(newSelected)
     setUserReactions(newSelected)
     setClicked(key)
-    setTimeout(() => setClicked(null), 500)
+    const clickedTimeout = setTimeout(() => setClicked(null), 500)
+    clickedTimeoutsRef.current.add(clickedTimeout)
 
     if (!wasSelected) {
       const particleId = Date.now()
       setParticles(prev => [...prev, { id: particleId, emoji, x: rect.left + rect.width / 2, y: rect.top }])
-      setTimeout(() => setParticles(prev => prev.filter(p => p.id !== particleId)), 1000)
+      const particleTimeout = setTimeout(() => setParticles(prev => prev.filter(p => p.id !== particleId)), 1000)
+      particleTimeoutsRef.current.add(particleTimeout)
     }
 
     setCounts(prev => ({
@@ -83,7 +87,7 @@ export function AboutCard({ db, isFirebaseReady }: AboutCardProps) {
           [key]: increment(wasSelected ? -1 : 1)
         }, { merge: true })
       } catch (error) {
-        console.error('Error updating emoji count:', error)
+        console.error('Error updating emoji count in Firebase:', error)
       }
     }
   }
@@ -99,6 +103,15 @@ export function AboutCard({ db, isFirebaseReady }: AboutCardProps) {
     document.addEventListener('click', handleClickOutside)
     return () => document.removeEventListener('click', handleClickOutside)
   }, [isActive])
+
+  useEffect(() => {
+    return () => {
+      particleTimeoutsRef.current.forEach(timeout => clearTimeout(timeout))
+      particleTimeoutsRef.current.clear()
+      clickedTimeoutsRef.current.forEach(timeout => clearTimeout(timeout))
+      clickedTimeoutsRef.current.clear()
+    }
+  }, [])
 
   return (
     <>

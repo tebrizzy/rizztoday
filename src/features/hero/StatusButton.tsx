@@ -1,27 +1,53 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 export function StatusButton() {
-  const [isWorking, setIsWorking] = useState(true)
   const [actionsVisible, setActionsVisible] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
+  const toggleActions = () => {
+    setActionsVisible(prev => !prev)
+  }
+
   const handleClick = (e: React.MouseEvent) => {
     if ((e.target as HTMLElement).closest('.action-btn')) return
-
-    setActionsVisible(!actionsVisible)
-    setIsWorking(!isWorking)
+    toggleActions()
   }
+
+  // Handle touch for iOS
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if ((e.target as HTMLElement).closest('.action-btn')) return
+    e.preventDefault()
+    toggleActions()
+  }
+
+  // Close on click outside
+  useEffect(() => {
+    if (!actionsVisible) return
+
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
+      if (buttonRef.current && !buttonRef.current.contains(e.target as Node)) {
+        setActionsVisible(false)
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside)
+    document.addEventListener('touchend', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside)
+      document.removeEventListener('touchend', handleClickOutside)
+    }
+  }, [actionsVisible])
 
   return (
     <button
       ref={buttonRef}
       className={`status-btn ${actionsVisible ? 'actions-visible' : ''}`}
       onClick={handleClick}
+      onTouchEnd={handleTouchEnd}
     >
       <span className="status-dot"></span>
-      <span className="status-text">
-        {isWorking ? 'free for pitchdeck design' : 'available'}
-      </span>
+      <span className="status-text">free for pitchdeck design</span>
 
       <div className="action-buttons">
         <a
