@@ -170,7 +170,7 @@ if (statusBtn) {
         const statusDot = statusBtn.querySelector('.status-dot');
         const newText = isWorking ? 'free for pitchdeck design' : 'available';
 
-        // FLIP Animation: measure, change, inverse transform, animate back
+        // Animate width directly (no scale transform) so popups aren't affected
         const startWidth = statusBtn.offsetWidth;
 
         // Change text
@@ -179,43 +179,21 @@ if (statusBtn) {
         // Get new width
         const endWidth = statusBtn.offsetWidth;
 
-        // Calculate scale ratio
-        const scaleX = startWidth / endWidth;
-
-        // Get action buttons container to counter-scale (prevent popup stretching)
-        const actionButtons = statusBtn.querySelector('.action-buttons');
-
-        // Apply inverse transform instantly (no transition)
+        // Set explicit width to start value (no transition)
         statusBtn.style.transition = 'none';
-        statusBtn.style.transform = `translate(-50%, -50%) scaleX(${scaleX})`;
-
-        // Counter-scale action buttons so they don't stretch
-        if (actionButtons) {
-            actionButtons.style.transition = 'none';
-            actionButtons.style.transform = `translateX(-50%) scaleX(${1 / scaleX})`;
-        }
+        statusBtn.style.width = startWidth + 'px';
 
         // Force reflow
         statusBtn.offsetHeight;
 
-        // Animate back with elastic easing
-        statusBtn.style.transition = 'transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)';
-        statusBtn.style.transform = 'translate(-50%, -50%) scaleX(1)';
+        // Animate width with elastic easing
+        statusBtn.style.transition = 'width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        statusBtn.style.width = endWidth + 'px';
 
-        // Animate action buttons back to normal
-        if (actionButtons) {
-            actionButtons.style.transition = 'transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            actionButtons.style.transform = 'translateX(-50%) scaleX(1)';
-        }
-
-        // Reset inline styles after animation completes so hover effects work
+        // Reset to auto after animation completes
         setTimeout(() => {
             statusBtn.style.transition = '';
-            statusBtn.style.transform = '';
-            if (actionButtons) {
-                actionButtons.style.transition = '';
-                actionButtons.style.transform = '';
-            }
+            statusBtn.style.width = '';
         }, 350);
 
         statusDot.style.backgroundColor = '#4ade80';
