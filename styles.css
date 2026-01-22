@@ -2221,11 +2221,21 @@ body {
 
     .name {
         font-size: 10px;
-        margin-bottom: 2px;
+        margin-bottom: 1px;
     }
 
     .tagline {
         font-size: 9px;
+    }
+
+    .client-logos {
+        margin-top: 6px;
+    }
+
+    .project-stats {
+        font-size: 7px;
+        margin-top: 5px;
+        padding-top: 5px;
     }
 
     .project-stats::before {
