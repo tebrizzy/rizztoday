@@ -2022,7 +2022,7 @@ body {
     }
 
     .project-stats::before {
-        width: 120px;
+        width: 140px;
     }
 
     /* iPod - scale down */
@@ -2219,7 +2219,7 @@ body {
     }
 
     .project-stats::before {
-        width: 100px;
+        width: 115px;
     }
 
     /* iPod - smaller on phone */
