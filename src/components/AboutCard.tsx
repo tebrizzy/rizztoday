@@ -1,0 +1,147 @@
+import { useState, useEffect } from 'react'
+import { Firestore, doc, getDoc, setDoc, increment } from 'firebase/firestore'
+import { usePanelStore, panelStore } from './MenuButtons'
+import { VerifiedBadge } from './VerifiedBadge'
+
+interface AboutCardProps {
+  db: Firestore | null
+  isFirebaseReady: boolean
+}
+
+const EMOJIS = [
+  { key: 'salute', emoji: '🫡' },
+  { key: 'sword', emoji: '🗡️' },
+  { key: 'basketball', emoji: '🏀' },
+  { key: 'heart', emoji: '❤️' }
+]
+
+const STORAGE_KEY = 'riz_emoji_reactions'
+
+function getUserReactions(): string[] {
+  const stored = localStorage.getItem(STORAGE_KEY)
+  return stored ? JSON.parse(stored) : []
+}
+
+function setUserReactions(reactions: string[]) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(reactions))
+}
+
+export function AboutCard({ db, isFirebaseReady }: AboutCardProps) {
+  const activePanel = usePanelStore()
+  const isActive = activePanel === 'about'
+
+  const [counts, setCounts] = useState<Record<string, number>>({})
+  const [selected, setSelected] = useState<string[]>(getUserReactions())
+  const [clicked, setClicked] = useState<string | null>(null)
+  const [particles, setParticles] = useState<{ id: number; emoji: string; x: number; y: number }[]>([])
+
+  useEffect(() => {
+    if (!db || !isFirebaseReady) return
+
+    const loadCounts = async () => {
+      try {
+        const docRef = doc(db, 'reactions', 'counts')
+        const docSnap = await getDoc(docRef)
+        if (docSnap.exists()) {
+          setCounts(docSnap.data() as Record<string, number>)
+        }
+      } catch (error) {
+        console.error('Error loading emoji counts:', error)
+      }
+    }
+
+    loadCounts()
+  }, [db, isFirebaseReady])
+
+  const handleEmojiClick = async (key: string, emoji: string, e: React.MouseEvent) => {
+    const rect = (e.target as HTMLElement).getBoundingClientRect()
+    const wasSelected = selected.includes(key)
+    const newSelected = wasSelected
+      ? selected.filter(s => s !== key)
+      : [...selected, key]
+
+    setSelected(newSelected)
+    setUserReactions(newSelected)
+    setClicked(key)
+    setTimeout(() => setClicked(null), 500)
+
+    if (!wasSelected) {
+      const particleId = Date.now()
+      setParticles(prev => [...prev, { id: particleId, emoji, x: rect.left + rect.width / 2, y: rect.top }])
+      setTimeout(() => setParticles(prev => prev.filter(p => p.id !== particleId)), 1000)
+    }
+
+    setCounts(prev => ({
+      ...prev,
+      [key]: Math.max(0, (prev[key] || 0) + (wasSelected ? -1 : 1))
+    }))
+
+    if (db) {
+      try {
+        const docRef = doc(db, 'reactions', 'counts')
+        await setDoc(docRef, {
+          [key]: increment(wasSelected ? -1 : 1)
+        }, { merge: true })
+      } catch (error) {
+        console.error('Error updating emoji count:', error)
+      }
+    }
+  }
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      if (!target.closest('.about-card') && !target.closest('[data-panel="about"]')) {
+        if (isActive) panelStore.close()
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [isActive])
+
+  return (
+    <>
+      <div className={`about-card ${isActive ? 'active' : ''}`}>
+        <div className="about-header">
+          <img src="/newpfp.png" alt="Riz Rose" className="about-pfp" />
+          <div className="about-info">
+            <h3 className="about-name">
+              Riz Rose
+              <VerifiedBadge color="red" />
+              <img loading="lazy" src="/content/logos/radiant logo.png" alt="Radiants" className="company-badge" />
+            </h3>
+            <span className="about-location">Full-Stack Creative</span>
+          </div>
+        </div>
+        <div className="about-bio">
+          <p className="about-intro">hi, i'm riz.</p>
+          <p>i turn ideas into visuals — pitch decks, brand identities, motion graphics. mostly for web3 people and indie creators who need to stand out.</p>
+          <p className="about-vibes">same struggle as you, just too stubborn to stay down. glad i was born at the right time.</p>
+        </div>
+        <div className="emoji-reactions">
+          {EMOJIS.map(({ key, emoji }) => (
+            <button
+              key={key}
+              className={`emoji-btn ${selected.includes(key) ? 'selected' : ''} ${clicked === key ? 'clicked' : ''}`}
+              data-emoji={key}
+              onClick={(e) => handleEmojiClick(key, emoji, e)}
+            >
+              <span className="emoji">{emoji}</span>
+              <span className="emoji-count">{counts[key] || 0}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      {particles.map(p => (
+        <span
+          key={p.id}
+          className="emoji-particle"
+          style={{ left: p.x, top: p.y }}
+        >
+          {p.emoji}
+        </span>
+      ))}
+    </>
+  )
+}
