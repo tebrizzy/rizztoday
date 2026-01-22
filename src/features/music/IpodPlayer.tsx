@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
 import { PLAYLIST } from '../../constants/music'
-import styles from './IpodPlayer.module.css'
 
 export function IpodPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -63,43 +62,43 @@ export function IpodPlayer() {
   }
 
   return (
-    <div className={styles.ipodNano}>
-      <div className={styles.ipodBody}>
-        <div className={`${styles.ipodScreen} ${isPlaying ? styles.active : ''}`}>
-          <div className={styles.songTitle}>{PLAYLIST[currentTrack]?.title || 'No Track'}</div>
-          <div className={styles.equalizer}>
-            <span className={styles.bar}></span>
-            <span className={styles.bar}></span>
-            <span className={styles.bar}></span>
+    <div className="ipod-nano">
+      <div className="ipod-body">
+        <div className={`ipod-screen ${isPlaying ? 'active' : ''}`}>
+          <div className="song-title">{PLAYLIST[currentTrack]?.title || 'No Track'}</div>
+          <div className="equalizer">
+            <span className="bar"></span>
+            <span className="bar"></span>
+            <span className="bar"></span>
           </div>
         </div>
-        <div className={styles.clickWheel}>
-          <div className={styles.wheelRing}>
-            <button className={`${styles.wheelBtn} ${styles.menu}`}>MENU</button>
-            <button className={`${styles.wheelBtn} ${styles.prev}`} onClick={prevTrack}>
+        <div className="click-wheel">
+          <div className="wheel-ring">
+            <button className="wheel-btn menu">MENU</button>
+            <button className="wheel-btn prev" onClick={prevTrack}>
               <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor">
                 <path d="M0 0H3V12H0V0ZM3 6L16 12V0L3 6Z"/>
               </svg>
             </button>
-            <button className={`${styles.wheelBtn} ${styles.next}`} onClick={nextTrack}>
+            <button className="wheel-btn next" onClick={nextTrack}>
               <svg width="16" height="12" viewBox="0 0 16 12" fill="currentColor">
                 <path d="M16 0H13V12H16V0ZM13 6L0 12V0L13 6Z"/>
               </svg>
             </button>
-            <button className={`${styles.wheelBtn} ${styles.playpause}`} onClick={togglePlay}>
+            <button className="wheel-btn playpause" onClick={togglePlay}>
               {isPlaying ? (
-                <svg className={styles.pauseIcon} width="10" height="12" viewBox="0 0 10 12" fill="currentColor">
+                <svg className="pause-icon" width="10" height="12" viewBox="0 0 10 12" fill="currentColor">
                   <rect x="0" y="0" width="3" height="12"/>
                   <rect x="7" y="0" width="3" height="12"/>
                 </svg>
               ) : (
-                <svg className={styles.playIcon} width="10" height="12" viewBox="0 0 10 12" fill="currentColor">
+                <svg className="play-icon" width="10" height="12" viewBox="0 0 10 12" fill="currentColor">
                   <path d="M0 0V12L10 6L0 0Z"/>
                 </svg>
               )}
             </button>
           </div>
-          <button className={styles.wheelCenter} onClick={togglePlay}></button>
+          <button className="wheel-center" onClick={togglePlay}></button>
         </div>
       </div>
       <audio
@@ -107,7 +106,7 @@ export function IpodPlayer() {
         src={PLAYLIST[currentTrack]?.src}
         onEnded={handleEnded}
       />
-      <svg className={styles.ipodCable} viewBox="0 0 60 200" fill="none">
+      <svg className="ipod-cable" viewBox="0 0 60 200" fill="none">
         <path
           d="M30 0 L30 40 Q30 60 40 80 Q55 110 35 140 Q20 165 30 200"
           stroke="rgba(255,255,255,0.6)"

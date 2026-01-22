@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import styles from './ClickWave.module.css'
 
 interface Wave {
   id: number
@@ -29,7 +28,7 @@ export function ClickWave() {
       {waves.map(wave => (
         <div
           key={wave.id}
-          className={styles.clickWave}
+          className="click-wave"
           style={{ left: wave.x, top: wave.y }}
         />
       ))}

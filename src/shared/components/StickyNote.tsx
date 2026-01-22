@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { INITIAL_TODOS } from '../../constants/todos'
-import styles from './StickyNote.module.css'
 
 export function StickyNote() {
   const [todos, setTodos] = useState(INITIAL_TODOS)
@@ -14,9 +13,9 @@ export function StickyNote() {
   }
 
   return (
-    <div className={styles.stickyNote}>
+    <div className="sticky-note">
       {todos.map(todo => (
-        <div key={todo.id} className={styles.stickyItem}>
+        <div key={todo.id} className="sticky-item">
           <input
             type="checkbox"
             id={todo.id}
