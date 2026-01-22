@@ -1,0 +1,155 @@
+/* Menu Bar */
+.menuBar {
+    height: var(--menu-bar-height);
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--divider);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    font-size: 11px;
+}
+
+.menuBarLeft, .menuBarRight, .logoSection, .navLinks, .menuBarIcons, .timeDate {
+    display: flex;
+    align-items: center;
+}
+
+.menuBarLeft { gap: 16px; }
+.menuBarRight { gap: 12px; }
+.logoSection { gap: 8px; }
+.navLinks { gap: 16px; }
+.menuBarIcons { gap: 8px; }
+.timeDate { gap: 6px; }
+
+.framerLogo, .framerLogo svg { width: 16px; height: 18px; display: flex; align-items: center; justify-content: center; }
+
+.roseEmoji { font-size: 12px; font-weight: 700; color: var(--text-secondary); line-height: 1; letter-spacing: -0.01em; }
+
+.navLink {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    transition: color 0.35s var(--smooth-ease);
+}
+.navLink:hover { color: var(--text-primary); }
+.navLink.archive { font-weight: 500; opacity: 0.51; letter-spacing: -0.2px; }
+
+.menuBarIcons svg { width: 14px; height: 14px; opacity: 0.8; }
+
+/* Notification */
+.notificationBtn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right: 12px;
+    padding: 8px;
+}
+.notificationBtn svg { width: 14px; height: 14px; opacity: 0.8; transition: opacity 0.3s var(--smooth-ease); pointer-events: none; }
+.notificationBtn:hover svg { opacity: 1; }
+
+.notificationBadge {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background-color: #E0115F;
+    color: white;
+    font-size: 9px;
+    font-weight: 600;
+    padding: 2px 4px;
+    border-radius: 8px;
+    min-width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(224, 17, 95, 0.4);
+    pointer-events: none;
+    animation: badge-jump 3s ease-in-out infinite;
+}
+
+:global(@keyframes badge-jump) {
+    0%, 85%, 100% { transform: translateY(0) scale(1); }
+    90% { transform: translateY(-4px) scale(1.1); }
+    95% { transform: translateY(0) scale(1); }
+}
+
+.notificationCard {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: -8px;
+    width: 320px;
+    background: transparent;
+    border-radius: 12px;
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.85) translateY(-10px);
+    transform-origin: top right;
+    transition: all 0.35s var(--bounce-ease);
+    z-index: 1001;
+    cursor: pointer;
+}
+
+.notificationSectionTitle { color: rgba(255, 255, 255, 0.6); font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600; margin-bottom: 10px; padding-left: 4px; }
+
+.notificationContent {
+    background: rgba(30, 30, 30, 0.95);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--panel-border);
+}
+.notificationContent:hover { background: rgba(40, 40, 40, 0.98); border-color: rgba(255, 255, 255, 0.15); box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7); }
+
+.notificationBtn:hover .notificationCard,
+.notificationCard:hover,
+.notificationCard.active { opacity: 1; visibility: visible; transform: scale(1) translateY(0); }
+
+.notificationHeader { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; gap: 8px; }
+.notificationPfp { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+.notificationApp { font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.9); letter-spacing: -0.01em; flex: 1; }
+.notificationTime { font-size: 11px; color: rgba(255, 255, 255, 0.5); }
+.notificationTitle { font-size: 13px; font-weight: 600; color: white; margin-bottom: 4px; letter-spacing: -0.01em; }
+.notificationMessage { font-size: 12px; line-height: 1.4; color: rgba(255, 255, 255, 0.7); letter-spacing: -0.01em; }
+
+.date, .time { font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif; font-size: 11px; font-weight: 500; color: var(--text-muted); letter-spacing: -0.2px; }
+
+.notificationOverlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 99; }
+.notificationOverlay.active { display: block; }
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+    .menuBar { padding: 0 8px; }
+    .menuBarLeft { gap: 12px; }
+    .menuBarRight { gap: 8px; }
+    .timeDate { gap: 4px; }
+
+    .notificationOverlay.active { background: rgba(0, 0, 0, 0.7); }
+}
+
+/* Responsive - Phone */
+@media (max-width: 480px) {
+    .navLinks { gap: 10px; }
+    .menuBarIcons { display: none; }
+}
+
+/* Touch Devices */
+@media (hover: none) {
+    .notificationBtn:hover .notificationCard { opacity: 0; visibility: hidden; }
+    .notificationCard { position: fixed; top: 44px; left: 50%; right: auto; transform: translateX(-50%) scale(0.85) translateY(-10px); transform-origin: top center; width: min(320px, 90vw); z-index: 10000; transition: all 0.35s var(--bounce-ease); }
+    .notificationCard.active { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1) translateY(0); }
+}

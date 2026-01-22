@@ -1,0 +1,26 @@
+@font-face {
+    font-family: 'Kids';
+    src: url('/content/font/Kids-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    overflow: clip;
+}
+
+body {
+    font-family: 'Inter Tight', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    display: flex;
+    flex-direction: column;
+}

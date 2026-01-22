@@ -1,0 +1,111 @@
+/* Sticky Notes */
+.stickyNote {
+    position: fixed;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%) rotate(2deg);
+    background: #fff740;
+    padding: 20px 24px;
+    border-radius: 3px;
+    box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+    min-width: 160px;
+}
+
+.stickyNote::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 6px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.08), transparent);
+    border-radius: 3px 3px 0 0;
+}
+
+.stickyItem {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.stickyItem:last-child { margin-bottom: 0; }
+
+.stickyItem input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #666;
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.stickyItem input[type="checkbox"]:checked::after {
+    content: '\2713';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+
+.stickyItem label {
+    font-family: 'Kids', cursive;
+    font-size: 20px;
+    color: #333;
+    cursor: pointer;
+    line-height: 1.2;
+}
+
+.stickyItem input[type="checkbox"]:checked + label {
+    text-decoration: line-through;
+    text-decoration-color: rgba(102, 102, 102, 0.6);
+    color: #666;
+}
+
+/* Mobile sticky note */
+@media (max-width: 768px) {
+    .stickyNote {
+        right: 12px;
+        left: auto;
+        top: 55px;
+        transform: rotate(2deg);
+        padding: 10px 14px;
+        min-width: 100px;
+    }
+    .stickyItem { gap: 6px; margin-bottom: 5px; }
+    .stickyItem label { font-size: 13px; }
+    .stickyItem input[type="checkbox"] { width: 12px; height: 12px; }
+}
+
+@media (max-width: 480px) {
+    .stickyNote {
+        right: 10px;
+        top: 50px;
+        padding: 8px 12px;
+        min-width: 90px;
+    }
+    .stickyItem { gap: 5px; margin-bottom: 4px; }
+    .stickyItem label { font-size: 11px; }
+    .stickyItem input[type="checkbox"] { width: 10px; height: 10px; }
+    .stickyItem input[type="checkbox"]:checked::after { font-size: 10px; }
+}
+
+/* Bottom fold effect */
+.stickyNote::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0 16px 16px;
+    border-color: transparent transparent #e6dc3a transparent;
+}

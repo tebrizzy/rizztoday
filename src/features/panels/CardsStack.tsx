@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { usePanelStore, panelStore } from '../../stores/panelStore'
 import { PROJECTS } from '../../constants/projects'
+import styles from './CardsStack.module.css'
 
 export function CardsStack() {
   const activePanel = usePanelStore()
@@ -22,7 +23,7 @@ export function CardsStack() {
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement
-      if (!target.closest('.cards-stack') && !target.closest('[data-panel="cards"]')) {
+      if (!target.closest(`.${styles.cardsStack}`) && !target.closest('[data-panel="cards"]')) {
         if (isActive) panelStore.close()
       }
     }
@@ -48,7 +49,7 @@ export function CardsStack() {
     <>
       {showTooltip && stackRef.current && (
         <div
-          className="cards-instruction-tooltip visible"
+          className={`${styles.cardsInstructionTooltip} ${styles.visible}`}
           style={{
             position: 'fixed',
             right: window.innerWidth - stackRef.current.getBoundingClientRect().right - 36,
@@ -59,19 +60,19 @@ export function CardsStack() {
           click to shift cards
         </div>
       )}
-      <div ref={stackRef} className={`cards-stack ${isActive ? 'active' : ''}`}>
+      <div ref={stackRef} className={`${styles.cardsStack} ${isActive ? styles.active : ''}`}>
         {cardOrder.map((projectIndex, displayIndex) => {
           const project = PROJECTS[projectIndex]
           return (
             <div
               key={projectIndex}
-              className="project-card"
+              className={styles.projectCard}
               data-index={displayIndex}
               onClick={(e) => handleCardClick(displayIndex, e)}
             >
-              <div className="card-content">
+              <div className={styles.cardContent}>
                 {project.type === 'grid' ? (
-                  <div className="card-grid-horizontal">
+                  <div className={styles.cardGridHorizontal}>
                     {project.type === 'grid' && project.images && project.images.map((img, i) => (
                       <img key={i} loading="lazy" src={img} alt={`${project.title} ${i + 1}`} />
                     ))}
@@ -80,12 +81,12 @@ export function CardsStack() {
                   <video src={project.video} autoPlay loop muted playsInline />
                 )}
               </div>
-              <div className="card-caption">
-                <a href={project.link} target="_blank" rel="noopener noreferrer" className="card-title">
+              <div className={styles.cardCaption}>
+                <a href={project.link} target="_blank" rel="noopener noreferrer" className={styles.cardTitle}>
                   {project.title}
                 </a>
                 {project.logo && (
-                  <img loading="lazy" src={project.logo} alt={project.logoAlt} className="card-logo" />
+                  <img loading="lazy" src={project.logo} alt={project.logoAlt} className={styles.cardLogo} />
                 )}
               </div>
             </div>

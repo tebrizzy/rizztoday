@@ -1,0 +1,115 @@
+/* Guestbook */
+.guestbookInputPanel, .guestbookCommentsPanel {
+    position: fixed;
+    background: var(--panel-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.85) translateY(-10px);
+    transform-origin: top left;
+    transition: all 0.35s var(--bounce-ease);
+    z-index: 101;
+}
+
+.guestbookInputPanel { left: 20px; bottom: 70px; width: 200px; padding: 12px; }
+.guestbookCommentsPanel { left: 240px; bottom: 70px; width: 130px; max-height: 110px; padding: 8px; transition-delay: 0.08s; overflow: hidden; background: rgba(28, 28, 30, 0.95); border: 1px solid var(--divider); }
+
+.guestbookInputPanel.active, .guestbookCommentsPanel.active { opacity: 1; visibility: visible; transform: scale(1) translateY(0); }
+
+.commentsTitle, .inputPanelTitle { font-family: 'Inter Tight', sans-serif; font-size: 11px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; padding-bottom: 6px; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+.inputPanelTitle { margin-bottom: 3px; }
+
+.guestbookInputPanel input, .guestbookInputPanel textarea { width: 100%; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 8px 10px; color: white; font-family: 'Inter Tight', sans-serif; font-size: 11px; transition: all 0.3s var(--smooth-ease); }
+.guestbookInputPanel input:focus, .guestbookInputPanel textarea:focus { outline: none; border-color: rgba(255, 255, 255, 0.25); background: rgba(255, 255, 255, 0.08); }
+.guestbookInputPanel input::placeholder, .guestbookInputPanel textarea::placeholder { color: rgba(255, 255, 255, 0.3); }
+.guestbookInputPanel input { margin-bottom: 8px; }
+.guestbookInputPanel textarea { min-height: 60px; resize: none; margin-bottom: 8px; }
+
+.guestbookFooter { display: flex; justify-content: space-between; align-items: center; }
+.charCount { font-size: 9px; color: rgba(255, 255, 255, 0.4); font-family: 'Fragment Mono', monospace; }
+.guestbookSubmit { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 6px; padding: 6px 12px; color: white; font-family: 'Inter Tight', sans-serif; font-size: 10px; font-weight: 600; cursor: pointer; transition: all 0.3s var(--bounce-ease); }
+.guestbookSubmit:hover { background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.3); transform: translateY(-1px); }
+.guestbookSubmit:active { transform: scale(0.95); }
+
+.guestbookCommentsPanel .commentsTitle,
+.guestbookCommentsPanel .guestbookMessages {
+    opacity: 0;
+    transition: opacity 0.3s ease 0.15s;
+}
+
+.guestbookCommentsPanel.active .commentsTitle,
+.guestbookCommentsPanel.active .guestbookMessages {
+    opacity: 1;
+}
+
+.guestbookMessages { display: flex; flex-direction: column; gap: 4px; max-height: 65px; overflow-y: auto; }
+.guestbookMessages::-webkit-scrollbar { width: 2px; }
+.guestbookMessages::-webkit-scrollbar-track { background: transparent; }
+.guestbookMessages::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.1); border-radius: 2px; }
+
+.guestMessageWrapper { display: flex; flex-direction: column; gap: 2px; align-items: flex-start; }
+.guestHeader { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.guestName { font-family: 'Inter Tight', sans-serif; font-size: 9px; font-weight: 600; color: rgba(255, 255, 255, 0.8); }
+.guestTime { font-family: 'Fragment Mono', monospace; font-size: 7px; color: rgba(255, 255, 255, 0.3); }
+.guestMessage { background: #F9D54A; border-radius: 12px 12px 12px 2px; padding: 6px 10px; display: inline-block; width: fit-content; max-width: 100%; }
+.guestText { font-family: 'Inter Tight', sans-serif; font-size: 9px; line-height: 1.3; color: #1a1a1a; word-break: break-word; }
+.noMessages { font-family: 'Inter Tight', sans-serif; font-size: 9px; color: rgba(255, 255, 255, 0.4); text-align: center; padding: 10px 0; }
+
+/* Overlays */
+.guestbookOverlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 99; }
+.guestbookOverlay.active { display: block; }
+.guestbookOverlay { z-index: 99; background: rgba(0, 0, 0, 0.4); }
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+    .guestbookInputPanel {
+        width: 200px !important;
+        left: 15px !important;
+        bottom: 75px !important;
+        transform-origin: bottom left !important;
+    }
+    .guestbookCommentsPanel {
+        left: 15px !important;
+        right: auto !important;
+        bottom: 280px !important;
+        top: auto !important;
+        width: 130px !important;
+        max-height: 100px !important;
+        padding: 8px !important;
+        transform-origin: bottom left !important;
+    }
+    .guestbookCommentsPanel .commentsTitle { font-size: 10px; margin-bottom: 6px; padding-bottom: 4px; }
+    .guestbookCommentsPanel .guestMessage { padding: 5px 8px; border-radius: 10px 10px 10px 2px; }
+    .guestbookCommentsPanel .guestName { font-size: 8px; }
+    .guestbookCommentsPanel .guestText { font-size: 8px; line-height: 1.2; }
+    .guestbookCommentsPanel .guestTime { font-size: 6px; }
+    .guestbookCommentsPanel .guestbookMessages { gap: 3px; max-height: 58px; }
+
+    .guestbookOverlay.active { background: rgba(0, 0, 0, 0.7); }
+}
+
+/* Responsive - Phone */
+@media (max-width: 480px) {
+    .guestbookInputPanel {
+        width: min(180px, 48vw) !important;
+        left: 12px !important;
+        bottom: 65px !important;
+    }
+    .guestbookCommentsPanel {
+        left: 12px !important;
+        bottom: 260px !important;
+        top: auto !important;
+        width: 130px !important;
+        max-height: 90px !important;
+        padding: 6px !important;
+    }
+    .guestbookCommentsPanel .commentsTitle { font-size: 9px; margin-bottom: 5px; padding-bottom: 3px; }
+    .guestbookCommentsPanel .guestMessage { padding: 4px 6px; border-radius: 8px 8px 8px 2px; }
+    .guestbookCommentsPanel .guestName { font-size: 7px; }
+    .guestbookCommentsPanel .guestText { font-size: 7px; line-height: 1.2; }
+    .guestbookCommentsPanel .guestTime { font-size: 5px; }
+    .guestbookCommentsPanel .guestbookMessages { gap: 3px; max-height: 58px; }
+}

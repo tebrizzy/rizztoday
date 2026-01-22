@@ -13,6 +13,7 @@ import { useGuestbookStore } from '../../stores/guestbookStore'
 import { GuestbookMessage } from '../../types/guestbook'
 import { formatTime } from '../../utils/time'
 import { escapeHtml } from '../../utils/sanitize'
+import styles from './Guestbook.module.css'
 
 interface GuestbookProps {
   db: Firestore | null
@@ -137,9 +138,9 @@ export function Guestbook({ db, isFirebaseReady }: GuestbookProps) {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement
       if (
-        !target.closest('.guestbook-btn') &&
-        !target.closest('.guestbook-input-panel') &&
-        !target.closest('.guestbook-comments-panel')
+        !target.closest(`.${styles.guestbookBtn}`) &&
+        !target.closest(`.${styles.guestbookInputPanel}`) &&
+        !target.closest(`.${styles.guestbookCommentsPanel}`)
       ) {
         close()
       }
@@ -151,10 +152,10 @@ export function Guestbook({ db, isFirebaseReady }: GuestbookProps) {
 
   return (
     <>
-      {isOpen && <div className="guestbook-overlay active" onClick={close} />}
+      {isOpen && <div className={`${styles.guestbookOverlay} ${styles.active}`} onClick={close} />}
 
-      <div className={`guestbook-input-panel ${isOpen ? 'active' : ''}`}>
-        <div className="input-panel-title">Leave a Note</div>
+      <div className={`${styles.guestbookInputPanel} ${isOpen ? styles.active : ''}`}>
+        <div className={styles.inputPanelTitle}>Leave a Note</div>
         <input
           type="text"
           placeholder="your name"
@@ -168,30 +169,30 @@ export function Guestbook({ db, isFirebaseReady }: GuestbookProps) {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         />
-        <div className="guestbook-footer">
-          <span className="char-count"><span>{message.length}</span>/240</span>
-          <button className="guestbook-submit" onClick={handleSubmit}>send</button>
+        <div className={styles.guestbookFooter}>
+          <span className={styles.charCount}><span>{message.length}</span>/240</span>
+          <button className={styles.guestbookSubmit} onClick={handleSubmit}>send</button>
         </div>
       </div>
 
-      <div className={`guestbook-comments-panel ${isOpen ? 'active' : ''}`}>
-        <div className="comments-title">Comments</div>
-        <div className="guestbook-messages">
+      <div className={`${styles.guestbookCommentsPanel} ${isOpen ? styles.active : ''}`}>
+        <div className={styles.commentsTitle}>Comments</div>
+        <div className={styles.guestbookMessages}>
           {loading ? (
-            <div className="no-messages">loading...</div>
+            <div className={styles.noMessages}>loading...</div>
           ) : messages.length === 0 ? (
-            <div className="no-messages">be the first to leave a note!</div>
+            <div className={styles.noMessages}>be the first to leave a note!</div>
           ) : (
             messages.map(msg => (
-              <div key={msg.id} className="guest-message-wrapper">
-                <div className="guest-header">
-                  <span className="guest-name">{escapeHtml(msg.name)}</span>
+              <div key={msg.id} className={styles.guestMessageWrapper}>
+                <div className={styles.guestHeader}>
+                  <span className={styles.guestName}>{escapeHtml(msg.name)}</span>
                   {msg.timestamp && (
-                    <span className="guest-time">{formatTime(msg.timestamp.toDate())}</span>
+                    <span className={styles.guestTime}>{formatTime(msg.timestamp.toDate())}</span>
                   )}
                 </div>
-                <div className="guest-message">
-                  <div className="guest-text">{escapeHtml(msg.message)}</div>
+                <div className={styles.guestMessage}>
+                  <div className={styles.guestText}>{escapeHtml(msg.message)}</div>
                 </div>
               </div>
             ))
