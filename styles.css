@@ -1934,7 +1934,7 @@ body {
     .menu-buttons {
         top: 50px;
         left: 10px;
-        gap: 32px;
+        gap: 6px;
     }
 
     .menu-btn {
@@ -1960,11 +1960,11 @@ body {
     }
 
     .menu-btn.active[data-original="1"] {
-        transform: translateY(-62px) !important;
+        transform: translateY(-36px) !important;
     }
 
     .menu-btn.active[data-original="2"] {
-        transform: translateY(-124px) !important;
+        transform: translateY(-72px) !important;
     }
 
     /* Menu bar */
