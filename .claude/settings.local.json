@@ -46,7 +46,19 @@
       "Bash(npx http-server:*)",
       "WebFetch(domain:kostya.sh)",
       "Bash(npm i:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(gh repo view:*)",
+      "WebFetch(domain:s3-alpha.figma.com)",
+      "Bash(npx stylelint:*)",
+      "Bash(for class in \"sticky-note\" \"sticky-item\" \"play-icon\" \"pause-icon\" \"verified-check\" \"company-badge\" \"orange\" \"red\")",
+      "Bash(do)",
+      "Bash(if grep -q \"\\\\.$class\" /Users/zen/rizztoday/styles.css)",
+      "Bash(then)",
+      "Bash(echo:*)",
+      "Bash(else)",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(osascript:*)"
     ]
   }
 }

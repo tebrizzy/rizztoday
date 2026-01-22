@@ -164,8 +164,9 @@ if (statusBtn) {
         // Animate width directly (no scale transform) so popups aren't affected
         const startWidth = statusBtn.offsetWidth;
 
-        // Hide overflow during animation so text doesn't spill out
-        statusBtn.style.overflow = 'hidden';
+        // Hide horizontal overflow during animation so text doesn't spill out
+        // Use overflow-x to not clip the popups above
+        statusBtn.style.overflowX = 'hidden';
 
         // Change text
         statusText.textContent = newText;
@@ -188,7 +189,7 @@ if (statusBtn) {
         setTimeout(() => {
             statusBtn.style.transition = '';
             statusBtn.style.width = '';
-            statusBtn.style.overflow = '';
+            statusBtn.style.overflowX = '';
         }, 350);
 
         statusDot.style.backgroundColor = '#4ade80';
