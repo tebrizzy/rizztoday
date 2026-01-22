@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react'
-import styles from './StatusButton.module.css'
 
 export function StatusButton() {
   const [actionsVisible, setActionsVisible] = useState(false)
@@ -10,13 +9,13 @@ export function StatusButton() {
   }
 
   const handleClick = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest(`.${styles.actionBtn}`)) return
+    if ((e.target as HTMLElement).closest('.action-btn')) return
     toggleActions()
   }
 
   // Handle touch for iOS
   const handleTouchEnd = (e: React.TouchEvent) => {
-    if ((e.target as HTMLElement).closest(`.${styles.actionBtn}`)) return
+    if ((e.target as HTMLElement).closest('.action-btn')) return
     e.preventDefault()
     toggleActions()
   }
@@ -43,43 +42,43 @@ export function StatusButton() {
   return (
     <button
       ref={buttonRef}
-      className={`${styles.statusBtn} ${actionsVisible ? styles.actionsVisible : ''}`}
+      className={`status-btn ${actionsVisible ? 'actions-visible' : ''}`}
       onClick={handleClick}
       onTouchEnd={handleTouchEnd}
     >
-      <span className={styles.statusDot}></span>
-      <span className={styles.statusText}>free for pitchdeck design</span>
+      <span className="status-dot"></span>
+      <span className="status-text">free for pitchdeck design</span>
 
-      <div className={styles.actionButtons}>
+      <div className="action-buttons">
         <a
           href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0-EvpHYoLjrPV2bm5X8RVJzC7IaXpJ8X4xWZfxQhYd2K0vYDjvYm0U5nBxYr1JKoZb0xKZ5Y5Z"
           target="_blank"
           rel="noopener noreferrer"
-          className={styles.actionBtn}
+          className="action-btn"
           onClick={(e) => e.stopPropagation()}
         >
-          <span className={styles.btnLabel}>Book</span>
-          <span className={styles.btnEmoji}>🗓️</span>
+          <span className="btn-label">Book</span>
+          <span className="btn-emoji">🗓️</span>
         </a>
         <a
           href="https://x.com/rizzytoday"
           target="_blank"
           rel="noopener noreferrer"
-          className={styles.actionBtn}
+          className="action-btn"
           onClick={(e) => e.stopPropagation()}
         >
-          <span className={styles.btnLabel}>Twitter</span>
-          <span className={styles.btnEmoji}>🔗</span>
+          <span className="btn-label">Twitter</span>
+          <span className="btn-emoji">🔗</span>
         </a>
         <a
           href="https://discord.com/users/rizzytoday"
           target="_blank"
           rel="noopener noreferrer"
-          className={styles.actionBtn}
+          className="action-btn"
           onClick={(e) => e.stopPropagation()}
         >
-          <span className={styles.btnLabel}>Discord</span>
-          <span className={styles.btnEmoji}>📞</span>
+          <span className="btn-label">Discord</span>
+          <span className="btn-emoji">📞</span>
         </a>
       </div>
     </button>

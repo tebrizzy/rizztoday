@@ -1,5 +1,4 @@
 import { usePanelStore, panelStore } from '../../stores/panelStore'
-import styles from './MenuButtons.module.css'
 
 export function MenuButtons() {
   const activePanel = usePanelStore()
@@ -26,17 +25,17 @@ export function MenuButtons() {
   ]
 
   return (
-    <div className={styles.menuButtons}>
+    <div className="menu-buttons">
       {buttons.map((button, index) => (
         <button
           key={button.id}
-          className={`${styles.menuBtn} ${activePanel === button.id ? styles.active : ''} ${activePanel && activePanel !== button.id ? styles.hidden : ''}`}
+          className={`menu-btn ${activePanel === button.id ? 'active' : ''} ${activePanel && activePanel !== button.id ? 'hidden' : ''}`}
           data-panel={button.id}
           data-original={index}
           onClick={() => panelStore.toggle(button.id)}
         >
           {button.icon}
-          <span className={styles.menuBtnLabel}>{button.label}</span>
+          <span className="menu-btn-label">{button.label}</span>
         </button>
       ))}
     </div>

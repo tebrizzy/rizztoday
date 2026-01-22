@@ -67,7 +67,10 @@
       "Bash(npx tsc:*)",
       "Bash(npm run build:*)",
       "Bash(timeout 10 npm run dev:*)",
-      "Bash(npm run dev:*)"
+      "Bash(npm run dev:*)",
+      "Bash(git pull:*)",
+      "Bash(git revert:*)",
+      "Bash(git checkout:*)"
     ]
   }
 }

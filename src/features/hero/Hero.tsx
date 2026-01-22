@@ -3,7 +3,6 @@ import { StatusButton } from './StatusButton'
 import { GuestbookButton } from './GuestbookButton'
 import { VerifiedBadge } from '../../shared/components/VerifiedBadge'
 import { ASCII_CONFIG, ASCII_IMAGE_CONFIG } from '../../constants/ascii'
-import styles from './Hero.module.css'
 
 export function Hero() {
   const canvasRef = useRef<HTMLPreElement>(null)
@@ -132,9 +131,9 @@ export function Hero() {
   }
 
   return (
-    <div className={styles.hero}>
+    <div className="hero">
       <div
-        className={styles.asciiRose}
+        className="ascii-rose"
         ref={containerRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => { mouseRef.current.isHovering = false }}
@@ -146,24 +145,24 @@ export function Hero() {
       <StatusButton />
       <GuestbookButton />
 
-      <div className={styles.nameTagline}>
-        <h1 className={styles.name}>
+      <div className="name-tagline">
+        <h1 className="name">
           Riz Rose
           <VerifiedBadge color="red" />
-          <img loading="lazy" src="/content/logos/radiant logo.png" alt="Radiants" className={styles.companyBadge} />
+          <img loading="lazy" src="/content/logos/radiant logo.png" alt="Radiants" className="company-badge" />
         </h1>
-        <p className={styles.tagline}>translating ideas into visuals</p>
+        <p className="tagline">translating ideas into visuals</p>
 
-        <div className={styles.projectStats}>
-          <span className={styles.statsLabel}>worked with</span>
-          <span className={`${styles.statsCounter} ${isGlitching ? styles.glitch : ''}`}>{projectCount}</span>
-          <span className={styles.statsLabel}>web3 projects</span>
+        <div className="project-stats">
+          <span className="stats-label">worked with</span>
+          <span className={`stats-counter ${isGlitching ? 'glitch' : ''}`}>{projectCount}</span>
+          <span className="stats-label">web3 projects</span>
         </div>
 
-        <div className={styles.clientLogos}>
-          <img loading="lazy" src="/content/logos/hydex logo.png" alt="Hydex" className={styles.logoHydex} />
-          <img loading="lazy" src="/content/logos/rad-BLACK.png" alt="Radiants" className={styles.logoRadiants} />
-          <img loading="lazy" src="/content/logos/Solana Logomark - Color.svg" alt="Solana" className={styles.logoSolana} />
+        <div className="client-logos">
+          <img loading="lazy" src="/content/logos/hydex logo.png" alt="Hydex" className="logo-hydex" />
+          <img loading="lazy" src="/content/logos/rad-BLACK.png" alt="Radiants" className="logo-radiants" />
+          <img loading="lazy" src="/content/logos/Solana Logomark - Color.svg" alt="Solana" className="logo-solana" />
         </div>
       </div>
     </div>
