@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { VerifiedBadge } from './VerifiedBadge'
+import { VerifiedBadge } from '../../shared/components/VerifiedBadge'
 
 export function MenuBar() {
   const [dateStr, setDateStr] = useState('')

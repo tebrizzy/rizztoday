@@ -58,7 +58,16 @@
       "Bash(else)",
       "Bash(fi)",
       "Bash(done)",
-      "Bash(osascript:*)"
+      "Bash(osascript:*)",
+      "Bash(node --check:*)",
+      "WebSearch",
+      "WebFetch(domain:agentation.dev)",
+      "WebFetch(domain:www.npmjs.com)",
+      "Bash(npm create:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run build:*)",
+      "Bash(timeout 10 npm run dev:*)",
+      "Bash(npm run dev:*)"
     ]
   }
 }

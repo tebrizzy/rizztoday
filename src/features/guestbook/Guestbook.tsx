@@ -7,48 +7,23 @@ import {
   orderBy,
   limit,
   getDocs,
-  serverTimestamp,
-  Timestamp
+  serverTimestamp
 } from 'firebase/firestore'
-import { useGuestbookStore } from '../hooks/useGuestbookStore'
+import { useGuestbookStore } from '../../stores/guestbookStore'
+import { GuestbookMessage } from '../../types/guestbook'
+import { formatTime } from '../../utils/time'
+import { escapeHtml } from '../../utils/sanitize'
 
 interface GuestbookProps {
   db: Firestore | null
   isFirebaseReady: boolean
 }
 
-interface Message {
-  id: string
-  name: string
-  message: string
-  timestamp: Timestamp | null
-}
-
-function formatTime(date: Date): string {
-  const now = new Date()
-  const diff = now.getTime() - date.getTime()
-  const mins = Math.floor(diff / 60000)
-  const hours = Math.floor(diff / 3600000)
-  const days = Math.floor(diff / 86400000)
-
-  if (mins < 1) return 'just now'
-  if (mins < 60) return `${mins}m ago`
-  if (hours < 24) return `${hours}h ago`
-  if (days < 7) return `${days}d ago`
-  return date.toLocaleDateString()
-}
-
-function escapeHtml(text: string): string {
-  const div = document.createElement('div')
-  div.textContent = text
-  return div.innerHTML
-}
-
 export function Guestbook({ db, isFirebaseReady }: GuestbookProps) {
   const { isOpen, close, markAsSeen, setHasNewEntries } = useGuestbookStore()
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
-  const [messages, setMessages] = useState<Message[]>([])
+  const [messages, setMessages] = useState<GuestbookMessage[]>([])
   const [loading, setLoading] = useState(false)
 
   // Check for new entries on mount
@@ -76,7 +51,7 @@ export function Guestbook({ db, isFirebaseReady }: GuestbookProps) {
           setHasNewEntries(true)
         }
       } catch (error) {
-        console.error('Error checking new entries:', error)
+        console.error('Error checking new guestbook entries:', error)
       }
     }
 
@@ -97,7 +72,7 @@ export function Guestbook({ db, isFirebaseReady }: GuestbookProps) {
         )
         const snapshot = await getDocs(q)
 
-        const loadedMessages: Message[] = []
+        const loadedMessages: GuestbookMessage[] = []
         snapshot.forEach(doc => {
           const data = doc.data()
           loadedMessages.push({
@@ -111,7 +86,7 @@ export function Guestbook({ db, isFirebaseReady }: GuestbookProps) {
         setMessages(loadedMessages)
         markAsSeen()
       } catch (error) {
-        console.error('Error loading messages:', error)
+        console.error('Error loading guestbook messages:', error)
       }
       setLoading(false)
     }
@@ -140,7 +115,7 @@ export function Guestbook({ db, isFirebaseReady }: GuestbookProps) {
       )
       const snapshot = await getDocs(q)
 
-      const loadedMessages: Message[] = []
+      const loadedMessages: GuestbookMessage[] = []
       snapshot.forEach(doc => {
         const data = doc.data()
         loadedMessages.push({
@@ -153,7 +128,7 @@ export function Guestbook({ db, isFirebaseReady }: GuestbookProps) {
 
       setMessages(loadedMessages)
     } catch (error) {
-      console.error('Error adding message:', error)
+      console.error('Error adding guestbook message:', error)
     }
   }
 

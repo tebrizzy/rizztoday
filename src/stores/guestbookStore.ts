@@ -1,11 +1,5 @@
-interface GuestbookStore {
-  isOpen: boolean
-  hasNewEntries: boolean
-  toggle: () => void
-  close: () => void
-  setHasNewEntries: (value: boolean) => void
-  markAsSeen: () => void
-}
+import { useSyncExternalStore } from 'react'
+import { GuestbookStore } from '../types/guestbook'
 
 // Simple state store without zustand dependency
 let state = {
@@ -33,6 +27,11 @@ export const guestbookStore = {
     }
     notifyListeners()
   },
+  open: () => {
+    state = { ...state, isOpen: true, hasNewEntries: false }
+    localStorage.setItem('guestbookLastSeen', Date.now().toString())
+    notifyListeners()
+  },
   close: () => {
     state = { ...state, isOpen: false }
     notifyListeners()
@@ -48,8 +47,6 @@ export const guestbookStore = {
   }
 }
 
-import { useSyncExternalStore } from 'react'
-
 export function useGuestbookStore(): GuestbookStore {
   const storeState = useSyncExternalStore(
     guestbookStore.subscribe,
@@ -58,7 +55,7 @@ export function useGuestbookStore(): GuestbookStore {
 
   return {
     ...storeState,
-    toggle: guestbookStore.toggle,
+    open: guestbookStore.open,
     close: guestbookStore.close,
     setHasNewEntries: guestbookStore.setHasNewEntries,
     markAsSeen: guestbookStore.markAsSeen

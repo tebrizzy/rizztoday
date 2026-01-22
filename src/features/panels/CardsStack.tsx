@@ -1,43 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
-import { usePanelStore, panelStore } from './MenuButtons'
-
-const PROJECTS = [
-  {
-    title: 'Pitchdeck Design',
-    link: 'https://x.com/rizzytoday/status/1999124944668553387?s=20',
-    logo: '/content/logos/hydex logo.png',
-    logoAlt: 'Hydex',
-    type: 'grid' as const,
-    images: [
-      '/content/PITCHDECK-2.jpeg',
-      '/content/PITCHDECK-3.jpeg',
-      '/content/PITCHDECK-6.jpeg',
-      '/content/PITCHDECK-8.jpeg'
-    ]
-  },
-  {
-    title: 'Motion Design',
-    link: 'https://x.com/rizzytoday/status/1985022653652955614?s=20',
-    logo: '/content/logos/radiant logo.png',
-    logoAlt: 'Radiants',
-    type: 'video' as const,
-    video: '/content/radiants-web.mp4'
-  },
-  {
-    title: 'Solana in Wall Street',
-    link: 'https://x.com/rizzytoday/status/1984049190822146067?s=20',
-    logo: '/content/logos/Solana Logomark - Color.svg',
-    logoAlt: 'Solana',
-    type: 'video' as const,
-    video: '/content/solana.mp4'
-  },
-  {
-    title: 'Logo Animation',
-    link: 'https://x.com/rizzytoday/status/1981382305609314481?s=20',
-    type: 'video' as const,
-    video: '/content/we-split-animation.mp4'
-  }
-]
+import { usePanelStore, panelStore } from '../../stores/panelStore'
+import { PROJECTS } from '../../constants/projects'
 
 export function CardsStack() {
   const activePanel = usePanelStore()
@@ -109,7 +72,7 @@ export function CardsStack() {
               <div className="card-content">
                 {project.type === 'grid' ? (
                   <div className="card-grid-horizontal">
-                    {project.images!.map((img, i) => (
+                    {project.type === 'grid' && project.images && project.images.map((img, i) => (
                       <img key={i} loading="lazy" src={img} alt={`${project.title} ${i + 1}`} />
                     ))}
                   </div>

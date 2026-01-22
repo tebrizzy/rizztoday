@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { StatusButton } from './StatusButton'
 import { GuestbookButton } from './GuestbookButton'
-import { VerifiedBadge } from './VerifiedBadge'
+import { VerifiedBadge } from '../../shared/components/VerifiedBadge'
+import { ASCII_CONFIG, ASCII_IMAGE_CONFIG } from '../../constants/ascii'
 
 export function Hero() {
   const canvasRef = useRef<HTMLPreElement>(null)
@@ -12,12 +13,12 @@ export function Hero() {
   const imageDataRef = useRef<ImageData | null>(null)
   const mouseRef = useRef({ x: 0, y: 0, isHovering: false })
 
-  const asciiChars = ' .:-=+*#%@'
-  const asciiWidth = 140
-  const asciiHeight = 95
-  const padding = 10
-  const imageWidth = asciiWidth - (padding * 2)
-  const imageHeight = asciiHeight - (padding * 2)
+  const asciiChars = ASCII_CONFIG.chars
+  const asciiWidth = ASCII_CONFIG.width
+  const asciiHeight = ASCII_CONFIG.height
+  const padding = ASCII_CONFIG.padding
+  const imageWidth = ASCII_IMAGE_CONFIG.width
+  const imageHeight = ASCII_IMAGE_CONFIG.height
 
   // ASCII animation
   useEffect(() => {
@@ -89,27 +90,36 @@ export function Hero() {
     const targetCount = 19
     let current = 0
     const stepTime = 2800 / targetCount
+    let countUpInterval: NodeJS.Timeout | null = null
+    let glitchTimeout1: NodeJS.Timeout | null = null
+    let glitchTimeout2: NodeJS.Timeout | null = null
+    let glitchLoopTimeout: NodeJS.Timeout | null = null
 
-    const countUp = setInterval(() => {
+    countUpInterval = setInterval(() => {
       current++
       setProjectCount(current)
       if (current >= targetCount) {
-        clearInterval(countUp)
-        setTimeout(startGlitchLoop, 300)
+        clearInterval(countUpInterval!)
+        glitchTimeout1 = setTimeout(startGlitchLoop, 300)
       }
     }, stepTime)
 
     const startGlitchLoop = () => {
       setProjectCount(20)
       setIsGlitching(true)
-      setTimeout(() => {
+      glitchTimeout2 = setTimeout(() => {
         setProjectCount(19)
         setIsGlitching(false)
-        setTimeout(startGlitchLoop, 1500)
+        glitchLoopTimeout = setTimeout(startGlitchLoop, 1500)
       }, 200)
     }
 
-    return () => clearInterval(countUp)
+    return () => {
+      if (countUpInterval) clearInterval(countUpInterval)
+      if (glitchTimeout1) clearTimeout(glitchTimeout1)
+      if (glitchTimeout2) clearTimeout(glitchTimeout2)
+      if (glitchLoopTimeout) clearTimeout(glitchLoopTimeout)
+    }
   }, [])
 
   const handleMouseMove = (e: React.MouseEvent) => {
