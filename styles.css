@@ -676,6 +676,15 @@ body {
 
 .stats-label {
     font-weight: 400;
+    flex: 1;
+}
+
+.stats-label:first-child {
+    text-align: right;
+}
+
+.stats-label:last-child {
+    text-align: left;
 }
 
 .stats-counter {
@@ -2022,7 +2031,7 @@ body {
     }
 
     .project-stats::before {
-        width: 130px;
+        width: 150px;
     }
 
     /* iPod - scale down */
@@ -2219,7 +2228,7 @@ body {
     }
 
     .project-stats::before {
-        width: 110px;
+        width: 125px;
     }
 
     /* iPod - smaller on phone */
