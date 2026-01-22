@@ -164,17 +164,41 @@ if (statusBtn) {
             return; // Don't change status on mobile - just toggle buttons
         }
 
-        // Desktop behavior - text changes, pill width animates with elastic bounce
+        // Desktop behavior - text changes, pill width animates with elastic bounce using FLIP
         isWorking = !isWorking;
         const statusText = statusBtn.querySelector('.status-text');
         const statusDot = statusBtn.querySelector('.status-dot');
+        const newText = isWorking ? 'free for pitchdeck design' : 'available';
 
-        // Change text instantly - button width stretches smoothly
-        if (isWorking) {
-            statusText.textContent = 'free for pitchdeck design';
-        } else {
-            statusText.textContent = 'available';
-        }
+        // FLIP Animation: measure, change, inverse transform, animate back
+        const startWidth = statusBtn.offsetWidth;
+
+        // Change text
+        statusText.textContent = newText;
+
+        // Get new width
+        const endWidth = statusBtn.offsetWidth;
+
+        // Calculate scale ratio
+        const scaleX = startWidth / endWidth;
+
+        // Apply inverse transform instantly (no transition)
+        statusBtn.style.transition = 'none';
+        statusBtn.style.transform = `translate(-50%, -50%) scaleX(${scaleX})`;
+
+        // Force reflow
+        statusBtn.offsetHeight;
+
+        // Animate back with elastic easing
+        statusBtn.style.transition = 'transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)';
+        statusBtn.style.transform = 'translate(-50%, -50%) scaleX(1)';
+
+        // Reset inline styles after animation completes so hover effects work
+        setTimeout(() => {
+            statusBtn.style.transition = '';
+            statusBtn.style.transform = '';
+        }, 350);
+
         statusDot.style.backgroundColor = '#4ade80';
         statusDot.style.boxShadow = '0 0 10px rgba(74, 222, 128, 0.8), 0 0 20px rgba(74, 222, 128, 0.4)';
     });
