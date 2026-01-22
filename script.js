@@ -198,22 +198,15 @@ if (statusBtn) {
 
     statusBtn.addEventListener('click', (e) => {
         // Don't toggle if clicking on action buttons
-        if (e.target.closest('.action-btn')) return;
+        if (e.target.closest('.action-btn')) {
+            return;
+        }
 
         // Toggle actions-visible on click (works for all devices)
         statusBtn.classList.toggle('actions-visible');
         animateStatusChange();
     });
 
-    // Close action buttons when clicking outside (all devices)
-    // Use setTimeout to avoid race condition with button click handler
-    document.addEventListener('click', (e) => {
-        setTimeout(() => {
-            if (!statusBtn.contains(e.target)) {
-                statusBtn.classList.remove('actions-visible');
-            }
-        }, 0);
-    });
 }
 
 // Add click animation to action buttons
@@ -246,7 +239,7 @@ const style = document.createElement('style');
 style.textContent = `
     .action-btn {
         position: relative;
-        overflow: hidden;
+        overflow: visible;
     }
 
     .ripple {
