@@ -24,7 +24,7 @@ export function StatusButton() {
     toggleActions()
   }
 
-  // Handle touch for mobile devices - toggle status instead of showing actions
+  // Handle touch for mobile devices - toggle status AND show actions
   const handleTouchEnd = (e: React.TouchEvent) => {
     if ((e.target as HTMLElement).closest('.action-btn')) return
 
@@ -35,6 +35,7 @@ export function StatusButton() {
     }, 500)
 
     toggleStatus()
+    setActionsVisible(true)
   }
 
   // Close on click outside
