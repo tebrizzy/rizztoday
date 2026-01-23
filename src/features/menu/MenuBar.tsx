@@ -44,6 +44,20 @@ export function MenuBar() {
         </div>
         <div className="menu-bar-right">
           <div className="menu-bar-icons">
+            <a
+              href="https://calendar.app.google/VDEgALuod7HRaJnk6"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="calendar-icon-link"
+              title="Book a call"
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <rect x="2" y="3" width="12" height="11" rx="1" stroke="rgb(255, 255, 255)" strokeWidth="1.2" fill="none"/>
+                <line x1="2" y1="6" x2="14" y2="6" stroke="rgb(255, 255, 255)" strokeWidth="1.2"/>
+                <line x1="5" y1="1" x2="5" y2="4" stroke="rgb(255, 255, 255)" strokeWidth="1.2" strokeLinecap="round"/>
+                <line x1="11" y1="1" x2="11" y2="4" stroke="rgb(255, 255, 255)" strokeWidth="1.2" strokeLinecap="round"/>
+              </svg>
+            </a>
             <svg width="14" height="10" viewBox="0 0 18 13" fill="none">
               <path d="M9 0C6.24 0 3.9 1.23 2.25 3.15L0.75 1.65C2.85 -0.55 5.7 -1.5 9 -1.5C12.3 -1.5 15.15 -0.55 17.25 1.65L15.75 3.15C14.1 1.23 11.76 0 9 0ZM9 4.5C7.35 4.5 5.85 5.25 4.8 6.45L3.3 4.95C4.8 3.3 6.75 2.25 9 2.25C11.25 2.25 13.2 3.3 14.7 4.95L13.2 6.45C12.15 5.25 10.65 4.5 9 4.5ZM9 9C8.4 9 7.8 9.15 7.35 9.45L5.85 7.95C6.75 7.05 7.8 6.75 9 6.75C10.2 6.75 11.25 7.05 12.15 7.95L10.65 9.45C10.2 9.15 9.6 9 9 9ZM11.25 10.5L9 12.75L6.75 10.5H11.25Z" fill="rgb(255, 255, 255)"/>
             </svg>
