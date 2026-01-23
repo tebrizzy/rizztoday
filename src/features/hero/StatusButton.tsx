@@ -2,11 +2,16 @@ import { useState, useRef, useEffect } from 'react'
 
 export function StatusButton() {
   const [actionsVisible, setActionsVisible] = useState(false)
+  const [statusText, setStatusText] = useState('free for pitchdeck design')
   const buttonRef = useRef<HTMLButtonElement>(null)
   const touchHandledRef = useRef(false)
 
   const toggleActions = () => {
     setActionsVisible(prev => !prev)
+  }
+
+  const toggleStatus = () => {
+    setStatusText(prev => prev === 'free for pitchdeck design' ? 'available' : 'free for pitchdeck design')
   }
 
   const handleClick = (e: React.MouseEvent) => {
@@ -19,7 +24,7 @@ export function StatusButton() {
     toggleActions()
   }
 
-  // Handle touch for mobile devices
+  // Handle touch for mobile devices - toggle status instead of showing actions
   const handleTouchEnd = (e: React.TouchEvent) => {
     if ((e.target as HTMLElement).closest('.action-btn')) return
 
@@ -29,7 +34,7 @@ export function StatusButton() {
       touchHandledRef.current = false
     }, 500)
 
-    toggleActions()
+    toggleStatus()
   }
 
   // Close on click outside
@@ -59,7 +64,7 @@ export function StatusButton() {
       onTouchEnd={handleTouchEnd}
     >
       <span className="status-dot"></span>
-      <span className="status-text">free for pitchdeck design</span>
+      <span className="status-text">{statusText}</span>
 
       <div className="action-buttons">
         <a
