@@ -3,20 +3,32 @@ import { useState, useRef, useEffect } from 'react'
 export function StatusButton() {
   const [actionsVisible, setActionsVisible] = useState(false)
   const buttonRef = useRef<HTMLButtonElement>(null)
+  const touchHandledRef = useRef(false)
 
   const toggleActions = () => {
     setActionsVisible(prev => !prev)
   }
 
   const handleClick = (e: React.MouseEvent) => {
+    // Prevent duplicate handling if touch was already processed
+    if (touchHandledRef.current) {
+      touchHandledRef.current = false
+      return
+    }
     if ((e.target as HTMLElement).closest('.action-btn')) return
     toggleActions()
   }
 
-  // Handle touch for iOS
+  // Handle touch for mobile devices
   const handleTouchEnd = (e: React.TouchEvent) => {
     if ((e.target as HTMLElement).closest('.action-btn')) return
-    e.preventDefault()
+
+    // Mark that touch was handled to prevent click event from firing
+    touchHandledRef.current = true
+    setTimeout(() => {
+      touchHandledRef.current = false
+    }, 500)
+
     toggleActions()
   }
 
