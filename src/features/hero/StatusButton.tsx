@@ -51,7 +51,7 @@ export function StatusButton() {
 
       <div className="action-buttons">
         <a
-          href="https://calendar.google.com/calendar/appointments/schedules/AcZssZ0-EvpHYoLjrPV2bm5X8RVJzC7IaXpJ8X4xWZfxQhYd2K0vYDjvYm0U5nBxYr1JKoZb0xKZ5Y5Z"
+          href="https://calendar.app.google/mpTJKMqZ8cTz5KD79"
           target="_blank"
           rel="noopener noreferrer"
           className="action-btn"
