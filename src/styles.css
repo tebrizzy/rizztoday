@@ -1038,29 +1038,14 @@ body {
 /* Mobile sticky note */
 @media (max-width: 768px) {
     .sticky-note {
-        right: 12px;
-        left: auto;
-        top: 55px;
-        transform: rotate(2deg);
-        padding: 10px 14px;
-        min-width: 100px;
+        display: none;
     }
-    .sticky-item { gap: 6px; margin-bottom: 5px; }
-    .sticky-item label { font-size: 13px; }
-    .sticky-item input[type="checkbox"] { width: 12px; height: 12px; }
 }
 
 @media (max-width: 480px) {
     .sticky-note {
-        right: 10px;
-        top: 50px;
-        padding: 8px 12px;
-        min-width: 90px;
+        display: none;
     }
-    .sticky-item { gap: 5px; margin-bottom: 4px; }
-    .sticky-item label { font-size: 11px; }
-    .sticky-item input[type="checkbox"] { width: 10px; height: 10px; }
-    .sticky-item input[type="checkbox"]:checked::after { font-size: 10px; }
 }
 
 /* Bottom fold effect */
@@ -1377,8 +1362,11 @@ body {
 /* Service Pills - Mobile */
 @media (max-width: 768px) {
     .service-pills-container {
-        left: 20px;
-        bottom: 120px;
+        left: auto;
+        right: 12px;
+        top: 55px;
+        bottom: auto;
+        align-items: flex-end;
         z-index: 100;
     }
 
@@ -1387,14 +1375,24 @@ body {
         font-size: 12px;
     }
 
+    .service-pills {
+        position: absolute;
+        top: calc(100% + 10px);
+        bottom: auto;
+        left: auto;
+        right: 0;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
     .service-card {
         position: fixed;
-        top: auto;
-        left: 20px;
-        right: auto;
-        bottom: 180px;
-        transform: scale(0.85) translateY(10px);
-        transform-origin: bottom left;
+        top: 160px;
+        left: auto;
+        right: 12px;
+        bottom: auto;
+        transform: scale(0.85) translateY(-10px);
+        transform-origin: top right;
         width: min(220px, 75vw);
         padding: 12px;
         border-radius: 12px;
@@ -1439,9 +1437,8 @@ body {
 /* Service Pills - Small Mobile */
 @media (max-width: 480px) {
     .service-pills-container {
-        left: 15px;
-        bottom: 110px;
-        z-index: 100;
+        right: 10px;
+        top: 50px;
     }
 
     .hire-me-btn {
@@ -1460,8 +1457,8 @@ body {
     }
 
     .service-card {
-        left: 15px;
-        bottom: 170px;
+        top: 150px;
+        right: 10px;
         width: min(200px, 70vw);
         padding: 10px;
         border-radius: 10px;
