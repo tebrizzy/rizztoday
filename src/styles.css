@@ -1378,7 +1378,8 @@ body {
 @media (max-width: 768px) {
     .service-pills-container {
         left: 20px;
-        bottom: 80px;
+        bottom: 120px;
+        z-index: 100;
     }
 
     .hire-me-btn {
@@ -1406,7 +1407,8 @@ body {
 @media (max-width: 480px) {
     .service-pills-container {
         left: 15px;
-        bottom: 75px;
+        bottom: 110px;
+        z-index: 100;
     }
 
     .hire-me-btn {
