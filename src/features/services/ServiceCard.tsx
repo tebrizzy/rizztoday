@@ -3,10 +3,9 @@ import type { Service } from '../../constants/services'
 
 interface ServiceCardProps {
   service: Service
-  onClose: () => void
 }
 
-export function ServiceCard({ service, onClose }: ServiceCardProps) {
+export function ServiceCard({ service }: ServiceCardProps) {
   const [isVisible, setIsVisible] = useState(false)
   const isVideo = service.preview.endsWith('.mp4')
 
