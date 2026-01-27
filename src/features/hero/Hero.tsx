@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { StatusButton } from './StatusButton'
 import { GuestbookButton } from './GuestbookButton'
 import { VerifiedBadge } from '../../shared/components/VerifiedBadge'
+import { ServicePills } from '../services/ServicePills'
 import { ASCII_CONFIG, ASCII_IMAGE_CONFIG } from '../../constants/ascii'
 
 export function Hero() {
@@ -10,6 +11,7 @@ export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [projectCount, setProjectCount] = useState(0)
   const [isGlitching, setIsGlitching] = useState(false)
+  const [isPfpSpinning, setIsPfpSpinning] = useState(false)
   const imageDataRef = useRef<ImageData | null>(null)
   const mouseRef = useRef({ x: 0, y: 0, isHovering: false })
 
@@ -144,8 +146,18 @@ export function Hero() {
 
       <StatusButton />
       <GuestbookButton />
+      <ServicePills />
 
       <div className="name-tagline">
+        <img
+          src="/newpfp.png"
+          alt="Riz Rose"
+          className={`hero-pfp ${isPfpSpinning ? 'spin' : ''}`}
+          onClick={() => {
+            setIsPfpSpinning(true)
+            setTimeout(() => setIsPfpSpinning(false), 600)
+          }}
+        />
         <h1 className="name">
           Riz Rose
           <VerifiedBadge color="red" />
