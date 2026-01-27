@@ -20,10 +20,6 @@ export function ServicePills() {
     setExpandedId(expandedId === id ? null : id)
   }
 
-  const handleCardClose = () => {
-    setExpandedId(null)
-  }
-
   // Close everything when clicking outside
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -67,7 +63,7 @@ export function ServicePills() {
       </div>
 
       {expandedService && (
-        <ServiceCard service={expandedService} onClose={handleCardClose} />
+        <ServiceCard service={expandedService} />
       )}
     </div>
   )
