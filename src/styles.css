@@ -1389,12 +1389,12 @@ body {
 
     .service-card {
         position: fixed;
-        top: 50%;
-        left: 50%;
+        top: auto;
+        left: 20px;
         right: auto;
-        bottom: auto;
-        transform: translate(-50%, -50%) scale(0.85);
-        transform-origin: center center;
+        bottom: 180px;
+        transform: scale(0.85) translateY(10px);
+        transform-origin: bottom left;
         width: min(220px, 75vw);
         padding: 12px;
         border-radius: 12px;
@@ -1402,7 +1402,7 @@ body {
     }
 
     .service-card.active {
-        transform: translate(-50%, -50%) scale(1);
+        transform: scale(1) translateY(0);
     }
 
     .service-card-preview {
@@ -1460,6 +1460,8 @@ body {
     }
 
     .service-card {
+        left: 15px;
+        bottom: 170px;
         width: min(200px, 70vw);
         padding: 10px;
         border-radius: 10px;
