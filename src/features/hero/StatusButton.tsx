@@ -3,6 +3,8 @@ import { useState, useRef, useEffect } from 'react'
 export function StatusButton() {
   const [actionsVisible, setActionsVisible] = useState(false)
   const [statusText, setStatusText] = useState('free for pitchdeck design')
+  const [isChanging, setIsChanging] = useState(false)
+  const [textAnimClass, setTextAnimClass] = useState('')
   const buttonRef = useRef<HTMLButtonElement>(null)
   const touchHandledRef = useRef(false)
 
@@ -11,7 +13,24 @@ export function StatusButton() {
   }
 
   const toggleStatus = () => {
-    setStatusText(prev => prev === 'free for pitchdeck design' ? 'available' : 'free for pitchdeck design')
+    // Start changing state for dot animation
+    setIsChanging(true)
+
+    // Animate text out
+    setTextAnimClass('animating-out')
+
+    setTimeout(() => {
+      // Change the text
+      setStatusText(prev => prev === 'free for pitchdeck design' ? 'available' : 'free for pitchdeck design')
+      // Animate text in
+      setTextAnimClass('animating-in')
+
+      setTimeout(() => {
+        // Clear animation classes
+        setTextAnimClass('')
+        setIsChanging(false)
+      }, 300)
+    }, 200)
   }
 
   const handleClick = (e: React.MouseEvent) => {
@@ -60,12 +79,12 @@ export function StatusButton() {
   return (
     <button
       ref={buttonRef}
-      className={`status-btn ${actionsVisible ? 'actions-visible' : ''}`}
+      className={`status-btn ${actionsVisible ? 'actions-visible' : ''} ${isChanging ? 'changing' : ''}`}
       onClick={handleClick}
       onTouchEnd={handleTouchEnd}
     >
       <span className="status-dot"></span>
-      <span className="status-text">{statusText}</span>
+      <span className={`status-text ${textAnimClass}`}>{statusText}</span>
 
       <div className="action-buttons">
         <a
