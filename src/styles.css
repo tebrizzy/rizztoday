@@ -143,6 +143,9 @@ body {
     background: transparent;
     border-radius: 12px;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     opacity: 0;
     visibility: hidden;
     transform: scale(0.85) translateY(-10px);
@@ -209,8 +212,10 @@ body {
     transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     padding: 12px 22px;
+    min-width: 160px;
     background: var(--glass-bg);
     backdrop-filter: var(--glass-blur);
     -webkit-backdrop-filter: var(--glass-blur);
@@ -237,27 +242,27 @@ body {
     50% { opacity: 0.7; transform: scale(1.1); }
 }
 
-/* Status text transition animations */
+/* Status text transition animations - lottery/slot machine style */
 @keyframes status-text-out {
-    0% { opacity: 1; transform: translateY(0); filter: blur(0); }
-    100% { opacity: 0; transform: translateY(-6px); filter: blur(3px); }
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-12px); }
 }
 
 @keyframes status-text-in {
-    0% { opacity: 0; transform: translateY(6px); filter: blur(3px); }
-    100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* Status dot activation pulse */
-@keyframes status-activate {
-    0% { transform: scale(1); }
-    30% { transform: scale(1.4); box-shadow: 0 0 20px rgba(74, 222, 128, 1); }
-    60% { transform: scale(0.9); }
-    100% { transform: scale(1); }
+/* Status dot - shrink to nothing then grow back (masks position shift) */
+@keyframes status-dot-morph {
+    0% { transform: scale(1); opacity: 1; }
+    40% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
 }
 
 .status-btn.changing .status-dot {
-    animation: status-activate 0.5s var(--bounce-ease);
+    animation: status-dot-morph 0.35s var(--smooth-ease);
 }
 
 .status-text {
@@ -267,11 +272,11 @@ body {
 }
 
 .status-text.animating-out {
-    animation: status-text-out 0.2s var(--smooth-ease) forwards;
+    animation: status-text-out 0.15s var(--smooth-ease) forwards;
 }
 
 .status-text.animating-in {
-    animation: status-text-in 0.3s var(--smooth-ease) forwards;
+    animation: status-text-in 0.2s var(--bounce-ease) forwards;
 }
 
 /* Action Buttons */
@@ -938,10 +943,14 @@ body {
 
     /* Touch active press feedback */
     .hire-me-btn:active,
-    .service-pill:active,
-    .status-btn:active {
+    .service-pill:active {
         transform: scale(0.97) !important;
         transition: transform 0.1s var(--smooth-ease) !important;
+    }
+
+    /* Keep status button stable on touch - no scaling */
+    .status-btn:active {
+        transform: translate(-50%, -50%) scale(1) !important;
     }
 
     .status-btn .action-buttons { opacity: 0; transform: translateX(-50%) scale(0.85) translateY(-10px); }
@@ -1129,7 +1138,7 @@ body {
 }
 
 .hire-me-btn {
-    display: flex;
+    display: none; /* temporarily hidden */
     align-items: center;
     gap: 8px;
     padding: 12px 20px;
