@@ -30,6 +30,16 @@
 
 html, body { height: 100%; overflow: clip; }
 
+/* Braille Spinner */
+.braille-spinner {
+    font-size: 14px;
+    color: var(--framer-red);
+    font-family: monospace;
+    width: 1em;
+    display: inline-block;
+    text-align: center;
+}
+
 body {
     font-family: 'Inter Tight', sans-serif;
     background-color: var(--bg-primary);

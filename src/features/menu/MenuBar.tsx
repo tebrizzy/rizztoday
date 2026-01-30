@@ -1,10 +1,20 @@
 import { useState, useEffect } from 'react'
 import { VerifiedBadge } from '../../shared/components/VerifiedBadge'
 
+const SPINNER_FRAMES = ['⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏']
+
 export function MenuBar() {
   const [dateStr, setDateStr] = useState('')
   const [timeStr, setTimeStr] = useState('')
   const [notificationActive, setNotificationActive] = useState(false)
+  const [spinnerFrame, setSpinnerFrame] = useState(0)
+
+  useEffect(() => {
+    const spinnerInterval = setInterval(() => {
+      setSpinnerFrame(f => (f + 1) % SPINNER_FRAMES.length)
+    }, 80)
+    return () => clearInterval(spinnerInterval)
+  }, [])
 
   useEffect(() => {
     const updateDateTime = () => {
@@ -37,6 +47,7 @@ export function MenuBar() {
                 <path d="M 22 4 L 22 6.667 L 22 9.333 L 16.5 9.333 L 11 9.333 L 11 4 Z M 11 9.333 L 15.469 9.333 L 22 20 L 22 20 L 19.25 20 L 15.469 14.667 L 15.469 20 L 11 20 Z" fill="rgb(227, 32, 32)"/>
               </svg>
             </div>
+            <span className="braille-spinner">{SPINNER_FRAMES[spinnerFrame]}</span>
           </div>
           <div className="nav-links">
             <a href="./archive" className="nav-link archive">Archive</a>
