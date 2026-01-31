@@ -1,17 +1,23 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, lazy, Suspense } from 'react'
 import { StatusButton } from './StatusButton'
 import { GuestbookButton } from './GuestbookButton'
 import { VerifiedBadge } from '../../shared/components/VerifiedBadge'
 import { ServicePills } from '../services/ServicePills'
 import { ASCII_CONFIG, ASCII_IMAGE_CONFIG } from '../../constants/ascii'
 
+// Lazy load shader to not block LCP
+const LiquidGlassShader = lazy(() =>
+  import('./LiquidGlassShader').then(m => ({ default: m.LiquidGlassShader }))
+)
+
 export function Hero() {
   const canvasRef = useRef<HTMLPreElement>(null)
   const imageCanvasRef = useRef<HTMLCanvasElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
   const [projectCount, setProjectCount] = useState(0)
   const [isGlitching, setIsGlitching] = useState(false)
   const [isPfpSpinning, setIsPfpSpinning] = useState(false)
+  const [shaderSize, setShaderSize] = useState({ width: 0, height: 0 })
+  const [shaderReady, setShaderReady] = useState(false)
   const imageDataRef = useRef<ImageData | null>(null)
   const mouseRef = useRef({ x: 0, y: 0, isHovering: false })
 
@@ -87,6 +93,37 @@ export function Hero() {
     return () => cancelAnimationFrame(animationId)
   }, [])
 
+  // Measure window for shader overlay - delay until after LCP
+  useEffect(() => {
+    const updateSize = () => {
+      setShaderSize({ width: window.innerWidth, height: window.innerHeight })
+    }
+
+    // Delay shader loading until after LCP (2-3 seconds after page load)
+    const loadShader = () => {
+      updateSize()
+      setShaderReady(true)
+    }
+
+    // Use requestIdleCallback if available, otherwise setTimeout
+    let idleId: number | undefined
+    let timeoutId: ReturnType<typeof setTimeout> | undefined
+
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(loadShader, { timeout: 3000 })
+    } else {
+      timeoutId = setTimeout(loadShader, 2000)
+    }
+
+    window.addEventListener('resize', updateSize)
+
+    return () => {
+      if (idleId !== undefined) window.cancelIdleCallback(idleId)
+      if (timeoutId !== undefined) clearTimeout(timeoutId)
+      window.removeEventListener('resize', updateSize)
+    }
+  }, [])
+
   // Project counter animation
   useEffect(() => {
     const targetCount = 19
@@ -124,24 +161,16 @@ export function Hero() {
     }
   }, [])
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!containerRef.current) return
-    const rect = containerRef.current.getBoundingClientRect()
-    mouseRef.current.x = ((e.clientX - rect.left) / rect.width) * asciiWidth
-    mouseRef.current.y = ((e.clientY - rect.top) / rect.height) * asciiHeight
-    mouseRef.current.isHovering = true
-  }
-
   return (
     <div className="hero">
-      <div
-        className="ascii-rose"
-        ref={containerRef}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={() => { mouseRef.current.isHovering = false }}
-      >
-        <pre ref={canvasRef}></pre>
-      </div>
+      {shaderReady && shaderSize.width > 0 && (
+        <Suspense fallback={null}>
+          <LiquidGlassShader
+            width={shaderSize.width}
+            height={shaderSize.height}
+          />
+        </Suspense>
+      )}
       <canvas ref={imageCanvasRef} style={{ display: 'none' }} />
 
       <StatusButton />
@@ -153,6 +182,7 @@ export function Hero() {
           src="/newpfp.png"
           alt="Riz Rose"
           className={`hero-pfp ${isPfpSpinning ? 'spin' : ''}`}
+          fetchPriority="high"
           onClick={() => {
             setIsPfpSpinning(true)
             setTimeout(() => setIsPfpSpinning(false), 600)
