@@ -131,7 +131,7 @@ export function AboutCard({ db, isFirebaseReady }: AboutCardProps) {
           <p className="about-intro">hi, i'm riz.</p>
           <p>i turn ideas into visuals — pitch decks, brand identities, motion graphics. mostly for web3 people and indie creators who need to stand out.</p>
           <p>creative direction mostly for web3...</p>
-          <p className="about-vibes">same suffering as you...</p>
+          <p className="about-vibes">same suffering as you, just too stubborn to stay down. glad i was born at the right time.</p>
         </div>
         <div className="emoji-reactions">
           {EMOJIS.map(({ key, emoji }) => (
