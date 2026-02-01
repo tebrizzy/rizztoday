@@ -176,7 +176,7 @@ export function Hero() {
           <img loading="lazy" src="/content/logos/hydex logo.png" alt="Hydex" className="logo-hydex" />
           <img loading="lazy" src="/content/logos/rad-BLACK.png" alt="Radiants" className="logo-radiants" />
           <img loading="lazy" src="/content/logos/Solana Logomark - Color.svg" alt="Solana" className="logo-solana" />
-          <img loading="lazy" src="/content/logos/soladex.png" alt="Soladex" className="logo-soladex" />
+          <img loading="lazy" src="/content/logos/soladex.svg" alt="Soladex" className="logo-soladex" />
         </div>
       </div>
     </div>
