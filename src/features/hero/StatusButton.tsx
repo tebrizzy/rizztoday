@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 
 export function StatusButton() {
   const [actionsVisible, setActionsVisible] = useState(false)
-  const [statusText, setStatusText] = useState('free for pitchdeck design')
+  const [statusText, setStatusText] = useState('active')
   const [isChanging, setIsChanging] = useState(false)
   const [textAnimClass, setTextAnimClass] = useState('')
   const buttonRef = useRef<HTMLButtonElement>(null)
@@ -13,24 +13,19 @@ export function StatusButton() {
   }
 
   const toggleStatus = () => {
-    // Start changing state for dot animation
+    if (isChanging) return // Prevent double-tap
     setIsChanging(true)
-
-    // Animate text out
     setTextAnimClass('animating-out')
 
     setTimeout(() => {
-      // Change the text
-      setStatusText(prev => prev === 'free for pitchdeck design' ? 'available' : 'free for pitchdeck design')
-      // Animate text in
+      setStatusText(prev => prev === 'active' ? 'free for pitchdeck' : 'active')
       setTextAnimClass('animating-in')
 
       setTimeout(() => {
-        // Clear animation classes
         setTextAnimClass('')
         setIsChanging(false)
-      }, 300)
-    }, 200)
+      }, 200)
+    }, 150)
   }
 
   const handleClick = (e: React.MouseEvent) => {
@@ -40,6 +35,7 @@ export function StatusButton() {
       return
     }
     if ((e.target as HTMLElement).closest('.action-btn')) return
+    toggleStatus()
     toggleActions()
   }
 
@@ -116,6 +112,16 @@ export function StatusButton() {
         >
           <span className="btn-label">Discord</span>
           <span className="btn-emoji">📞</span>
+        </a>
+        <a
+          href="https://github.com/rizzytoday"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="action-btn"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <span className="btn-label">GitHub</span>
+          <span className="btn-emoji">🐙</span>
         </a>
       </div>
     </button>
