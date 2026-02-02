@@ -14,6 +14,7 @@ export function Hero() {
   const [isPfpSpinning, setIsPfpSpinning] = useState(false)
   const imageDataRef = useRef<ImageData | null>(null)
   const mouseRef = useRef({ x: 0, y: 0, isHovering: false })
+  const [asciiReady, setAsciiReady] = useState(false)
 
   const asciiChars = ASCII_CONFIG.chars
   const asciiWidth = ASCII_CONFIG.width
@@ -61,6 +62,7 @@ export function Hero() {
         output += '\n'
       }
       canvasRef.current.textContent = output
+      setAsciiReady(true)
     }
 
     let animationId: number
@@ -175,7 +177,7 @@ export function Hero() {
   return (
     <div className="hero">
       <div
-        className="ascii-rose"
+        className={`ascii-rose ${asciiReady ? 'ready' : ''}`}
         ref={containerRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => { mouseRef.current.isHovering = false }}

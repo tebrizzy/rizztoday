@@ -211,6 +211,8 @@ body {
     transition: opacity 0.35s var(--smooth-ease);
     cursor: crosshair;
 }
+.ascii-rose { opacity: 0; }
+.ascii-rose.ready { opacity: 0.4; }
 .ascii-rose:hover { opacity: 0.6; }
 .ascii-rose pre { font-family: 'Fragment Mono', monospace; font-size: 8px; line-height: 1; color: var(--text-primary); margin: 0; padding: 0; white-space: pre; letter-spacing: 0.5px; text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
 
@@ -413,7 +415,7 @@ body {
 
 /* Name Tagline */
 .name-tagline { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); text-align: center; z-index: 5; }
-.hero-pfp { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255, 255, 255, 0.2); margin-bottom: 2px; opacity: 0.8; transition: opacity 0.3s var(--smooth-ease), transform 0.5s var(--bounce-ease); cursor: pointer; }
+.hero-pfp { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255, 255, 255, 0.2); margin-bottom: 6px; opacity: 0.9; transition: opacity 0.3s var(--smooth-ease), transform 0.5s var(--bounce-ease); cursor: pointer; }
 .hero-pfp:hover { opacity: 1; transform: scale(1.1); }
 .hero-pfp.spin { animation: spin360 0.6s var(--bounce-ease); }
 @keyframes spin360 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
