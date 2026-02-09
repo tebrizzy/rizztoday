@@ -429,7 +429,7 @@ body {
 .client-logos img.logo-hydex { height: 14px; }
 .client-logos img.logo-radiants { height: 17px; }
 .client-logos img.logo-soladex { height: 16px; }
-.client-logos img.logo-skr { height: 15px; }
+.client-logos img.logo-skr { height: 18px; }
 .client-logos img:hover { filter: none; opacity: 1; transform: scale(1.15); }
 .client-logos img.logo-hydex:hover { filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.7)); }
 .client-logos img.logo-radiants:hover { filter: brightness(0) saturate(100%) invert(89%) sepia(25%) saturate(748%) hue-rotate(332deg) brightness(103%) contrast(98%) drop-shadow(0 0 8px rgba(252, 225, 132, 0.8)); }
