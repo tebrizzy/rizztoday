@@ -31,11 +31,19 @@ export function useFirebase() {
       }
     }
 
-    // Defer until after page is interactive
+    // Defer Firebase until well after first paint — not needed for initial render
+    const deferLoad = () => {
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadFirebase, { timeout: 5000 })
+      } else {
+        setTimeout(loadFirebase, 3000)
+      }
+    }
+
     if (document.readyState === 'complete') {
-      loadFirebase()
+      deferLoad()
     } else {
-      window.addEventListener('load', loadFirebase, { once: true })
+      window.addEventListener('load', deferLoad, { once: true })
     }
   }, [])
 

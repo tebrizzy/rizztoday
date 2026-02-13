@@ -206,6 +206,8 @@ export function Hero() {
         <img
           src="/newpfp.png"
           alt="Riz Rose"
+          width={64}
+          height={64}
           className={`hero-pfp ${isPfpSpinning ? 'spin' : ''}`}
           fetchPriority="high"
           onClick={() => {

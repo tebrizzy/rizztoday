@@ -1,10 +1,11 @@
 import { lazy, Suspense } from 'react'
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/react'
 import { MenuBar } from './features/menu/MenuBar'
 import { Hero } from './features/hero/Hero'
 import { ClickWave } from './shared/components/ClickWave'
 import { useFirebase } from './services/firebase'
+
+const Analytics = lazy(() => import('@vercel/analytics/react').then(m => ({ default: m.Analytics })))
+const SpeedInsights = lazy(() => import('@vercel/speed-insights/react').then(m => ({ default: m.SpeedInsights })))
 
 // Lazy-load offscreen panels and decorative elements (not visible at first paint)
 const MenuButtons = lazy(() => import('./features/panels/MenuButtons').then(m => ({ default: m.MenuButtons })))
@@ -38,8 +39,10 @@ function App() {
         <Guestbook db={db} isFirebaseReady={isReady} />
       </Suspense>
       <ClickWave />
-      <Analytics />
-      <SpeedInsights />
+      <Suspense fallback={null}>
+        <Analytics />
+        <SpeedInsights />
+      </Suspense>
     </>
   )
 }

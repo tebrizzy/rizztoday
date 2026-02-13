@@ -79,7 +79,9 @@ export function CardsStack() {
                     ))}
                   </div>
                 ) : (
-                  <video src={project.video} autoPlay loop muted playsInline />
+                  isActive
+                    ? <video src={project.video} autoPlay loop muted playsInline />
+                    : <div className="card-video-placeholder" />
                 )}
               </div>
               <div className="card-caption">
