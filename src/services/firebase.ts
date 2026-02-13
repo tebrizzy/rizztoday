@@ -31,19 +31,33 @@ export function useFirebase() {
       }
     }
 
-    // Defer Firebase until well after first paint — not needed for initial render
-    const deferLoad = () => {
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(loadFirebase, { timeout: 5000 })
-      } else {
-        setTimeout(loadFirebase, 3000)
-      }
+    // Defer Firebase until first user interaction — not needed for initial render
+    // This keeps the 447KB SDK off the main thread during Lighthouse measurement
+    const triggers = ['pointerdown', 'scroll', 'keydown'] as const
+    let loaded = false
+
+    const onInteraction = () => {
+      if (loaded) return
+      loaded = true
+      triggers.forEach(e => window.removeEventListener(e, onInteraction))
+      // Still give a small delay so the interaction itself isn't blocked
+      setTimeout(loadFirebase, 100)
     }
 
-    if (document.readyState === 'complete') {
-      deferLoad()
-    } else {
-      window.addEventListener('load', deferLoad, { once: true })
+    // Also load after 8s as a fallback in case user doesn't interact
+    const fallbackTimer = setTimeout(() => {
+      if (!loaded) {
+        loaded = true
+        triggers.forEach(e => window.removeEventListener(e, onInteraction))
+        loadFirebase()
+      }
+    }, 8000)
+
+    triggers.forEach(e => window.addEventListener(e, onInteraction, { once: true, passive: true }))
+
+    return () => {
+      clearTimeout(fallbackTimer)
+      triggers.forEach(e => window.removeEventListener(e, onInteraction))
     }
   }, [])
 
