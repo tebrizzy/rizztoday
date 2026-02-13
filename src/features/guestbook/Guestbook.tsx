@@ -12,7 +12,6 @@ import {
 import { useGuestbookStore } from '../../stores/guestbookStore'
 import { GuestbookMessage } from '../../types/guestbook'
 import { formatTime } from '../../utils/time'
-import { escapeHtml } from '../../utils/sanitize'
 
 interface GuestbookProps {
   db: Firestore | null
@@ -25,6 +24,7 @@ export function Guestbook({ db, isFirebaseReady }: GuestbookProps) {
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState<GuestbookMessage[]>([])
   const [loading, setLoading] = useState(false)
+  const [lastSubmitTime, setLastSubmitTime] = useState(0)
 
   // Check for new entries on mount
   useEffect(() => {
@@ -96,6 +96,9 @@ export function Guestbook({ db, isFirebaseReady }: GuestbookProps) {
 
   const handleSubmit = async () => {
     if (!name.trim() || !message.trim() || !db) return
+    const now = Date.now()
+    if (now - lastSubmitTime < 10000) return
+    setLastSubmitTime(now)
 
     try {
       await addDoc(collection(db, 'guestbook'), {
@@ -132,8 +135,10 @@ export function Guestbook({ db, isFirebaseReady }: GuestbookProps) {
     }
   }
 
-  // Close on outside click
+  // Close on outside click — only listen when open
   useEffect(() => {
+    if (!isOpen) return
+
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement
       if (
@@ -147,7 +152,7 @@ export function Guestbook({ db, isFirebaseReady }: GuestbookProps) {
 
     document.addEventListener('click', handleClickOutside)
     return () => document.removeEventListener('click', handleClickOutside)
-  }, [close])
+  }, [isOpen, close])
 
   return (
     <>
@@ -191,13 +196,13 @@ export function Guestbook({ db, isFirebaseReady }: GuestbookProps) {
             messages.map(msg => (
               <div key={msg.id} className="guest-message-wrapper">
                 <div className="guest-header">
-                  <span className="guest-name">{escapeHtml(msg.name)}</span>
+                  <span className="guest-name">{msg.name}</span>
                   {msg.timestamp && (
                     <span className="guest-time">{formatTime(msg.timestamp.toDate())}</span>
                   )}
                 </div>
                 <div className="guest-message">
-                  <div className="guest-text">{escapeHtml(msg.message)}</div>
+                  <div className="guest-text">{msg.message}</div>
                 </div>
               </div>
             ))

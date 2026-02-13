@@ -12,7 +12,11 @@ service cloud.firestore {
     }
     match /reactions/{doc} {
       allow read: if true;
-      allow write: if true;
+      allow update: if doc == 'counts'
+                    && request.resource.data.diff(resource.data).affectedKeys()
+                       .hasOnly(['salute', 'sword', 'basketball', 'heart']);
+      allow create: if false;
+      allow delete: if false;
     }
   }
 }

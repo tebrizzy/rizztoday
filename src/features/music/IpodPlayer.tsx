@@ -37,7 +37,7 @@ export function IpodPlayer() {
     const newIndex = loadTrack(currentTrack - 1)
     if (audioRef.current) {
       audioRef.current.src = PLAYLIST[newIndex].src
-      if (isPlaying) audioRef.current.play()
+      if (isPlaying) audioRef.current.play().catch(() => setIsPlaying(false))
     }
   }
 
@@ -45,7 +45,7 @@ export function IpodPlayer() {
     const newIndex = loadTrack(currentTrack + 1)
     if (audioRef.current) {
       audioRef.current.src = PLAYLIST[newIndex].src
-      if (isPlaying) audioRef.current.play()
+      if (isPlaying) audioRef.current.play().catch(() => setIsPlaying(false))
     }
   }
 
@@ -54,7 +54,7 @@ export function IpodPlayer() {
       const newIndex = loadTrack(currentTrack + 1)
       if (audioRef.current) {
         audioRef.current.src = PLAYLIST[newIndex].src
-        audioRef.current.play()
+        audioRef.current.play().catch(() => setIsPlaying(false))
       }
     } else {
       setIsPlaying(false)
