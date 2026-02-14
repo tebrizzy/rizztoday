@@ -1,17 +1,14 @@
 import { useEffect, useRef } from 'react'
 
 const TRAIL_COUNT = 5
-const TRAIL_DELAY = 1 // ~1ms stagger per ghost
-
-// 1x1 transparent PNG as data URI — bulletproof cursor hide
-const TRANSPARENT_CURSOR = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABmJLR0QA/wD/AP+gvaeTAAAAC0lEQVQI12NgAAIABQABNjN9GQAAAABJRu5ErkJggg==") 0 0, none'
 
 export function CursorGlitch() {
   const trailsRef = useRef<HTMLDivElement[]>([])
+  const waveRef = useRef<HTMLDivElement>(null)
   const positions = useRef(
-    Array.from({ length: TRAIL_COUNT }, () => ({ x: -100, y: -100 }))
+    Array.from({ length: TRAIL_COUNT }, () => ({ x: -9999, y: -9999 }))
   )
-  const mouse = useRef({ x: -100, y: -100 })
+  const mouse = useRef({ x: -9999, y: -9999 })
   const pressing = useRef(false)
   const rafId = useRef(0)
 
@@ -23,8 +20,6 @@ export function CursorGlitch() {
 
     const onDown = (e: MouseEvent) => {
       pressing.current = true
-      // Snap all ghosts to exact click position AND update transforms immediately
-      // (don't wait for rAF — prevents 1-frame stale position flash)
       const x = e.clientX
       const y = e.clientY
       for (let i = 0; i < TRAIL_COUNT; i++) {
@@ -33,9 +28,18 @@ export function CursorGlitch() {
         const el = trailsRef.current[i]
         if (el) el.style.transform = `translate(${x}px, ${y}px)`
       }
-      // Press-down scale on lead cursor
       const lead = trailsRef.current[0]
       if (lead) lead.style.scale = '0.85'
+
+      // Click wave — reuse existing element, no DOM creation
+      const wave = waveRef.current
+      if (wave) {
+        wave.style.left = x + 'px'
+        wave.style.top = y + 'px'
+        wave.style.animation = 'none'
+        wave.offsetHeight // force reflow to restart animation
+        wave.style.animation = ''
+      }
     }
 
     const onUp = () => {
@@ -44,9 +48,9 @@ export function CursorGlitch() {
       if (lead) lead.style.scale = '1'
     }
 
-    // Force-hide native cursor via JS on every element
+    // Force-hide native cursor via JS
     const style = document.createElement('style')
-    style.textContent = `*, *::before, *::after, html, body { cursor: ${TRANSPARENT_CURSOR} !important; }`
+    style.textContent = `*, *::before, *::after, html, body { cursor: none !important; }`
     document.head.appendChild(style)
 
     window.addEventListener('mousemove', onMove, { passive: true })
@@ -56,7 +60,6 @@ export function CursorGlitch() {
     const tick = () => {
       for (let i = TRAIL_COUNT - 1; i >= 0; i--) {
         const target = i === 0 ? mouse.current : positions.current[i - 1]
-        // When pressing, snap hard (high lerp) so ghosts stay locked
         const lerp = pressing.current ? 0.8 : 0.15 + i * 0.08
         positions.current[i].x += (target.x - positions.current[i].x) * lerp
         positions.current[i].y += (target.y - positions.current[i].y) * lerp
@@ -69,16 +72,6 @@ export function CursorGlitch() {
       rafId.current = requestAnimationFrame(tick)
     }
 
-    // Stagger start each trail by TRAIL_DELAY ms
-    const timeouts: number[] = []
-    for (let i = 0; i < TRAIL_COUNT; i++) {
-      timeouts.push(
-        window.setTimeout(() => {
-          positions.current[i] = { ...mouse.current }
-        }, i * TRAIL_DELAY)
-      )
-    }
-
     rafId.current = requestAnimationFrame(tick)
 
     return () => {
@@ -86,7 +79,6 @@ export function CursorGlitch() {
       window.removeEventListener('mousedown', onDown)
       window.removeEventListener('mouseup', onUp)
       cancelAnimationFrame(rafId.current)
-      timeouts.forEach(clearTimeout)
       style.remove()
     }
   }, [])
@@ -108,7 +100,6 @@ export function CursorGlitch() {
           ref={(el) => {
             if (el) trailsRef.current[i] = el
           }}
-          className="cursor-ghost"
           style={{
             position: 'absolute',
             top: 0,
@@ -116,6 +107,7 @@ export function CursorGlitch() {
             width: '20px',
             height: '20px',
             willChange: 'transform',
+            transform: 'translate(-9999px, -9999px)',
             zIndex: TRAIL_COUNT - i,
             opacity: 0.85 - i * 0.15,
             transition: 'scale 0.15s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -139,6 +131,8 @@ export function CursorGlitch() {
           </svg>
         </div>
       ))}
+      {/* Pre-rendered click wave — no DOM creation on click */}
+      <div ref={waveRef} className="click-wave" style={{ transform: 'translate(-50%, -50%)' }} />
     </div>
   )
 }

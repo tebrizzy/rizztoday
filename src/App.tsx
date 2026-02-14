@@ -1,7 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { MenuBar } from './features/menu/MenuBar'
 import { Hero } from './features/hero/Hero'
-import { ClickWave } from './shared/components/ClickWave'
 import { CursorGlitch } from './shared/components/CursorGlitch'
 import { useFirebase } from './services/firebase'
 
@@ -39,7 +38,6 @@ function App() {
       <Suspense fallback={null}>
         <Guestbook db={db} isFirebaseReady={isReady} />
       </Suspense>
-      <ClickWave />
       <CursorGlitch />
       <Suspense fallback={null}>
         <Analytics />
