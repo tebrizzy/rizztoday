@@ -3,6 +3,9 @@ import { useEffect, useRef } from 'react'
 const TRAIL_COUNT = 5
 const TRAIL_DELAY = 1 // ~1ms stagger per ghost
 
+// 1x1 transparent PNG as data URI — bulletproof cursor hide
+const TRANSPARENT_CURSOR = 'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABmJLR0QA/wD/AP+gvaeTAAAAC0lEQVQI12NgAAIABQABNjN9GQAAAABJRu5ErkJggg==") 0 0, none'
+
 export function CursorGlitch() {
   const trailsRef = useRef<HTMLDivElement[]>([])
   const positions = useRef(
@@ -35,6 +38,11 @@ export function CursorGlitch() {
       const lead = trailsRef.current[0]
       if (lead) lead.style.scale = '1'
     }
+
+    // Force-hide native cursor via JS on every element
+    const style = document.createElement('style')
+    style.textContent = `*, *::before, *::after, html, body { cursor: ${TRANSPARENT_CURSOR} !important; }`
+    document.head.appendChild(style)
 
     window.addEventListener('mousemove', onMove, { passive: true })
     window.addEventListener('mousedown', onDown)
@@ -74,6 +82,7 @@ export function CursorGlitch() {
       window.removeEventListener('mouseup', onUp)
       cancelAnimationFrame(rafId.current)
       timeouts.forEach(clearTimeout)
+      style.remove()
     }
   }, [])
 
