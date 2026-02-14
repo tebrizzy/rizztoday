@@ -6,7 +6,7 @@
     font-display: swap;
 }
 
-*, *::before, *::after, html, body { cursor: none !important; }
+*, *::before, *::after, html, body { cursor: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMyAyTDMgMTdMNy41IDEyLjVMMTEgMThMMTMuNSAxNi41TDEwIDExTDE2IDExTDMgMloiIGZpbGw9IndoaXRlIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjEuMiIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg==) 3 2, auto !important; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
