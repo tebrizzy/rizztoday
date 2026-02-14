@@ -4,7 +4,6 @@ const TRAIL_COUNT = 5
 
 export function CursorGlitch() {
   const trailsRef = useRef<HTMLDivElement[]>([])
-  const waveRef = useRef<HTMLDivElement>(null)
   const positions = useRef(
     Array.from({ length: TRAIL_COUNT }, () => ({ x: -9999, y: -9999 }))
   )
@@ -30,16 +29,6 @@ export function CursorGlitch() {
       }
       const lead = trailsRef.current[0]
       if (lead) lead.style.scale = '0.85'
-
-      // Click wave — reuse existing element, no DOM creation
-      const wave = waveRef.current
-      if (wave) {
-        wave.style.left = x + 'px'
-        wave.style.top = y + 'px'
-        wave.style.animation = 'none'
-        wave.offsetHeight // force reflow to restart animation
-        wave.style.animation = ''
-      }
     }
 
     const onUp = () => {
@@ -48,10 +37,9 @@ export function CursorGlitch() {
       if (lead) lead.style.scale = '1'
     }
 
-    // Force-hide native cursor via JS
-    const style = document.createElement('style')
-    style.textContent = `*, *::before, *::after, html, body { cursor: none !important; }`
-    document.head.appendChild(style)
+    // Force-hide native cursor
+    document.documentElement.style.setProperty('cursor', 'none', 'important')
+    document.body.style.setProperty('cursor', 'none', 'important')
 
     window.addEventListener('mousemove', onMove, { passive: true })
     window.addEventListener('mousedown', onDown)
@@ -79,13 +67,13 @@ export function CursorGlitch() {
       window.removeEventListener('mousedown', onDown)
       window.removeEventListener('mouseup', onUp)
       cancelAnimationFrame(rafId.current)
-      style.remove()
+      document.documentElement.style.removeProperty('cursor')
+      document.body.style.removeProperty('cursor')
     }
   }, [])
 
   return (
     <div
-      className="cursor-glitch-layer"
       aria-hidden="true"
       style={{
         position: 'fixed',
@@ -131,8 +119,6 @@ export function CursorGlitch() {
           </svg>
         </div>
       ))}
-      {/* Pre-rendered click wave — no DOM creation on click */}
-      <div ref={waveRef} className="click-wave" style={{ transform: 'translate(-50%, -50%)' }} />
     </div>
   )
 }

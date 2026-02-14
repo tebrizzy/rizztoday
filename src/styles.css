@@ -6,7 +6,7 @@
     font-display: swap;
 }
 
-*, *::before, *::after, html, body { cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABmJLR0QA/wD/AP+gvaeTAAAAC0lEQVQI12NgAAIABQABNjN9GQAAAABJRu5ErkJggg==") 0 0, none !important; }
+*, *::before, *::after, html, body { cursor: none !important; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 :root {
