@@ -212,13 +212,13 @@ export function Hero() {
         </div>
 
         <div className="client-logos">
-          <img loading="lazy" width={20} height={14} src="/content/logos/hydex logo.png" alt="Hydex" className="logo-hydex" />
-          <img loading="lazy" width={16} height={14} src="/content/logos/Solana Logomark - Color.svg" alt="Solana" className="logo-solana" />
-          <img loading="lazy" width={16} height={16} src="/content/logos/soladex.svg" alt="Soladex" className="logo-soladex" />
-          <img loading="lazy" width={16} height={16} src="/content/logos/rad-BLACK.webp" alt="Radiants" className="logo-radiants" />
-          <img loading="lazy" width={14} height={18} src="/content/logos/skr-seeker.png" alt="Seeker" className="logo-skr" />
-          <img loading="lazy" width={28} height={28} src="/content/logos/bonk.svg" alt="Bonk" className="logo-bonk" />
-          <img loading="lazy" width={132} height={22} src="/content/logos/solana-mobile.svg" alt="Solana Mobile" className="logo-solana-mobile" />
+          <a href="https://x.com/hydaborz" target="_blank" rel="noopener noreferrer"><img loading="lazy" width={20} height={14} src="/content/logos/hydex logo.png" alt="Hydex" className="logo-hydex" /></a>
+          <a href="https://x.com/solana" target="_blank" rel="noopener noreferrer"><img loading="lazy" width={16} height={14} src="/content/logos/Solana Logomark - Color.svg" alt="Solana" className="logo-solana" /></a>
+          <a href="https://x.com/soladexfinance" target="_blank" rel="noopener noreferrer"><img loading="lazy" width={16} height={16} src="/content/logos/soladex.svg" alt="Soladex" className="logo-soladex" /></a>
+          <a href="https://x.com/radiantsgg" target="_blank" rel="noopener noreferrer"><img loading="lazy" width={16} height={16} src="/content/logos/rad-BLACK.webp" alt="Radiants" className="logo-radiants" /></a>
+          <a href="https://x.com/skaborz" target="_blank" rel="noopener noreferrer"><img loading="lazy" width={14} height={18} src="/content/logos/skr-seeker.png" alt="Seeker" className="logo-skr" /></a>
+          <a href="https://x.com/bonaborz" target="_blank" rel="noopener noreferrer"><img loading="lazy" width={28} height={28} src="/content/logos/bonk.svg" alt="Bonk" className="logo-bonk" /></a>
+          <a href="https://x.com/solanamobile" target="_blank" rel="noopener noreferrer"><img loading="lazy" width={132} height={22} src="/content/logos/solana-mobile.svg" alt="Solana Mobile" className="logo-solana-mobile" /></a>
         </div>
       </div>
     </div>
